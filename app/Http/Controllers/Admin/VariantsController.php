@@ -25,7 +25,8 @@ class VariantsController extends Controller
 //            $query = Variant::whereHas('product', function ($q) use ($product) {
 //                $q->where('product_id', $product->id);
 //            })->select(sprintf('%s.*', (new Variant)->table));
-            $query = $product->variants->select(sprintf('%s.*', (new Variant)->table));
+//            dd($query);
+            $query = Variant::select(sprintf('%s.*', (new Variant)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,22 +49,23 @@ class VariantsController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
+            $table->editColumn('id', function ($row) use ($product) {
+
                 return $row->id ? $row->id : "";
             });
-            $table->editColumn('color', function ($row) {
+            $table->editColumn('color', function ($row) use ($product) {
                 return $row->color ? $row->color : "";
             });
-            $table->editColumn('size', function ($row) {
+            $table->editColumn('size', function ($row) use ($product) {
                 return $row->size ? $row->size : "";
             });
-            $table->editColumn('price', function ($row) {
+            $table->editColumn('price', function ($row) use ($product) {
                 return $row->price ? $row->price : "";
             });
-            $table->editColumn('count', function ($row) {
+            $table->editColumn('count', function ($row) use ($product) {
                 return $row->count ? $row->count : "";
             });
-            $table->editColumn('image', function ($row) {
+            $table->editColumn('image', function ($row) use ($product) {
                 if ($photo = $row->image) {
                     return sprintf(
                         '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
@@ -73,7 +75,7 @@ class VariantsController extends Controller
                 }
                 return '';
             });
-            $table->rawColumns(['actions', 'placeholder', 'image']);
+            $table->rawColumns(['actions', 'placeholder', 'image', 'variants']);
 
             return $table->make(true);
         }
@@ -137,7 +139,7 @@ class VariantsController extends Controller
             $variant->image->delete();
         }
 
-        return redirect()->route('admin.products.variants.index', $product);
+        return redirect()->route('admin.products.show', [$product, $variant]);
     }
 
     public function show(Product $product, Variant $variant)

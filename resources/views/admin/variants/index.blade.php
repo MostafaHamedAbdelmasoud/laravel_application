@@ -39,6 +39,10 @@
                     <th>
                         {{ trans('cruds.variant.fields.image') }}
                     </th>
+
+                    <th>
+                        {{ trans('cruds.variant.fields.variants.colors') }}
+                    </th>
                     <th>
                         &nbsp;
                     </th>
@@ -62,6 +66,7 @@
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
+                    <td></td>
                     <td>
                     </td>
                     <td>
@@ -123,11 +128,12 @@
                 ajax: "{{ route('admin.products.variants.index',$product) }}",
                 columns: [
                     {data: 'placeholder', name: 'placeholder'},
-                    {data: 'id', name: 'id'},
-                    {data: 'price', name: 'price'},
-                    {data: 'count', name: 'count'},
-                    {data: 'color', name: 'color'},
-                    {data: 'size', name: 'size'},
+                    // {data: 'id', name: 'id'},
+                    // {data: 'price', name: 'price'},
+                    // {data: 'count', name: 'count'},
+                    // {data: 'color', name: 'color'},
+                    {data: 'variants', name: 'variants.color'},
+                    // {data: 'size', name: 'size'},
                     {data: 'image', name: 'image', sortable: false, searchable: false},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],

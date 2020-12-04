@@ -24,6 +24,7 @@ class Order extends Model
     protected $with = [
         'user',
         'coupon',
+        'product',
     ];
 
     /**
@@ -31,7 +32,7 @@ class Order extends Model
      *
      * @var array
      */
-    public $fillable = [
+    protected $fillable = [
         'user_id',
         'coupon_id',
         'subtotal',
