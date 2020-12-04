@@ -25,10 +25,22 @@
                         {{ trans('cruds.offer.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.offer.fields.show_in_trader_page') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.show_in_main_page') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.offer.fields.name') }}
                     </th>
                     <th>
+                        {{ trans('cruds.offer.fields.description') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.offer.fields.category') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.sub_category') }}
                     </th>
                     <th>
                         {{ trans('cruds.offer.fields.add_date') }}
@@ -59,6 +71,13 @@
                     <td>
                     </td>
                     <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
@@ -68,6 +87,14 @@
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($sub_categories as $key => $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
@@ -151,8 +178,12 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'show_in_trader_page', name: 'show_in_trader_page' },
+{ data: 'show_in_main_page', name: 'show_in_main_page' },
 { data: 'name', name: 'name' },
+{ data: 'description', name: 'description' },
 { data: 'category_name', name: 'category.name' },
+{ data: 'sub_category_name', name: 'sub_category.name' },
 { data: 'add_date', name: 'add_date' },
 { data: 'date_end', name: 'date_end' },
 { data: 'phone_number', name: 'phone_number' },

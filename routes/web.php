@@ -11,7 +11,9 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
+//    , 'middleware' => ['auth']
+], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -31,6 +33,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('mainpageimages/ckmedia', 'MainPageImagesController@storeCKEditorImages')->name('mainpageimages.storeCKEditorImages');
     Route::resource('mainpageimages', 'MainPageImagesController');
 
+    // ItemAdvertisements
+    Route::delete('item_advertisements/destroy', 'ItemAdvertisementsController@massDestroy')->name('item_advertisements.massDestroy');
+    Route::post('item_advertisements/media', 'ItemAdvertisementsController@storeMedia')->name('item_advertisements.storeMedia');
+    Route::post('item_advertisements/ckmedia', 'ItemAdvertisementsController@storeCKEditorImages')->name('item_advertisements.storeCKEditorImages');
+    Route::resource('item_advertisements', 'ItemAdvertisementsController');
+
     // Cities
     Route::delete('cities/destroy', 'CitiesController@massDestroy')->name('cities.massDestroy');
     Route::resource('cities', 'CitiesController');
@@ -44,6 +52,48 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Categories
     Route::delete('categories/destroy', 'CategoriesController@massDestroy')->name('categories.massDestroy');
     Route::resource('categories', 'CategoriesController');
+
+    // sub_categories
+    Route::delete('sub_categories/destroy', 'SubCategoriesController@massDestroy')->name('sub_categories.massDestroy');
+    Route::resource('sub_categories', 'SubCategoriesController');
+
+    // MainProductType
+    Route::delete('main_product_types/destroy', 'MainProductTypesController@massDestroy')->name('main_product_types.massDestroy');
+    Route::resource('main_product_types', 'MainProductTypesController');
+
+    // sub_product_types
+    Route::delete('sub_product_types/destroy', 'SubProductTypesController@massDestroy')->name('sub_product_types.massDestroy');
+    Route::resource('sub_product_types', 'SubProductTypesController');
+
+    // MainProductServiceType
+    Route::delete('main_product_service_types/destroy', 'MainProductServiceTypesController@massDestroy')->name('main_product_service_types.massDestroy');
+    Route::resource('main_product_service_types', 'MainProductServiceTypesController');
+
+
+    // sub_product_service_types
+    Route::delete('sub_product_service_types/destroy', 'SubProductServiceTypesController@massDestroy')->name('sub_product_service_types.massDestroy');
+    Route::resource('sub_product_service_types', 'SubProductServiceTypesController');
+
+
+    // NewsCategories
+    Route::delete('news_categories/destroy', 'NewsCategoriesController@massDestroy')->name('news_categories.massDestroy');
+    Route::resource('news_categories', 'NewsCategoriesController');
+
+    // news_sub_categories
+    Route::delete('news_sub_categories/destroy', 'NewsSubCategoriesController@massDestroy')->name('news_sub_categories.massDestroy');
+    Route::resource('news_sub_categories', 'NewsSubCategoriesController');
+
+    // Coupon
+    Route::delete('coupons/destroy', 'CouponsController@massDestroy')->name('coupons.massDestroy');
+    Route::resource('coupons', 'CouponsController');
+
+    // CustomField
+    Route::delete('custom_fields/destroy', 'CustomFieldsController@massDestroy')->name('custom_fields.massDestroy');
+    Route::resource('custom_fields', 'CustomFieldsController');
+
+    // CustomField
+    Route::delete('custom_field_options/destroy', 'CustomFieldOptionsController@massDestroy')->name('custom_field_options.massDestroy');
+    Route::resource('custom_field_options', 'CustomFieldOptionsController');
 
     // Offers
     Route::delete('offers/destroy', 'OffersController@massDestroy')->name('offers.massDestroy');
@@ -88,9 +138,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('products/media', 'ProductsController@storeMedia')->name('products.storeMedia');
     Route::post('products/ckmedia', 'ProductsController@storeCKEditorImages')->name('products.storeCKEditorImages');
     Route::resource('products', 'ProductsController');
+
+    // products.variants
+    Route::delete('variants/destroy', 'ProductsController@massDestroy')->name('variants.massDestroy');
+    Route::post('variants/media', 'ProductsController@storeMedia')->name('variants.storeMedia');
+    Route::post('variants/ckmedia', 'ProductsController@storeCKEditorImages')->name('variants.storeCKEditorImages');
+    Route::resource('products.variants', 'VariantsController');
+
+
 });
+
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
-// Change password
+    // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
         Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
         Route::post('password', 'ChangePasswordController@update')->name('password.update');

@@ -3,6 +3,7 @@
 return [
     'actions'                              => 'الإجراءات',
     'add'                                  => 'إضافة',
+    'empty'                                  => 'لا يوجد',
     'allRightsReserved'                    => 'كافة الحقوق محفوظة',
     'areYouSure'                           => 'هل أنت متأكد؟',
     'clickHereToVerify'                    => 'انقر هنا للتحقق',

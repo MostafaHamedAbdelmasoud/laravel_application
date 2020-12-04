@@ -24,13 +24,20 @@ class UpdateNewsRequest extends FormRequest
             'details'      => [
                 'required',
             ],
-            'category_id'  => [
+            'news_category_id'  => [
                 'required',
                 'integer',
+                'exists:news_categories,id'
+            ],
+            'news_sub_category_id'  => [
+                'required',
+                'integer',
+                'exists:news_sub_categories,id'
             ],
             'city_id'      => [
                 'required',
                 'integer',
+                'exists:cities,id'
             ],
             'add_date'     => [
                 'required',
@@ -38,9 +45,6 @@ class UpdateNewsRequest extends FormRequest
             ],
             'phone_number' => [
                 'string',
-                'required',
-            ],
-            'approved'     => [
                 'required',
             ],
         ];

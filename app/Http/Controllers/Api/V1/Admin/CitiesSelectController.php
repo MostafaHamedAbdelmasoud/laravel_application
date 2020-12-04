@@ -22,7 +22,4 @@ class CitiesSelectController extends Controller
 
         return CitySelectResource::collection($city);
     }
-
-
-
 }

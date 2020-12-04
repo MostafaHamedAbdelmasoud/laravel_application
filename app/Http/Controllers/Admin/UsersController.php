@@ -21,6 +21,7 @@ class UsersController extends Controller
 
         if ($request->ajax()) {
             $query = User::with(['roles'])->select(sprintf('%s.*', (new User)->table));
+//            dd($query);
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -47,6 +48,9 @@ class UsersController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
+            $table->editColumn('accept_notifications', function ($row) {
+                return $row->accept_notifications ? 'نعم' : "لا";
+            });
             $table->editColumn('email', function ($row) {
                 return $row->email ? $row->email : "";
             });
@@ -62,6 +66,9 @@ class UsersController extends Controller
             });
             $table->editColumn('phone_number', function ($row) {
                 return $row->phone_number ? $row->phone_number : "";
+            });
+            $table->editColumn('phone_verified', function ($row) {
+                return $row->phone_verified ? 'نعم' : "لا";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'roles']);
@@ -86,6 +93,7 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
+
         $user->roles()->sync($request->input('roles', []));
 
         return redirect()->route('admin.users.index');
@@ -104,7 +112,10 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        $request['accept_notifications'] = $request['accept_notifications']?1:0;
+
         $user->update($request->all());
+
         $user->roles()->sync($request->input('roles', []));
 
         return redirect()->route('admin.users.index');

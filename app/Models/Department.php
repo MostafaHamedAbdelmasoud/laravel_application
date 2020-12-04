@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -11,7 +12,7 @@ use \DateTimeInterface;
 
 class Department extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, HasMediaTrait,Filterable;
 
     public $table = 'departments';
 
@@ -31,6 +32,7 @@ class Department extends Model implements HasMedia
         'city_id',
         'phone_number',
         'category_id',
+        'sub_category_id',
         'trader_id',
         'created_at',
         'updated_at',
@@ -69,6 +71,14 @@ class Department extends Model implements HasMedia
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sub_category()
+    {
+        return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
     public function trader()
     {

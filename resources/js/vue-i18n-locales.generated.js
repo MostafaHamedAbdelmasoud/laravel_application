@@ -104,8 +104,8 @@ export default {
                 }
             },
             "department": {
-                "title": "تجاري و خدمي",
-                "title_singular": "تجاري و خدمي",
+                "title": "قسم التسوق ",
+                "title_singular": "قسم التسوق ",
                 "fields": {
                     "id": "ID",
                     "id_helper": " ",

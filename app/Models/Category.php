@@ -50,4 +50,12 @@ class Category extends Model
     {
         return $this->hasMany(News::class, 'category_id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function SubCategories()
+    {
+        return $this->hasMany(SubCategory::class, 'category_id');
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Filters\JobOffersFilter;
+use App\Http\Filters\JobsFilter;
 use App\Http\Requests\StoreJobOfferRequest;
 use App\Http\Requests\UpdateJobOfferRequest;
 use App\Http\Resources\Admin\JobOfferResource;
@@ -17,11 +19,17 @@ class JobOfferApiController extends Controller
     use MediaUploadingTrait;
 
 
+    public function __construct(JobOffersFilter  $filter)
+    {
+        $this->filter = $filter;
+    }
+
+
     public function index()
     {
         //abort_if(Gate::denies('job_offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new JobOfferResource(JobOffer::with(['specialization', 'city'])->get());
+        return new JobOfferResource(JobOffer::with(['specialization', 'city'])->filter($this->filter)->where('deleted_at', null)->latest()->get());
     }
 
     public function store(StoreJobOfferRequest $request)

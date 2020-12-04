@@ -10,13 +10,13 @@ use App\Http\Requests\UpdateDepartmentRequest;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Department;
+use App\Models\SubCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Trader;
-
 
 class DepartmentsController extends Controller
 {
@@ -27,7 +27,6 @@ class DepartmentsController extends Controller
         //abort_if(Gate::denies('department_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-
             $query = Department::with(['city', 'category','trader'])->select(sprintf('%s.*', (new Department)->table));
             $table = Datatables::of($query);
 
@@ -79,6 +78,9 @@ class DepartmentsController extends Controller
             $table->addColumn('category_name', function ($row) {
                 return $row->category ? $row->category->name : '';
             });
+            $table->addColumn('sub_category_name', function ($row) {
+                return $row->sub_category ? $row->sub_category->name : '';
+            });
             $table->addColumn('trader_name', function ($row) {
                 return $row->trader ? $row->trader->name : '';
             });
@@ -89,9 +91,10 @@ class DepartmentsController extends Controller
 
         $cities     = City::get();
         $categories = Category::get();
+        $sub_categories = SubCategory::get();
         $traders    = Trader::get();
 
-        return view('admin.departments.index', compact('cities', 'categories','traders'));
+        return view('admin.departments.index', compact('sub_categories', 'cities', 'categories', 'traders'));
     }
 
     public function create()
@@ -104,7 +107,7 @@ class DepartmentsController extends Controller
 
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.departments.create', compact('cities', 'categories','traders'));
+        return view('admin.departments.create', compact('cities', 'categories', 'traders'));
     }
 
     public function store(StoreDepartmentRequest $request)
@@ -133,8 +136,9 @@ class DepartmentsController extends Controller
         $department->load('city', 'category');
 
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sub_category_id = $department->sub_category->id;
 
-        return view('admin.departments.edit', compact('cities', 'categories', 'department','traders'));
+        return view('admin.departments.edit', compact('cities', 'categories', 'department', 'traders'));
     }
 
     public function update(UpdateDepartmentRequest $request, Department $department)

@@ -25,6 +25,14 @@ class StoreProductRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'main_product_type_id' => [
+                'required',
+                'exists:main_product_types,id',
+            ],
+            'sub_product_type_id' => [
+                'required',
+                'exists:sub_product_types,id',
+            ],
         ];
     }
 }

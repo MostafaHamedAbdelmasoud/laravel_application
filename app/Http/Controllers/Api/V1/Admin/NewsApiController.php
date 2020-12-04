@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Filters\NewsFilter;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Resources\Admin\NewsResource;
@@ -12,15 +13,31 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class NewsApiController
+ * @package App\Http\Controllers\Api\V1\Admin
+ */
 class NewsApiController extends Controller
 {
     use MediaUploadingTrait;
+
+    protected $filter;
+
+    /**
+     * NewsApiController constructor.
+     * @param NewsFilter $filter
+     */
+    public function __construct(NewsFilter $filter)
+    {
+        $this->filter = $filter;
+    }
 
     public function index()
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NewsResource(News::with(['category', 'city'])->get());
+        $news_query_builder = News::with(['news_category', 'city'])->filter($this->filter)->latest();
+        return new NewsResource($news_query_builder->get());
     }
 
     public function store(StoreNewsRequest $request)

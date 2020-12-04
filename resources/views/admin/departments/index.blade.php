@@ -43,6 +43,9 @@
                         {{ trans('cruds.department.fields.category') }}
                     </th>
                     <th>
+                        {{ trans('cruds.department.fields.sub_category') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.offer.fields.trader') }}
                     </th>
                     <th>
@@ -63,6 +66,7 @@
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
+
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
@@ -74,6 +78,7 @@
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
+
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
@@ -82,6 +87,16 @@
                             @endforeach
                         </select>
                     </td>
+
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($sub_categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
@@ -153,6 +168,7 @@
 { data: 'city_name', name: 'city.name' },
 { data: 'phone_number', name: 'phone_number' },
 { data: 'category_name', name: 'category.name' },
+{ data: 'sub_category_name', name: 'sub_category.name' },
 { data: 'trader_name', name: 'trader.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

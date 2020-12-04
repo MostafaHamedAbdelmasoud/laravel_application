@@ -9,6 +9,7 @@ use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Category;
 use App\Models\Offer;
+use App\Models\SubCategory;
 use App\Models\Trader;
 use Gate;
 use Illuminate\Http\Request;
@@ -32,9 +33,9 @@ class OffersController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'offer_show';
-                $editGate      = 'offer_edit';
-                $deleteGate    = 'offer_delete';
+                $viewGate = 'offer_show';
+                $editGate = 'offer_edit';
+                $deleteGate = 'offer_delete';
                 $crudRoutePart = 'offers';
 
                 return view('partials.datatablesActions', compact(
@@ -52,8 +53,24 @@ class OffersController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
+
+            $table->editColumn('description', function ($row) {
+                return $row->description ? $row->description : "";
+            });
+
+            $table->editColumn('show_in_trader_page', function ($row) {
+                return $row->showInTraderPage();
+            });
+            $table->editColumn('show_in_main_page', function ($row) {
+                return $row->showInMainPage() ;
+            });
+
             $table->addColumn('category_name', function ($row) {
                 return $row->category ? $row->category->name : '';
+            });
+
+            $table->addColumn('sub_category_name', function ($row) {
+                return $row->sub_category ? $row->sub_category->name : '';
             });
 
             $table->editColumn('phone_number', function ($row) {
@@ -89,9 +106,10 @@ class OffersController extends Controller
         }
 
         $categories = Category::get();
-        $traders    = Trader::get();
+        $sub_categories = SubCategory::get();
+        $traders = Trader::get();
 
-        return view('admin.offers.index', compact('categories', 'traders'));
+        return view('admin.offers.index', compact('categories', 'traders', 'sub_categories'));
     }
 
     public function create()
@@ -100,13 +118,19 @@ class OffersController extends Controller
 
         $categories = Category::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $sub_categories = SubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.offers.create', compact('categories', 'traders'));
+        return view('admin.offers.create', compact('categories', 'traders', 'sub_categories'));
     }
 
     public function store(StoreOfferRequest $request)
     {
+        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+
+        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+
         $offer = Offer::create($request->all());
 
         foreach ($request->input('images', []) as $file) {
@@ -126,16 +150,23 @@ class OffersController extends Controller
 
         $categories = Category::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $sub_categories = SubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $offer->load('category', 'trader');
 
-        return view('admin.offers.edit', compact('categories', 'traders', 'offer'));
+        return view('admin.offers.edit', compact('categories', 'traders', 'offer', 'sub_categories'));
     }
 
     public function update(UpdateOfferRequest $request, Offer $offer)
     {
+        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+
+        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+
         $offer->update($request->all());
+
 
         if (count($offer->images) > 0) {
             foreach ($offer->images as $media) {
@@ -185,10 +216,10 @@ class OffersController extends Controller
     {
         abort_if(Gate::denies('offer_create') && Gate::denies('offer_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Offer();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Offer();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

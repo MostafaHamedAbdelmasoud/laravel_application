@@ -51,7 +51,7 @@ class RolesController extends Controller
                 $labels = [];
 
                 foreach ($row->permissions as $permission) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->title);
+                    $labels[] = sprintf('<span class="label label-info label-many">%s ،</span>', trans('permissions.'.$permission->title));
                 }
 
                 return implode(' ', $labels);

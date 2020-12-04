@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Filters\Filterable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ use \DateTimeInterface;
 
 class Offer extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, HasMediaTrait,Filterable;
 
     public $table = 'offers';
 
@@ -30,7 +31,11 @@ class Offer extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'description',
+        'show_in_trader_page',
+        'show_in_main_page',
         'category_id',
+        'sub_category_id',
         'add_date',
         'date_end',
         'phone_number',
@@ -56,6 +61,11 @@ class Offer extends Model implements HasMedia
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function sub_category()
+    {
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function getAddDateAttribute($value)
@@ -93,5 +103,17 @@ class Offer extends Model implements HasMedia
         });
 
         return $files;
+    }
+
+
+    public function showInTraderPage()
+    {
+        return $this->show_in_trader_page?'نعم':'لا';
+    }
+
+
+    public function showInMainPage()
+    {
+        return $this->show_in_main_page?'نعم':'لا';
     }
 }

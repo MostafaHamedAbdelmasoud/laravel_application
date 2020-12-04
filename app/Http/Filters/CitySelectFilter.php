@@ -2,7 +2,6 @@
 
 namespace App\Http\Filters;
 
-
 class CitySelectFilter extends BaseFilters
 {
     /**
@@ -28,5 +27,4 @@ class CitySelectFilter extends BaseFilters
 
         return $this->builder;
     }
-
 }

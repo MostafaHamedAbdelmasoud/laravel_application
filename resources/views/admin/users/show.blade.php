@@ -41,14 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
-                        </th>
-                        <td>
-                            {{ $user->email_verified_at }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <td>
@@ -63,6 +55,14 @@
                         </th>
                         <td>
                             {{ $user->phone_number }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.accept_notifications') }}
+                        </th>
+                        <td>
+                            {{ $user->accept_notifications?'نعم' :'لا' }}
                         </td>
                     </tr>
                 </tbody>

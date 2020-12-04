@@ -13,6 +13,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('name');
             $table->longText('about')->nullable();
             $table->string('phone_number');
+
             $table->timestamps();
             $table->softDeletes();
         });

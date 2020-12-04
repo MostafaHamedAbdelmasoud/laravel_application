@@ -18,6 +18,5 @@ class CreateNotificationsTable extends Migration
             $table->softDeletes();
         });
 //        Schema::enableForeignKeyConstraints();
-
     }
 }

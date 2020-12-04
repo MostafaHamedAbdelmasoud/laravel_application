@@ -20,6 +20,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.offer.fields.name_helper') }}</span>
             </div>
+
+
             <div class="form-group">
                 <label class="required" for="category_id">{{ trans('cruds.offer.fields.category') }}</label>
                 <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
@@ -34,6 +36,21 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.offer.fields.category_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label class="required" for="sub_category_id">{{ trans('cruds.offer.fields.sub_category') }}</label>
+                <select class="form-control select2 {{ $errors->has('sub_category') ? 'is-invalid' : '' }}" name="sub_category_id" id="sub_category_id" required>
+
+                </select>
+                @if($errors->has('sub_category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('sub_category') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.offer.fields.sub_category_helper') }}</span>
+            </div>
+
+
             <div class="form-group">
                 <label class="required" for="add_date">{{ trans('cruds.offer.fields.add_date') }}</label>
                 <input class="form-control date {{ $errors->has('add_date') ? 'is-invalid' : '' }}" type="text" name="add_date" id="add_date" value="{{ old('add_date', $offer->add_date) }}" required>
@@ -109,6 +126,39 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.offer.fields.images_helper') }}</span>
             </div>
+
+
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('show_in_main_page') ? 'is-invalid' : '' }}">
+                    <input class="form-check-input" type="checkbox" name="show_in_main_page" id="show_in_main_page" value="1"
+                            {{ old('show_in_main_page', $offer->show_in_main_page) == 1 ? 'checked' : '' }}>
+                    <label class="required form-check-label"
+                           for="show_in_main_page">{{ trans('cruds.product.fields.show_in_main_page') }}</label>
+                </div>
+                @if($errors->has('show_in_main_page'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('show_in_main_page') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.show_in_main_page_helper') }}</span>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('show_in_trader_page') ? 'is-invalid' : '' }}">
+                    <input class="form-check-input" type="checkbox" name="show_in_trader_page" id="show_in_trader_page" value="1"
+                            {{ old('show_in_trader_page', $offer->show_in_trader_page) == 1 ? 'checked' : '' }}>
+                    <label class="required form-check-label"
+                           for="show_in_trader_page">{{ trans('cruds.product.fields.show_in_trader_page') }}</label>
+                </div>
+                @if($errors->has('show_in_trader_page'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('show_in_trader_page') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.show_in_trader_page_helper') }}</span>
+            </div>
+
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -122,7 +172,20 @@
 
 @endsection
 
+
+@php
+    $user = \Illuminate\Support\Facades\Auth::User();
+    $token = $user->createToken($user->email.'-'.now());
+    $token = $token->accessToken;
+@endphp
+
+
+
+
 @section('scripts')
+
+@include('admin.offers.components.form_scripts',['token'=>$token,'sub_category_id'=>isset($offer)?$offer->sub_category_id:'0'])
+
 <script>
     var uploadedImagesMap = {}
 Dropzone.options.imagesDropzone = {

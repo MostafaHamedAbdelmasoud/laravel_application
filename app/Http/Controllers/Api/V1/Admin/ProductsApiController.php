@@ -21,13 +21,18 @@ class ProductsApiController extends Controller
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $trader_id = $request['trader_id'];
-        if(isset($trader_id))
-            return new ProductResource(Product::where('trader_id',$trader_id)->with(['trader'])->get());
+        if (isset($trader_id)) {
+            return new ProductResource(Product::where('trader_id', $trader_id)->with(['trader'])->get());
+        }
         return new ProductResource(Product::with(['trader'])->get());
     }
 
     public function store(StoreProductRequest $request)
     {
+        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+
+        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+
         $product = Product::create($request->all());
 
         if ($request->input('image', false)) {
@@ -48,6 +53,10 @@ class ProductsApiController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
+        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+
+        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+
         $product->update($request->all());
 
         if ($request->input('image', false)) {

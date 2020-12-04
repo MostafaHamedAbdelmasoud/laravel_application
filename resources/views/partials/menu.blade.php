@@ -34,6 +34,16 @@
                             </a>
                         </li>
                     @endcan
+                    @can('advertisement_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.item_advertisements.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/item_advertisements") || request()->is("admin/item_advertisements/*") ? "active" : "" }}">
+                                <i class="fa-fw far fa-font-awesome-logo-full c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.item_advertisement.title') }}
+                            </a>
+                        </li>
+                    @endcan
                     @can('department_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.departments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/departments") || request()->is("admin/departments/*") ? "active" : "" }}">
@@ -114,6 +124,36 @@
                             </a>
                         </li>
                     @endcan
+                    @can('coupon_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.coupons.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/coupons") || request()->is("admin/coupons/*") ? "active" : "" }}">
+                                <i class="fa-fw fas fa-cut c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.coupon.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('custom_field_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.custom_fields.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/custom_fields") || request()->is("admin/custom_fields/*") ? "active" : "" }}">
+                                <i class="fa-fw fas fa-plus-square c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.custom_field.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('custom_field_option_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.custom_field_options.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/custom_field_options") || request()->is("admin/custom_field_options/*") ? "active" : "" }}">
+                                <i class="fa-fw fas fa-ellipsis-v c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.custom_field_option.title') }}
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         @endcan
@@ -139,13 +179,89 @@
                     @can('category_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/categories") || request()->is("admin/categories/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-th c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.category.title') }}
                             </a>
                         </li>
                     @endcan
+                    @can('category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.sub_categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sub_categories") || request()->is("admin/sub_categories/*") ? "active" : "" }}">
+                                <i class="fa-fw fas fa-bezier-curve c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.sub_category.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.news_categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/news_categories") || request()->is("admin/news_categories/*") ? "active" : "" }}">
+                                <i class="fa-fw fas fa-th c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.news_category.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.news_sub_categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/news_sub_categories") || request()->is("admin/news_categories/*") ? "active" : "" }}">
+                                <i class="fa-fw fas fa-bezier-curve c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.news_sub_category.title') }}
+                            </a>
+                        </li>
+                    @endcan
+
+                        @can('category_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.main_product_types.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/main_product_types") || request()->is("admin/main_product_types/*") ? "active" : "" }}">
+                                    <i class="fa-fw fas fa-th c-sidebar-nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.main_product_type.title') }}
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('category_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.sub_product_types.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sub_product_types") || request()->is("admin/sub_categories/*") ? "active" : "" }}">
+                                    <i class="fa-fw fas fa-bezier-curve c-sidebar-nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.sub_product_type.title') }}
+                                </a>
+                            </li>
+                        @endcan
+
+
+                        @can('category_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.main_product_service_types.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/main_product_service_types") || request()->is("admin/main_product_service_types/*") ? "active" : "" }}">
+                                    <i class="fa-fw fas fa-th c-sidebar-nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.main_product_service_type.title') }}
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('category_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.sub_product_service_types.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sub_product_service_types") || request()->is("admin/sub_categories/*") ? "active" : "" }}">
+                                    <i class="fa-fw fas fa-bezier-curve c-sidebar-nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.sub_product_service_type.title') }}
+                                </a>
+                            </li>
+                        @endcan
+
                     @can('specialization_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.specializations.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/specializations") || request()->is("admin/specializations/*") ? "active" : "" }}">

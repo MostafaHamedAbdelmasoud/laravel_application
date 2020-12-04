@@ -28,6 +28,10 @@ class StoreDepartmentRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'trader_id'      => [
+                'required',
+                'exists:traders,id',
+            ],
             'phone_number' => [
                 'string',
                 'required',

@@ -44,7 +44,7 @@ class PermissionsController extends Controller
                 return $row->id ? $row->id : "";
             });
             $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : "";
+                return $row->title ? trans('permissions.'.$row->title) : "";
             });
 
             $table->rawColumns(['actions', 'placeholder']);

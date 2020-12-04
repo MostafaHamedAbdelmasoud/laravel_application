@@ -28,7 +28,7 @@
                 </div>
                 <select class="form-control select2 {{ $errors->has('permissions') ? 'is-invalid' : '' }}" name="permissions[]" id="permissions" multiple required>
                     @foreach($permissions as $id => $permissions)
-                        <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || $role->permissions->contains($id)) ? 'selected' : '' }}>{{ $permissions }}</option>
+                        <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || $role->permissions->contains($id)) ? 'selected' : '' }}>{{ trans('permissions.'.$permissions)  }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('permissions'))

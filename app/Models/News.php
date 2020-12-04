@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Filters\Filterable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,13 +13,14 @@ use \DateTimeInterface;
 
 class News extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, HasMediaTrait, Filterable;
 
     public $table = 'news';
 
     protected $appends = [
         'image',
     ];
+
 
     protected $dates = [
         'add_date',
@@ -30,7 +32,10 @@ class News extends Model implements HasMedia
     protected $fillable = [
         'name',
         'details',
-        'category_id',
+        'price',
+        'detailed_title',
+        'news_category_id',
+        'news_sub_category_id',
         'city_id',
         'add_date',
         'phone_number',
@@ -56,17 +61,12 @@ class News extends Model implements HasMedia
         $file = $this->getMedia('image')->last();
 
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function city()
@@ -82,5 +82,27 @@ class News extends Model implements HasMedia
     public function setAddDateAttribute($value)
     {
         $this->attributes['add_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getIsApprovedAttribute()
+    {
+        return $this->approved ? 'نعم' : 'لا';
+    }
+
+
+    public function news_category()
+    {
+        return $this->belongsTo(NewsCategory::class);
+    }
+
+    public function news_sub_category()
+    {
+        return $this->belongsTo(NewsSubCategory::class);
+    }
+
+
+    public function getPriceValueAttribute()
+    {
+        return $this->price?  ' جنية '. $this->price :'';
     }
 }

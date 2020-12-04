@@ -18,9 +18,8 @@ class CategoriesApiController extends Controller
         $type = $request['type'];
 
         //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if(isset($type)){
-        return new CategoryResource(Category::where('type',$type)->get());
-
+        if (isset($type)) {
+            return new CategoryResource(Category::where('type', $type)->get());
         }
         return new CategoryResource(Category::all());
     }

@@ -79,6 +79,23 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.job.fields.specialization_helper') }}</span>
             </div>
+
+
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
+                    <input class="form-check-input" type="checkbox" name="approved" id="approved"
+                           value="1" {{ $job->approved || old('approved', 0) === 1 ? 'checked' : '' }} >
+                    <label class="required form-check-label"
+                           for="approved">{{ trans('cruds.news.fields.approved') }}</label>
+                </div>
+                @if($errors->has('approved'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('approved') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.news.fields.approved_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

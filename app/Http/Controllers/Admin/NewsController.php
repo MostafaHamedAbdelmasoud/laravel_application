@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateNewsRequest;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\News;
+use App\Models\NewsCategory;
+use App\Models\NewsSubCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -25,22 +27,24 @@ class NewsController extends Controller
 
         $news = News::all();
 
-        $categories = Category::get();
+        $news_categories = NewsCategory::get();
+
+        $news_sub_categories = NewsSubCategory::get();
 
         $cities = City::get();
 
-        return view('admin.news.index', compact('news', 'categories', 'cities'));
+        return view('admin.news.index', compact('news', 'news_categories', 'news_sub_categories', 'cities'));
     }
 
     public function create()
     {
         //abort_if(Gate::denies('news_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = Category::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $news_categories = NewsCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.news.create', compact('categories', 'cities'));
+        return view('admin.news.create', compact('news_categories', 'cities'));
     }
 
     public function store(StoreNewsRequest $request)
@@ -48,7 +52,9 @@ class NewsController extends Controller
         $news = News::create($request->all());
 
         if ($request->input('image', false)) {
-            $news->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+            foreach ($request->input('image') as $image) {
+                $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+            }
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -62,26 +68,31 @@ class NewsController extends Controller
     {
         //abort_if(Gate::denies('news_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = Category::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $news_categories = NewsCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $news_sub_categories = NewsSubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $news->load('category', 'city');
+        $news->load('news_category', 'city');
 
-        return view('admin.news.edit', compact('categories', 'cities', 'news'));
+        return view('admin.news.edit', compact('news_categories', 'cities', 'news', 'news_sub_categories'));
     }
 
     public function update(UpdateNewsRequest $request, News $news)
     {
+        $request['approved'] = $request['approved']?1:0;
+
         $news->update($request->all());
 
         if ($request->input('image', false)) {
-            if (!$news->image || $request->input('image') !== $news->image->file_name) {
-                if ($news->image) {
-                    $news->image->delete();
-                }
+            foreach ($request->input('image') as $image) {
+                if (!$news->image || $image !== $news->image->file_name) {
+                    if ($news->image) {
+                        $news->image->delete();
+                    }
 
-                $news->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+                    $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+                }
             }
         } elseif ($news->image) {
             $news->image->delete();
@@ -94,9 +105,10 @@ class NewsController extends Controller
     {
         //abort_if(Gate::denies('news_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $news->load('category', 'city');
+        $news->load('news_category', 'city');
 
-        return view('admin.news.show', compact('news'));
+        $news_medias = $news->getMedia('image');
+        return view('admin.news.show', compact('news', 'news_medias'));
     }
 
     public function destroy(News $news)
@@ -119,10 +131,10 @@ class NewsController extends Controller
     {
         //abort_if(Gate::denies('news_create') && Gate::denies('news_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new News();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new News();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

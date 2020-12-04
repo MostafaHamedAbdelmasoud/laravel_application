@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsersApiController extends Controller
 {
-
-
     public function index()
     {
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -42,7 +40,10 @@ class UsersApiController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        $request['accept_notifications'] = $request['accept_notifications']?1:0;
+
         $user->update($request->all());
+
         $user->roles()->sync($request->input('roles', []));
 
         return (new UserResource($user))

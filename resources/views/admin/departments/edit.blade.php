@@ -79,6 +79,26 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.department.fields.category_helper') }}</span>
             </div>
+
+
+            <div class="form-group">
+                <label for="category_id">{{ trans('cruds.department.fields.sub_category') }}</label>
+                <select class="form-control select2 {{ $errors->has('sub_category') ? 'is-invalid' : '' }}"
+                        name="sub_category_id" id="sub_category_id">
+                    {{--                        @foreach($categories as $id => $sub_category)--}}
+                    {{--                            <option--}}
+                    {{--                                value="{{ $id }}" {{ old('sub_category_id') == $id ? 'selected' : '' }}>{{ $sub_category }}</option>--}}
+                    {{--                        @endforeach--}}
+                </select>
+                @if($errors->has('sub_category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('sub_category') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.department.fields.sub_category_helper') }}</span>
+            </div>
+
+
             <div class="form-group">
                 <label for="trader_id">{{ trans('cruds.offer.fields.trader') }}</label>
                 <select class="form-control select2 {{ $errors->has('trader') ? 'is-invalid' : '' }}" name="trader_id" id="trader_id">
@@ -106,8 +126,20 @@
 
 @endsection
 
+@php
+    $user = \Illuminate\Support\Facades\Auth::User();
+    $token = $user->createToken($user->email.'-'.now());
+    $token = $token->accessToken;
+@endphp
+
+@include('admin.departments.components.form_scripts',['token'=>$token,'sub_category_id'=>$department->sub_category_id])
+
 @section('scripts')
+
 <script>
+
+
+
     Dropzone.options.logoDropzone = {
     url: '{{ route('admin.departments.storeMedia') }}',
     maxFilesize: 5, // MB

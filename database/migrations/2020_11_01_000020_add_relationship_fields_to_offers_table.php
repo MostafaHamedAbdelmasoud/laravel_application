@@ -17,6 +17,5 @@ class AddRelationshipFieldsToOffersTable extends Migration
             $table->foreign('trader_id', 'trader_fk_2504442')->references('id')->on('traders');
         });
         Schema::enableForeignKeyConstraints();
-
     }
 }

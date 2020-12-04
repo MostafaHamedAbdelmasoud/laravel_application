@@ -70,6 +70,9 @@ class JobsController extends Controller
             $table->editColumn('details', function ($row) {
                 return $row->details ? $row->details : "";
             });
+            $table->editColumn('approved', function ($row) {
+                return $row->is_approved ;
+            });
             $table->addColumn('specialization_name', function ($row) {
                 return $row->specialization ? $row->specialization->name : '';
             });
@@ -126,6 +129,8 @@ class JobsController extends Controller
 
     public function update(UpdateJobRequest $request, Job $job)
     {
+        $request['approved'] = $request['approved']?1:0;
+
         $job->update($request->all());
 
         if ($request->input('image', false)) {

@@ -12,6 +12,7 @@ class CreateJobsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->date('add_date');
+            $table->boolean('approved')->default(0);
             $table->longText('details');
             $table->timestamps();
             $table->softDeletes();
