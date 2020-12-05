@@ -11,6 +11,8 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('whats_app_number');
+            $table->string('email');
             $table->date('add_date');
             $table->boolean('approved')->default(0);
             $table->longText('details');

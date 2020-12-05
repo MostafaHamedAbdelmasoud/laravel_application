@@ -6,6 +6,12 @@
             {{ trans('global.show') }} {{ trans('cruds.variant.title') }}
         </div>
 
+        <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.products.show',$product) }}">
+                    مشاهدة المنتج     {{$product->name }}
+                    </a>
+                </div>
+
         <div class="card-body">
             <div class="form-group">
                 <div class="form-group">

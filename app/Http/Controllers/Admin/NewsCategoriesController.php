@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNewsCategoryRequest;
 use App\Http\Requests\StoreNewsCategoryRequest;
 use App\Http\Requests\UpdateNewsCategoryRequest;
+use App\Models\Helpers\PermissionHelper;
 use App\Models\NewsCategory;
 use Gate;
 use Illuminate\Http\Request;
@@ -66,6 +67,8 @@ class NewsCategoriesController extends Controller
     {
         $news_category = NewsCategory::create($request->all());
 
+        PermissionHelper::createPermissionWithModelAttribute($news_category->name);
+
         return redirect()->route('admin.news_categories.index');
     }
 
@@ -79,6 +82,9 @@ class NewsCategoriesController extends Controller
     public function update(UpdateNewsCategoryRequest $request, NewsCategory $news_category)
     {
         $news_category->update($request->all());
+
+        PermissionHelper::createPermissionWithModelAttribute($news_category->name);
+
 
         return redirect()->route('admin.news_categories.index');
     }

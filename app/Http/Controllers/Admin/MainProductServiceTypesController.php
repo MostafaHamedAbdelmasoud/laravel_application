@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMainProductServiceTypeRequest;
 use App\Http\Requests\StoreMainProductServiceTypeRequest;
 use App\Http\Requests\UpdateMainProductServiceTypeRequest;
+use App\Models\Helpers\PermissionHelper;
 use App\Models\MainProductServiceType;
 use Gate;
 use Illuminate\Http\Request;
@@ -66,6 +67,8 @@ class MainProductServiceTypesController extends Controller
     {
         $main_product_service_type = MainProductServiceType::create($request->all());
 
+        PermissionHelper::createPermissionWithModelAttribute($main_product_service_type->name);
+
         return redirect()->route('admin.main_product_service_types.index');
     }
 
@@ -79,6 +82,9 @@ class MainProductServiceTypesController extends Controller
     public function update(UpdateMainProductServiceTypeRequest $request, MainProductServiceType $main_product_service_type)
     {
         $main_product_service_type->update($request->all());
+
+        PermissionHelper::createPermissionWithModelAttribute($main_product_service_type->name);
+
 
         return redirect()->route('admin.main_product_service_types.index');
     }

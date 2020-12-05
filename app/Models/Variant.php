@@ -21,9 +21,10 @@ class Variant extends Model implements HasMedia
         'deleted_at',
     ];
 
-    protected $with =[
-        'products',
-    ];
+    // protected $with =[
+    //     'products',
+    // ];
+
     protected $appends = [
         'image',
     ];

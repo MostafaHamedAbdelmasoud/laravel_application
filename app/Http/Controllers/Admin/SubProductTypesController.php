@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroySubProductTypeRequest;
 use App\Http\Requests\StoreSubProductTypeRequest;
 use App\Http\Requests\UpdateSubProductTypeRequest;
 use App\Models\Category;
+use App\Models\Helpers\PermissionHelper;
 use App\Models\MainProductType;
 use App\Models\SubProductType;
 use Gate;
@@ -73,6 +74,8 @@ class SubProductTypesController extends Controller
     {
         $sub_product_type = SubProductType::create($request->all());
 
+        PermissionHelper::createPermissionWithModelAttribute($sub_product_type->name);
+
         return redirect()->route('admin.sub_product_types.index');
     }
 
@@ -89,6 +92,8 @@ class SubProductTypesController extends Controller
     public function update(UpdateSubProductTypeRequest $request, SubProductType $sub_product_type)
     {
         $sub_product_type->update($request->all());
+
+        PermissionHelper::createPermissionWithModelAttribute($sub_product_type->name);
 
         return redirect()->route('admin.sub_product_types.index');
     }

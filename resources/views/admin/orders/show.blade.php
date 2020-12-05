@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.job.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.order.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.jobs.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.orders.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,84 +17,77 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.id') }}
+                            {{ trans('cruds.order.fields.id') }}
                         </th>
                         <td>
-                            {{ $job->id }}
+                            {{ $order->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.name') }}
+                            {{ trans('cruds.order.fields.user') }}
                         </th>
                         <td>
-                            {{ $job->name }}
+                            {{ $order->user? $order->user->name:'' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.email') }}
+                            {{ trans('cruds.order.fields.coupon') }}
                         </th>
                         <td>
-                            {{ $job->email }}
+                            {{ $order->coupon? $order->coupon->name:'' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.whats_app_number') }}
+                            {{ trans('cruds.order.fields.subtotal') }}
                         </th>
                         <td>
-                            {{ $job->whats_app_number }}
+                            {{ $order->subtotal }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.image') }}
+                            {{ trans('cruds.order.fields.discount') }}
                         </th>
                         <td>
-                            @if($job->image)
-                                <a href="{{ $job->image->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $job->image->getUrl('thumb') }}">
-                                </a>
-                            @endif
+                            {{ $order->discount }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.city') }}
+                            {{ trans('cruds.order.fields.total') }}
                         </th>
                         <td>
-                            {{ $job->city->name ?? '' }}
+                            {{ $order->total }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.add_date') }}
+                            {{ trans('cruds.order.fields.details') }}
                         </th>
                         <td>
-                            {{ $job->add_date }}
+                            {{ $order->details }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.job.fields.details') }}
+                            {{ trans('cruds.order.fields.product_variant') }}
                         </th>
                         <td>
-                            {{ $job->details }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.job.fields.specialization') }}
-                        </th>
-                        <td>
-                            {{ $job->specialization->name ?? '' }}
+                            @foreach($order->OrderProducts as  $order_product)
+                                <span class="label label-info">
+                                {{ $order_product->ProductVariant->product->name .' - '.  $order_product->ProductVariant->variant->color .' - '. 
+                                 $order_product->ProductVariant->variant->size .' - '.$order_product->ProductVariant->variant->price }}
+                                </span>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.jobs.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.orders.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

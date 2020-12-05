@@ -31,6 +31,8 @@ class Job extends Model implements HasMedia
     protected $fillable = [
         'name',
         'approved',
+        'whats_app_number',
+        'email',
         'city_id',
         'add_date',
         'details',

@@ -24,7 +24,6 @@ class Order extends Model
     protected $with = [
         'user',
         'coupon',
-        'product',
     ];
 
     /**
@@ -35,6 +34,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'coupon_id',
+        'details',
         'subtotal',
         'total',
         'discount',
@@ -64,5 +64,12 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function OrderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
     }
 }

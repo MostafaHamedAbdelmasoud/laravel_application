@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyNewsSubCategoryRequest;
 use App\Http\Requests\StoreNewsSubCategoryRequest;
 use App\Http\Requests\UpdateNewsSubCategoryRequest;
 use App\Models\Category;
+use App\Models\Helpers\PermissionHelper;
 use App\Models\NewsCategory;
 use App\Models\NewsSubCategory;
 use Gate;
@@ -73,6 +74,8 @@ class NewsSubCategoriesController extends Controller
     {
         $news_sub_category = NewsSubCategory::create($request->all());
 
+        PermissionHelper::createPermissionWithModelAttribute($news_sub_category->name);
+
         return redirect()->route('admin.news_sub_categories.index');
     }
 
@@ -89,6 +92,8 @@ class NewsSubCategoriesController extends Controller
     public function update(UpdateNewsSubCategoryRequest $request, NewsSubCategory $news_sub_category)
     {
         $news_sub_category->update($request->all());
+
+        PermissionHelper::createPermissionWithModelAttribute($news_sub_category->name);
 
         return redirect()->route('admin.news_sub_categories.index');
     }

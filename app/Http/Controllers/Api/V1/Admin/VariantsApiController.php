@@ -19,7 +19,16 @@ class VariantsApiController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function store(Product $product,Request $request)
+
+    public function index(Product $product)
+    {
+        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return new VariantResource($product->variants);
+    }
+
+
+    public function store(Product $product, Request $request)
     {
         $variant = Variant::create($request->all());
 
@@ -33,7 +42,7 @@ class VariantsApiController extends Controller
         }
 
         return (new VariantResource($variant))
-            ->additional(['product_variants' => $product->ProductVariants])
+            ->additional(['product_variants' => $product->variants])
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }

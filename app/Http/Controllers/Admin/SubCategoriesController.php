@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroySubCategoryRequest;
 use App\Http\Requests\StoreSubCategoryRequest;
 use App\Http\Requests\UpdateSubCategoryRequest;
 use App\Models\Category;
+use App\Models\Helpers\PermissionHelper;
 use App\Models\SubCategory;
 use Gate;
 use Illuminate\Http\Request;
@@ -72,6 +73,9 @@ class SubCategoriesController extends Controller
     {
         $sub_category = SubCategory::create($request->all());
 
+        PermissionHelper::createPermissionWithModelAttribute($sub_category->name);
+
+
         return redirect()->route('admin.sub_categories.index');
     }
 
@@ -88,6 +92,8 @@ class SubCategoriesController extends Controller
     public function update(UpdateSubCategoryRequest $request, SubCategory $sub_category)
     {
         $sub_category->update($request->all());
+
+        PermissionHelper::createPermissionWithModelAttribute($sub_category->name);
 
         return redirect()->route('admin.sub_categories.index');
     }

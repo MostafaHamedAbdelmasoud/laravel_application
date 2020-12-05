@@ -74,7 +74,7 @@
             </div>
             <div class="form-group">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
-                    <input class="form-check-input" type="checkbox" name="approved" id="approved" value="1" {{ $jobOffer->approved || old('approved', 0) === 1 ? 'checked' : '' }} required>
+                    <input class="form-check-input" type="checkbox" name="approved" id="approved" value="1" {{ $jobOffer->approved || old('approved', 0) === 1 ? 'checked' : '' }} >
                     <label class="required form-check-label" for="approved">{{ trans('cruds.jobOffer.fields.approved') }}</label>
                 </div>
                 @if($errors->has('approved'))

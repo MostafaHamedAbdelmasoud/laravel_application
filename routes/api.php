@@ -7,7 +7,7 @@ Route::group(
     function () {
         // Permissions
         Route::apiResource('permissions', 'PermissionsApiController');
-
+    
         // Roles
         Route::group(['middleware' => 'can:role_access'], function () {
             Route::apiResource('roles', 'RolesApiController');
@@ -70,12 +70,6 @@ Route::group(
         // Coupons
         Route::apiResource('coupons', 'CouponsApiController');
 
-        // CustomField
-        Route::apiResource('custom_fields', 'CustomFieldsApiController');
-
-        // CustomField
-        Route::apiResource('custom_field_options', 'CustomFieldOptionsApiController');
-
         // Offers
         Route::post('offers/media', 'OffersApiController@storeMedia')->name('offers.storeMedia');
         Route::apiResource('offers', 'OffersApiController');
@@ -106,9 +100,12 @@ Route::group(
         Route::post('products/media', 'ProductsApiController@storeMedia')->name('products.storeMedia');
         Route::apiResource('products', 'ProductsApiController');
 
-        // Products
+        // Variants
         Route::post('variants/media', 'VariantsApiController@storeMedia')->name('variants.storeMedia');
         Route::apiResource('products.variants', 'VariantsApiController');
+        
+        // Orders
+        Route::apiResource('orders', 'OrdersApiController');
     }
 );
 

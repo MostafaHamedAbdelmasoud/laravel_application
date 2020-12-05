@@ -7,6 +7,8 @@ use App\Http\Requests\MassDestroyCategoryRequest;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Helpers\PermissionHelper;
+use App\Repositories\CouponRepository;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,9 +16,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CategoriesController extends Controller
 {
+
+    protected $repo;
+
+    public function __construct(CouponRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
     public function index(Request $request)
     {
-        //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Category::query()->select(sprintf('%s.*', (new Category)->table));
@@ -69,6 +79,8 @@ class CategoriesController extends Controller
     {
         $category = Category::create($request->all());
 
+        PermissionHelper::createPermissionWithModelAttribute($category->name);
+
         return redirect()->route('admin.categories.index');
     }
 
@@ -82,6 +94,8 @@ class CategoriesController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
+
+        PermissionHelper::createPermissionWithModelAttribute($category->name);
 
         return redirect()->route('admin.categories.index');
     }

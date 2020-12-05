@@ -320,17 +320,6 @@
 
 
 
-{{--    @include('admin.products.components.ajax_request_save',[--}}
-{{--        'token'=>$token,--}}
-{{--        'form'=>'form_create1',--}}
-{{--        'method'=>'post',--}}
-{{--        'api_url'=>'/api/v1/products/'.$product->id.'/variants',--}}
-{{--    ]);--}}
-
-{{--    @include('admin.products.components.variant_form_scripts',[--}}
-{{--     'main_name_id'=>'#add_field',--}}
-{{-- ]);--}}
-
 
 
 

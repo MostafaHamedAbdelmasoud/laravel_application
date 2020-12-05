@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->decimal('subtotal');
+            $table->text('details');
             $table->decimal('discount');
             $table->decimal('total');
             $table->foreign('user_id')

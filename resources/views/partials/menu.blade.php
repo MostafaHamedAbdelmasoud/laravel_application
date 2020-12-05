@@ -134,26 +134,17 @@
                             </a>
                         </li>
                     @endcan
-                    @can('custom_field_access')
+                    @can('order_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.custom_fields.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/custom_fields") || request()->is("admin/custom_fields/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/orders") || request()->is("admin/orders/*") ? "active" : "" }}">
                                 <i class="fa-fw fas fa-plus-square c-sidebar-nav-icon">
 
                                 </i>
-                                {{ trans('cruds.custom_field.title') }}
+                                {{ trans('cruds.order.title') }}
                             </a>
                         </li>
                     @endcan
-                    @can('custom_field_option_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.custom_field_options.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/custom_field_options") || request()->is("admin/custom_field_options/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-ellipsis-v c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.custom_field_option.title') }}
-                            </a>
-                        </li>
-                    @endcan
+                    
                 </ul>
             </li>
         @endcan

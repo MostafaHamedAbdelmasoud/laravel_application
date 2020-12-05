@@ -133,6 +133,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('traders/ckmedia', 'TraderController@storeCKEditorImages')->name('traders.storeCKEditorImages');
     Route::resource('traders', 'TraderController');
 
+    // Traders
+    Route::delete('orders/destroy', 'OrdersController@massDestroy')->name('orders.massDestroy');
+    Route::resource('orders', 'OrdersController');
+
     // Products
     Route::delete('products/destroy', 'ProductsController@massDestroy')->name('products.massDestroy');
     Route::post('products/media', 'ProductsController@storeMedia')->name('products.storeMedia');
@@ -140,12 +144,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::resource('products', 'ProductsController');
 
     // products.variants
-    Route::delete('variants/destroy', 'ProductsController@massDestroy')->name('variants.massDestroy');
-    Route::post('variants/media', 'ProductsController@storeMedia')->name('variants.storeMedia');
-    Route::post('variants/ckmedia', 'ProductsController@storeCKEditorImages')->name('variants.storeCKEditorImages');
+    Route::delete('variants/destroy', 'VariantsController@massDestroy')->name('variants.massDestroy');
+    Route::post('variants/media', 'VariantsController@storeMedia')->name('variants.storeMedia');
+    Route::post('variants/ckmedia', 'VariantsController@storeCKEditorImages')->name('variants.storeCKEditorImages');
     Route::resource('products.variants', 'VariantsController');
-
-
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

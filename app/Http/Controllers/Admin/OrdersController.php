@@ -3,111 +3,117 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\Category;
-use App\Models\City;
+use App\Models\Coupon;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\ProductVariant;
+use App\Models\User;
+use Exception;
 use Gate;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrdersController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
-        //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('orders_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $news = Order::all();
+        $orders = Order::all();
 
-        return view('admin.news.index', compact('news', 'news_categories', 'news_sub_categories', 'cities'));
+
+        return view('admin.orders.index', compact('orders'));
     }
 
     public function create()
     {
-        //abort_if(Gate::denies('news_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('orders_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $news_categories = OrderCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $product_variants =  ProductVariant::all();
 
-        $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $coupons =   Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.news.create', compact('news_categories', 'cities'));
+        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.orders.create', compact('product_variants', 'coupons', 'users'));
     }
 
     public function store(StoreOrderRequest $request)
     {
-        $news = Order::create($request->all());
+        DB::beginTransaction();
+        try {
+            $order = Order::create($request->all());
 
-        if ($request->input('image', false)) {
-            foreach ($request->input('image') as $image) {
-                $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+
+            foreach ($request->product_variant as $product_variant) {
+                OrderProduct::create([
+
+                    'product_variant_id' => $product_variant,
+
+                    'order_id' => $order->id
+                ]);
             }
+
+            DB::commit();
+
+            return redirect()->route('admin.orders.index');
+        } catch (Exception $e) {
+
+            DB::rollback();
+
+            var_dump($e->getMessage());
+        }
+    }
+
+    public function edit(Order $order)
+    {
+        //abort_if(Gate::denies('orders_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $product_variants =  ProductVariant::all();
+
+        $coupons =   Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $order_product_ids = $order->OrderProducts->pluck('product_variant_id');
+        
+        return view('admin.orders.edit', compact('users', 'product_variants', 'order', 'coupons','order_product_ids'));
+    }
+
+    public function update(UpdateOrderRequest $request, Order $order)
+    {
+        $order->update($request->all());
+
+        $order_product_ids = $order->OrderProducts->pluck('id');
+        
+        foreach($order_product_ids as $id){
+            OrderProduct::where('id',$id)->delete();
+        }
+        
+        foreach ($request->product_variant as $id) {
+            $order->OrderProducts()->create([
+                'product_variant_id' => $id,
+            ]);
         }
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $news->id]);
-        }
-
-        return redirect()->route('admin.news.index');
+        return redirect()->route('admin.orders.index');
     }
 
-    public function edit(Order $news)
+    public function show(Order $order)
     {
-        //abort_if(Gate::denies('news_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $order_products = $order->OrderProducts;
 
-        $news_categories = OrderCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $news_sub_categories = OrderSubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $news->load('news_category', 'city');
-
-        return view('admin.news.edit', compact('news_categories', 'cities', 'news', 'news_sub_categories'));
+        return view('admin.orders.show', compact('order', 'order_products'));
     }
 
-    public function update(UpdateOrderRequest $request, Order $news)
+    public function destroy(Order $order)
     {
-        $request['approved'] = $request['approved']?1:0;
+        //abort_if(Gate::denies('orders_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $news->update($request->all());
-
-        if ($request->input('image', false)) {
-            foreach ($request->input('image') as $image) {
-                if (!$news->image || $image !== $news->image->file_name) {
-                    if ($news->image) {
-                        $news->image->delete();
-                    }
-
-                    $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
-                }
-            }
-        } elseif ($news->image) {
-            $news->image->delete();
-        }
-
-        return redirect()->route('admin.news.index');
-    }
-
-    public function show(Order $news)
-    {
-        //abort_if(Gate::denies('news_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $news->load('news_category', 'city');
-
-        $news_medias = $news->getMedia('image');
-        return view('admin.news.show', compact('news', 'news_medias'));
-    }
-
-    public function destroy(Order $news)
-    {
-        //abort_if(Gate::denies('news_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $news->delete();
+        $order->delete();
 
         return back();
     }
@@ -119,15 +125,4 @@ class OrdersController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function storeCKEditorImages(Request $request)
-    {
-        //abort_if(Gate::denies('news_create') && Gate::denies('news_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $model = new Order();
-        $model->id = $request->input('crud_id', 0);
-        $model->exists = true;
-        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
-
-        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
-    }
 }

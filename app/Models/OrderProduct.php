@@ -24,10 +24,7 @@ class OrderProduct extends Model
      */
     public $fillable = [
         'order_id',
-        'product_id',
-        'quantity',
-        'price',
-        'total',
+        'product_variant_id',
     ];
 
     /**
@@ -37,8 +34,7 @@ class OrderProduct extends Model
      */
     protected $with = [
         'order',
-        'product',
-        'orderProductFieldValues',
+        'ProductVariant',
     ];
 
     /**
@@ -54,9 +50,9 @@ class OrderProduct extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function product()
+    public function ProductVariant()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(ProductVariant::class);
     }
 
     /**
@@ -65,13 +61,5 @@ class OrderProduct extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function orderProductFieldValues()
-    {
-        return $this->hasMany(OrderProductFieldValue::class);
     }
 }

@@ -19,9 +19,9 @@ class Product extends Model implements HasMedia
         'image',
     ];
 
-    protected $with = [
-        'variants',
-    ];
+    // protected $with = [
+    //     'variants',
+    // ];
 
     protected $dates = [
         'created_at',
@@ -88,11 +88,6 @@ class Product extends Model implements HasMedia
     public function department()
     {
         return $this->belongsTo(Department::class);
-    }
-
-    public function CustomFieldOptions()
-    {
-        return $this->hasMany(CustomFieldOption::class);
     }
 
     public function showInTraderPage()

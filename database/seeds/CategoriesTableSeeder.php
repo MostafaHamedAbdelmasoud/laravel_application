@@ -11,7 +11,7 @@ class CategoriesTableSeeder extends Seeder
             [
                 'id'             => 1,
                 'name'           => 'رئيسية تجربة',
-                'type'           => 'خدمي',
+                'type'           => 'service',
             ],
         ];
 

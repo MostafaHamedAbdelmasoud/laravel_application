@@ -46,6 +46,12 @@
                         {{ trans('cruds.job.fields.specialization') }}
                     </th>
                     <th>
+                        {{ trans('cruds.job.fields.whats_app_number') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.job.fields.email') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -83,6 +89,12 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -148,6 +160,8 @@
                     {data: 'image', name: 'image', sortable: false, searchable: false},
                     {data: 'city_name', name: 'city.name'},
                     {data: 'add_date', name: 'add_date'},
+                    {data: 'whats_app_number', name: 'whats_app_number'},
+                    {data: 'email', name: 'email'},
                     {data: 'details', name: 'details'},
                     {data: 'specialization_name', name: 'specialization.name'},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}

@@ -2,9 +2,17 @@
 @section('content')
 
     <div class="card">
+
+    <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.products.show',$product) }}">
+                    مشاهدة المنتج     {{$product->name }}
+                    </a>
+                </div>
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.variant.title_singular') }}
         </div>
+
+        
 
         <div class="card-body">
             <form method="POST" action="{{ route("admin.products.variants.store",$product) }}" enctype="multipart/form-data">

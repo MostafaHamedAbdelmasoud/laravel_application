@@ -24,6 +24,12 @@ class StoreJobRequest extends FormRequest
             'image'             => [
                 'required',
             ],
+            'whats_app_number'  => [
+                'required',
+            ],
+            'email' => [
+                'required',
+            ],
             'city_id'           => [
                 'required',
                 'integer',

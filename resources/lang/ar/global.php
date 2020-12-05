@@ -3,6 +3,7 @@
 return [
     'actions'                              => 'الإجراءات',
     'add'                                  => 'إضافة',
+    'access'                                  => 'رؤية',
     'empty'                                  => 'لا يوجد',
     'allRightsReserved'                    => 'كافة الحقوق محفوظة',
     'areYouSure'                           => 'هل أنت متأكد؟',
@@ -36,7 +37,7 @@ return [
     'no_results'                           => 'لايوجد نتائج',
     'results_could_not_be_loaded'          => 'لايمكن جلب النتائج',
     'search_input_too_short'               => 'الرجاء إدخال: عدد أو أكثر من الشخصيات',
-    'show'                                 => 'مشاهدة',
+    'show'                                 => 'عرض',
     'systemCalendar'                       => 'التقويم',
     'thankYouForUsingOurApplication'       => 'شكرا لزيارتك لموقعنا',
     'timeFrom'                             => 'من',

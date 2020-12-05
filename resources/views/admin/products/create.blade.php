@@ -307,14 +307,6 @@
     @endif
 
 
-    {{--    @include('admin.products.components.custom_field_form_scripts',[--}}
-    {{--     'token'=>$token,--}}
-    {{--     'component_id'=>isset($product)?$product->sub_product_type_id:'0',--}}
-    {{--     'main_name_id'=>'#custom_field_id',--}}
-    {{--     'sub_name_id'=>'custom_field_id',--}}
-    {{--     'api_url'=>'/api/v1/custom_fields',--}}
-    {{-- ]);--}}
-
 
     {{--    @include('admin.products.components.ajax_request_save',[--}}
     {{--        'token'=>$token,--}}

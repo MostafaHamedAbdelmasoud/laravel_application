@@ -7,18 +7,14 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Http\Resources\Admin\ProductResource;
-use App\Http\Resources\Admin\VariantResource;
 use App\Models\City;
 use App\Models\Department;
 use App\Models\MainProductServiceType;
 use App\Models\MainProductType;
 use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Models\SubProductServiceType;
 use App\Models\SubProductType;
 use App\Models\Trader;
-use App\Models\Variant;
 use App\Repositories\ProductRepository;
 use Gate;
 use Illuminate\Http\Request;
@@ -38,7 +34,6 @@ class ProductsController extends Controller
 
     public function __construct(ProductRepository $repo)
     {
-
         $this->repo = $repo;
     }
 
@@ -147,7 +142,7 @@ class ProductsController extends Controller
         $sub_product_service_types = SubProductServiceType::get();
         $departments = Department::get();
         $cities = City::get();
-
+        // dd($cities);
         return view('admin.products.index', compact(
             'traders',
             'main_product_types',
@@ -225,7 +220,6 @@ class ProductsController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-
         $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
         $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
@@ -254,8 +248,9 @@ class ProductsController extends Controller
     {
         //abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('trader', 'ProductVariants');
-        $product_variants = $product->ProductVariants;
+        $product->load('trader', 'variants');
+
+        $product_variants = $product->variants;
 
         return view('admin.products.show', compact('product', 'product_variants'));
     }

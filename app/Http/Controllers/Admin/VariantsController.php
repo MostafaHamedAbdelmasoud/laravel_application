@@ -22,11 +22,9 @@ class VariantsController extends Controller
         //abort_if(Gate::denies('variant_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-//            $query = Variant::whereHas('product', function ($q) use ($product) {
-//                $q->where('product_id', $product->id);
-//            })->select(sprintf('%s.*', (new Variant)->table));
-//            dd($query);
-            $query = Variant::select(sprintf('%s.*', (new Variant)->table));
+            $query = Variant::whereHas('products', function ($q) use ($product) {
+                $q->where('product_id', $product->id);
+            })->select(sprintf('%s.*', (new Variant)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,7 +48,6 @@ class VariantsController extends Controller
             });
 
             $table->editColumn('id', function ($row) use ($product) {
-
                 return $row->id ? $row->id : "";
             });
             $table->editColumn('color', function ($row) use ($product) {
@@ -75,8 +72,10 @@ class VariantsController extends Controller
                 }
                 return '';
             });
-            $table->rawColumns(['actions', 'placeholder', 'image', 'variants']);
 
+            $table->rawColumns(['actions', 'placeholder', 'image']);
+
+                 
             return $table->make(true);
         }
 
@@ -94,13 +93,8 @@ class VariantsController extends Controller
     public function store(Product $product, Request $request)
     {
         try {
+            $variant = $product->variants()->create($request->all());
 
-            $variant = Variant::create($request->all());
-
-            ProductVariant::create([
-                'product_id' => $product->id,
-                'variant_id' => $variant->id,
-            ]);
             if ($request->input('image', false)) {
                 $variant->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
             }
@@ -139,7 +133,7 @@ class VariantsController extends Controller
             $variant->image->delete();
         }
 
-        return redirect()->route('admin.products.show', [$product, $variant]);
+        return redirect()->route('admin.products.variants.show', [$product, $variant]);
     }
 
     public function show(Product $product, Variant $variant)
@@ -152,10 +146,12 @@ class VariantsController extends Controller
     public function destroy(Product $product, Variant $variant)
     {
         //abort_if(Gate::denies('variant_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $product_variants = ProductVariant::where('variant_id', $variant->id)->get();
-        foreach ($product_variants as $product_variant) {
-            $product_variant->delete();
-        }
+        // $product_variants = ProductVariant::where('variant_id', $variant->id)->get();
+        // foreach ($product_variants as $product_variant) {
+        //     $product_variant->delete();
+        // }
+        $product->variants()->detach($variant->id);
+
         $variant->delete();
 
         return back();

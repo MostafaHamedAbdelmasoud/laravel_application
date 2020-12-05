@@ -25,6 +25,12 @@ class UpdateJobRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'whats_app_number'  => [
+                'required',
+            ],
+            'email' => [
+                'required',
+            ],
             'add_date'          => [
                 'required',
                 'date_format:' . config('panel.date_format'),

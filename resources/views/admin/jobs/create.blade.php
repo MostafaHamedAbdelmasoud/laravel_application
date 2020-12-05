@@ -20,6 +20,28 @@
                 <span class="help-block">{{ trans('cruds.job.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="whats_app_number">{{ trans('cruds.job.fields.whats_app_number') }}</label>
+                <input class="form-control {{ $errors->has('whats_app_number') ? 'is-invalid' : '' }}" type="tel" name="whats_app_number" id="whats_app_number" value="{{ old('whats_app_number', '') }}" required>
+                @if($errors->has('whats_app_number'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('whats_app_number') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.job.fields.whats_app_number_helper') }}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="email">{{ trans('cruds.job.fields.email') }}</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', '') }}" required>
+                @if($errors->has('email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.job.fields.email_helper') }}</span>
+            </div>
+
+            <div class="form-group">
                 <label class="required" for="image">{{ trans('cruds.job.fields.image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image-dropzone">
                 </div>

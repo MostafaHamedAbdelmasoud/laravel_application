@@ -352,53 +352,29 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 85,
-                'title' => 'custom_field_create',
+                'title' => 'order_create',
 
             ],
             [
                 'id' => 86,
-                'title' => 'custom_field_access',
+                'title' => 'order_access',
 
             ],
             [
                 'id' => 87,
-                'title' => 'custom_field_delete',
+                'title' => 'order_delete',
 
             ],
             [
                 'id' => 88,
-                'title' => 'custom_field_show',
+                'title' => 'order_show',
 
             ],
             [
                 'id' => 89,
-                'title' => 'custom_field_edit',
+                'title' => 'order_edit',
 
             ],
-            [
-                'id' => 90,
-                'title' => 'custom_field_option_edit',
-
-            ],
-            [
-                'id' => 91,
-                'title' => 'custom_field_option_create',
-
-            ],
-            [
-                'id' => 92,
-                'title' => 'custom_field_option_access',
-
-            ],
-            [
-                'id' => 93,
-                'title' => 'custom_field_option_show',
-
-            ],
-            [
-                'id' => 94,
-                'title' => 'custom_field_option_delete',
-            ]
         ];
 
         Permission::insert($permissions);
