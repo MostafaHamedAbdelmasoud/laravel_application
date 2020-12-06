@@ -11,7 +11,7 @@ class UpdateSubCategoryRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('category_edit');
+        return Gate::allows('sub_category_edit');
     }
 
     public function rules()

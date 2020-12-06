@@ -11,7 +11,7 @@ class StoreSubProductTypeRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('category_create');
+        return Gate::allows('sub_product_type_create');
     }
 
     public function rules()

@@ -35,7 +35,11 @@ class JobsApiController extends Controller
 
         $city_id = $request['city_id'];
         $specialization_id = $request['specialization_id'];
+        $details = $request['details'];
 
+        if (isset($details)) {
+            $jobQueryBuilder = $jobQueryBuilder->where('details', $details);
+        }
         if (isset($city_id)) {
             $jobQueryBuilder = $jobQueryBuilder->where('city_id', $city_id);
         }

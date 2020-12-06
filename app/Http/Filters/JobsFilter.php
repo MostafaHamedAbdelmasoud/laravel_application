@@ -2,6 +2,8 @@
 
 namespace App\Http\Filters;
 
+use Illuminate\Http\Request;
+
 class JobsFilter extends BaseFilters
 {
     /**
@@ -19,10 +21,11 @@ class JobsFilter extends BaseFilters
      * @param string|int $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function details($value)
+    protected function details(Request $request,$value)
     {
         if ($value) {
-            return $this->builder->where('details', 'like', "%$value%");
+            return $this->builder->where('details', 'like', "%$value%")
+                ->orWhere($request->details, 'like', "%$value%");
         }
 
         return $this->builder;

@@ -27,9 +27,11 @@ class NewsCategoriesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'category_show';
-                $editGate      = 'category_edit';
-                $deleteGate    = 'category_delete';
+                $name_seperated = explode(' ',$row->name);
+                $name_imploded_with_underscore  = implode('_',$name_seperated);
+                $viewGate      = $name_imploded_with_underscore.'_show';
+                $editGate      = $name_imploded_with_underscore.'_edit';
+                $deleteGate    = $name_imploded_with_underscore.'_delete';
                 $crudRoutePart = 'news_categories';
 
                 return view('partials.datatablesActions', compact(

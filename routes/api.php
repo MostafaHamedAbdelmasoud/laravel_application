@@ -2,12 +2,12 @@
 
 Route::group(
     ['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin',
-    'middleware' => ['auth:api']
+//    'middleware' => ['auth:api']
 ],
     function () {
         // Permissions
         Route::apiResource('permissions', 'PermissionsApiController');
-    
+
         // Roles
         Route::group(['middleware' => 'can:role_access'], function () {
             Route::apiResource('roles', 'RolesApiController');
@@ -33,37 +33,37 @@ Route::group(
         Route::post('departments/media', 'DepartmentsApiController@storeMedia')->name('departments.storeMedia');
         Route::apiResource('departments', 'DepartmentsApiController');
 
-        // Categories
+        // تصنيف قسم التسوق الرئيسية
         Route::apiResource('categories', 'CategoriesApiController');
 
 
-        // MainProductType
+        // تصنيف منتجات رئيسي
         Route::apiResource('main_product_types', 'MainProductTypesController');
 
 
-        // MainProductServiceType
+        //تصنيف خدمات منتجات رئيسي
         Route::apiResource('main_product_service_types', 'MainProductServiceTypesController');
 
 
-        // SubCategories
+        // تصنيف قسم التسوق الفرعية
         Route::apiResource('sub_categories', 'SubCategoriesApiController');
         Route::get('get_categories_ajax/{id}', 'SubCategoriesApiController@getCategoryAjax');
 
-        // sub_product_types
+        // تصنيف منتجات فرعي
         Route::apiResource('sub_product_types', 'SubProductTypesApiController');
         Route::get('get_main_product_type_ajax/{id}', 'SubProductTypesApiController@getMainProductTypeAjax');
 
 
-        // sub_product_service_types
+        //تصنيف خدمات منتجات فرعي
         Route::apiResource('sub_product_service_types', 'SubProductServiceTypesApiController');
         Route::get('get_main_product_service_type_ajax/{id}', 'SubProductServiceTypesApiController@SubProductServiceTypeAjax');
 
 
-        // NewsCategories
+        //تصنيف الإعلانات رئيسي
         Route::apiResource('news_categories', 'NewsCategoriesApiController');
 
 
-        // SubCategories
+        //تصنيف فرعي الإعلانات
         Route::apiResource('news_sub_categories', 'NewsSubCategoriesApiController');
         Route::get('get_news_sub_categories_ajax/{id}', 'NewsSubCategoriesApiController@getNewsSubCategoryAjax');
 
@@ -103,7 +103,7 @@ Route::group(
         // Variants
         Route::post('variants/media', 'VariantsApiController@storeMedia')->name('variants.storeMedia');
         Route::apiResource('products.variants', 'VariantsApiController');
-        
+
         // Orders
         Route::apiResource('orders', 'OrdersApiController');
     }

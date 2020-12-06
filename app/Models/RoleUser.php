@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-class Role extends Model
+class RoleUser extends Model
 {
     use SoftDeletes;
 
-    public $table = 'roles';
+    public $table = 'role_user';
 
     protected $dates = [
         'created_at',
@@ -19,7 +19,8 @@ class Role extends Model
     ];
 
     protected $fillable = [
-        'title',
+        'user_id',
+        'role_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -30,13 +31,22 @@ class Role extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function permissions()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsTo(Role::class);
     }
 
-    public function RoleUsers()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
-        return$this->hasMany(RoleUser::class);
+        return $this->belongsTo(User::class);
     }
+
+
 }

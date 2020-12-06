@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Resources\Admin\NewsResource;
 use App\Models\News;
 use Gate;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class NewsApiController
  * @package App\Http\Controllers\Api\V1\Admin
  */
-class NewsApiController extends Controller
+class NewsApiController extends Controller  implements ShouldQueue
 {
     use MediaUploadingTrait;
 
@@ -32,11 +33,18 @@ class NewsApiController extends Controller
         $this->filter = $filter;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $news_query_builder = News::with(['news_category', 'city'])->filter($this->filter)->latest();
+        $news_query_builder = News::with(['news_category', 'city'])->whereNull('deleted_at')->filter($this->filter)->latest();
+
+        $details = $request['details'];
+
+        if (isset($details)) {
+            $news_query_builder = $news_query_builder->where('details', $details);
+        }
+
         return new NewsResource($news_query_builder->get());
     }
 
@@ -44,8 +52,8 @@ class NewsApiController extends Controller
     {
         $news = News::create($request->all());
 
-        if ($request->input('image', false)) {
-            $news->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+        if ($request->file('image')) {
+            $news->addMedia($request->file('image'))->toMediaCollection('image');
         }
 
         return (new NewsResource($news))
@@ -57,20 +65,20 @@ class NewsApiController extends Controller
     {
         //abort_if(Gate::denies('news_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NewsResource($news->load(['category', 'city']));
+        return new NewsResource($news->load(['news_category', 'city']));
     }
 
     public function update(UpdateNewsRequest $request, News $news)
     {
+//        return \response()->json($request);
         $news->update($request->all());
-
-        if ($request->input('image', false)) {
-            if (!$news->image || $request->input('image') !== $news->image->file_name) {
+        if ($request->file('image')) {
+            if (!$news->image || $request->file('image') !== $news->image->file_name) {
                 if ($news->image) {
                     $news->image->delete();
                 }
 
-                $news->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+                $news->addMedia($request->file('image'))->toMediaCollection('image');
             }
         } elseif ($news->image) {
             $news->image->delete();

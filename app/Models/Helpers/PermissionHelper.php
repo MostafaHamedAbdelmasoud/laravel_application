@@ -31,16 +31,16 @@ class PermissionHelper
         try {
 
             $permissions = Permission::pluck('title','id');
-            
+
             $path = base_path() . '/resources/lang/ar/permissions.php';
 
             $content = "<?php\n\nreturn\n[\n";
 
             foreach ($permissions as $key => $permission) {
-                if($key>89) break;
+                if($key>124) break;
                 $content .= "\t'" . $permission . "' => '" . trans('permissions_copy.'.$permission)  . "',\n";
             }
-            
+
             $content .= "\t'" . $attribute_seperated . '_create' . "' => '" .  $attribute_seperated . '_' . trans('global.add') . "',\n";
             $content .= "\t'" . $attribute_seperated . '_edit' . "' => '" .  $attribute_seperated . '_' . trans('global.edit') . "',\n";
             $content .= "\t'" . $attribute_seperated . '_show' . "' => '" .  $attribute_seperated .  '_' . trans('global.show') . "',\n";

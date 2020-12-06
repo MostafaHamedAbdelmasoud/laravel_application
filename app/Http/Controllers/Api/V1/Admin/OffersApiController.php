@@ -34,8 +34,10 @@ class OffersApiController extends Controller
         //abort_if(Gate::denies('offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $category_id = $request['category_id'];
         $trader_id = $request['trader_id'];
-
-
+        $description = $request['description'];
+        if (isset($description)) {
+            $offerQueryBuilder = $offerQueryBuilder->where('description', $description);
+        }
         if (isset($trader_id)) {
             $offerQueryBuilder = $offerQueryBuilder->where('trader_id', $trader_id);
         }
@@ -48,9 +50,9 @@ class OffersApiController extends Controller
 
     public function store(StoreOfferRequest $request)
     {
-        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+        $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
-        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+        $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
 
         $offer = Offer::create($request->all());
 
@@ -72,9 +74,9 @@ class OffersApiController extends Controller
 
     public function update(UpdateOfferRequest $request, Offer $offer)
     {
-        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+        $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
-        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+        $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
 
         $offer->update($request->all());
 

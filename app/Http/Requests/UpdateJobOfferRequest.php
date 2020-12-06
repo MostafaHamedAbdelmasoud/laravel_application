@@ -5,13 +5,14 @@ namespace App\Http\Requests;
 use App\Models\JobOffer;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UpdateJobOfferRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(Request $request)
     {
-        return Gate::allows('job_offer_edit');
+        return $request->expectsJson()?true:  Gate::allows('job_offer_edit');
     }
 
     public function rules()

@@ -5,13 +5,14 @@ namespace App\Http\Requests;
 use App\Models\Job;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class StoreJobRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(Request $request)
     {
-        return Gate::allows('job_create');
+         return $request->expectsJson()?true: Gate::allows('job_create');
     }
 
     public function rules()

@@ -20,18 +20,23 @@ class ProductsApiController extends Controller
     {
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $productQuery = Product::with(['trader']);
         $trader_id = $request['trader_id'];
-        if (isset($trader_id)) {
-            return new ProductResource(Product::where('trader_id', $trader_id)->with(['trader'])->get());
+        $details = $request['details'];
+        if (isset($details)) {
+            $productQuery = $productQuery->where('details', $details);
         }
-        return new ProductResource(Product::with(['trader'])->get());
+        if (isset($trader_id)) {
+            $productQuery = $productQuery->where('trader_id', $trader_id);
+        }
+        return new ProductResource($productQuery->get());
     }
 
     public function store(StoreProductRequest $request)
     {
-        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+        $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
-        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+        $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
 
         $product = Product::create($request->all());
 
@@ -53,9 +58,9 @@ class ProductsApiController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+        $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
-        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+        $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
 
         $product->update($request->all());
 

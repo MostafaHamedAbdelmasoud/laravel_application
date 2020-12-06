@@ -5,47 +5,54 @@ namespace App\Http\Requests;
 use App\Models\News;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UpdateNewsRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(Request $request)
     {
-        return Gate::allows('news_edit');
+        return $request->expectsJson()?true:  Gate::allows('news_edit');
     }
 
     public function rules()
     {
         return [
-            'name'         => [
+            'name' => [
                 'string',
-                'required',
+//                'required',
             ],
-            'details'      => [
-                'required',
+            'image' => [
+//                'required',
             ],
-            'news_category_id'  => [
-                'required',
+            'details' => [
+//                'required',
+            ],
+            'detailed_title' => [
+//                'required',
+            ],
+            'news_category_id' => [
+//                'required',
                 'integer',
                 'exists:news_categories,id'
             ],
-            'news_sub_category_id'  => [
-                'required',
+            'news_sub_category_id' => [
+//                'required',
                 'integer',
                 'exists:news_sub_categories,id'
             ],
-            'city_id'      => [
-                'required',
+            'city_id' => [
+//                'required',
                 'integer',
-                'exists:cities,id'
+                'exists:cities,id',
             ],
-            'add_date'     => [
-                'required',
+            'add_date' => [
+//                'required',
                 'date_format:' . config('panel.date_format'),
             ],
             'phone_number' => [
                 'string',
-                'required',
+//                'required',
             ],
         ];
     }

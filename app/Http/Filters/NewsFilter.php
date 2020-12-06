@@ -2,6 +2,8 @@
 
 namespace App\Http\Filters;
 
+use Illuminate\Http\Request;
+
 class NewsFilter extends BaseFilters
 {
     /**

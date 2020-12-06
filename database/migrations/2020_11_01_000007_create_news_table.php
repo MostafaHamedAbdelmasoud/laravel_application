@@ -10,12 +10,12 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('detailed_title');
-            $table->longText('details');
-            $table->date('add_date');
+            $table->string('name')->nullable();
+            $table->text('detailed_title')->nullable();
+            $table->longText('details')->nullable();
+            $table->date('add_date')->nullable();
             $table->string('price')->nullable();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->boolean('approved')->default(0);
             $table->timestamps();
             $table->softDeletes();

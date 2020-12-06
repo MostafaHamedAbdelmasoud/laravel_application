@@ -11,7 +11,7 @@ class StoreSubCategoryRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('category_create');
+        return Gate::allows('sub_category_create');
     }
 
     public function rules()

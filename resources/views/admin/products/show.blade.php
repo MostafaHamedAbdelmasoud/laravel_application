@@ -45,6 +45,38 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.product.fields.detailed_title') }}
+                        </th>
+                        <td>
+                            {{ $product->detailed_title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.details') }}
+                        </th>
+                        <td>
+                            {{ $product->details }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.price_after_discount') }}
+                        </th>
+                        <td>
+                            {{ $product->price_after_discount }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.product_code') }}
+                        </th>
+                        <td>
+                            {{ $product->product_code }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.product.fields.price') }}
                         </th>
                         <td>
@@ -57,6 +89,78 @@
                         </th>
                         <td>
                             {{ $product->trader->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.city_name') }}
+                        </th>
+                        <td>
+                            {{ $product->city?$product->city->name : '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.department_name') }}
+                        </th>
+                        <td>
+                            {{ $product->department?$product->department->name : '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.MainProductType') }}
+                        </th>
+                        <td>
+                            {{ $product->MainProductType?$product->MainProductType->name : '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.SubProductType') }}
+                        </th>
+                        <td>
+                            {{ $product->SubProductType?$product->SubProductType->name : '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.MainProductServiceType') }}
+                        </th>
+                        <td>
+                            {{ $product->MainProductServiceType?$product->MainProductServiceType->name : '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.SubProductServiceType') }}
+                        </th>
+                        <td>
+                            {{ $product->SubProductServiceType?$product->SubProductServiceType->name : '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.show_trader_name') }}
+                        </th>
+                        <td>
+                            {{ $product->show_trader_name?'نعم' : 'لا' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.show_in_trader_page') }}
+                        </th>
+                        <td>
+                            {{ $product->show_in_trader_page?'نعم' : 'لا' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.show_in_main_page') }}
+                        </th>
+                        <td>
+                            {{ $product->show_in_main_page?'نعم' : 'لا' }}
                         </td>
                     </tr>
                     </tbody>

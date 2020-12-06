@@ -5,13 +5,14 @@ namespace App\Http\Requests;
 use App\Models\News;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class StoreNewsRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(Request $request)
     {
-        return Gate::allows('news_create');
+        return $request->expectsJson()?true: Gate::allows('news_create');
     }
 
     public function rules()
@@ -21,9 +22,9 @@ class StoreNewsRequest extends FormRequest
                 'string',
                 'required',
             ],
-//            'image'        => [
-//                'required',
-//            ],
+            'image'        => [
+                'required',
+            ],
             'details'      => [
                 'required',
             ],

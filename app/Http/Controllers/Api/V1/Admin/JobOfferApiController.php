@@ -19,17 +19,22 @@ class JobOfferApiController extends Controller
     use MediaUploadingTrait;
 
 
-    public function __construct(JobOffersFilter  $filter)
+    public function __construct(JobOffersFilter $filter)
     {
         $this->filter = $filter;
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         //abort_if(Gate::denies('job_offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new JobOfferResource(JobOffer::with(['specialization', 'city'])->filter($this->filter)->where('deleted_at', null)->latest()->get());
+        $jobOfferQueryBuilder = JobOffer::with(['specialization', 'city'])->filter($this->filter)->where('deleted_at', null);
+        $details = $request['details'];
+        if (isset($details)) {
+            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details', $details);
+        }
+        return new JobOfferResource($jobOfferQueryBuilder->latest()->get());
     }
 
     public function store(StoreJobOfferRequest $request)

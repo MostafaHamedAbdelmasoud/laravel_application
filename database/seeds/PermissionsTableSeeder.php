@@ -375,6 +375,181 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'order_edit',
 
             ],
+            [
+                'id' => 90,
+                'title' => 'sub_category_create',
+
+            ],
+            [
+                'id' => 91,
+                'title' => 'sub_category_access',
+
+            ],
+            [
+                'id' => 92,
+                'title' => 'sub_category_delete',
+
+            ],
+            [
+                'id' => 93,
+                'title' => 'sub_category_show',
+
+            ],
+            [
+                'id' => 94,
+                'title' => 'sub_category_edit',
+
+            ],
+            [
+                'id' => 95,
+                'title' => 'news_category_create',
+
+            ],
+            [
+                'id' => 96,
+                'title' => 'news_category_access',
+
+            ],
+            [
+                'id' => 97,
+                'title' => 'news_category_delete',
+
+            ],
+            [
+                'id' => 98,
+                'title' => 'news_category_show',
+
+            ],
+            [
+                'id' => 99,
+                'title' => 'news_category_edit',
+
+            ],
+            [
+                'id' => 100,
+                'title' => 'news_sub_category_create',
+
+            ],
+            [
+                'id' => 101,
+                'title' => 'news_sub_category_access',
+
+            ],
+            [
+                'id' => 102,
+                'title' => 'news_sub_category_delete',
+
+            ],
+            [
+                'id' => 103,
+                'title' => 'news_sub_category_show',
+
+            ],
+            [
+                'id' => 104,
+                'title' => 'news_sub_category_edit',
+
+            ],
+            [
+                'id' => 105,
+                'title' => 'main_product_type_create',
+
+            ],
+            [
+                'id' => 106,
+                'title' => 'main_product_type_access',
+
+            ],
+            [
+                'id' => 107,
+                'title' => 'main_product_type_delete',
+
+            ],
+            [
+                'id' => 108,
+                'title' => 'main_product_type_show',
+
+            ],
+            [
+                'id' => 109,
+                'title' => 'main_product_type_edit',
+
+            ],
+            [
+                'id' => 110,
+                'title' => 'sub_product_type_create',
+
+            ],
+            [
+                'id' => 111,
+                'title' => 'sub_product_type_access',
+
+            ],
+            [
+                'id' => 112,
+                'title' => 'sub_product_type_delete',
+
+            ],
+            [
+                'id' => 113,
+                'title' => 'sub_product_type_show',
+
+            ],
+            [
+                'id' => 114,
+                'title' => 'sub_product_type_edit',
+
+            ],
+            [
+                'id' => 115,
+                'title' => 'main_product_service_type_create',
+
+            ],
+            [
+                'id' => 116,
+                'title' => 'main_product_service_type_access',
+
+            ],
+            [
+                'id' => 117,
+                'title' => 'main_product_service_type_delete',
+
+            ],
+            [
+                'id' => 118,
+                'title' => 'main_product_service_type_show',
+
+            ],
+            [
+                'id' => 119,
+                'title' => 'main_product_service_type_edit',
+
+            ],
+            [
+                'id' => 120,
+                'title' => 'sub_product_service_type_create',
+
+            ],
+            [
+                'id' => 121,
+                'title' => 'sub_product_service_type_access',
+
+            ],
+            [
+                'id' => 122,
+                'title' => 'sub_product_service_type_delete',
+
+            ],
+            [
+                'id' => 123,
+                'title' => 'sub_product_service_type_show',
+
+            ],
+            [
+                'id' => 124,
+                'title' => 'sub_product_service_type_edit',
+
+            ],
         ];
 
         Permission::insert($permissions);
