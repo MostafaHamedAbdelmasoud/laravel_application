@@ -19,7 +19,6 @@ class ProductVariant extends Model
 
     protected $with=[
         'variant',
-        'product',
     ];
 
     protected $fillable = [

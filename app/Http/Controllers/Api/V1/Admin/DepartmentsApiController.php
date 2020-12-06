@@ -33,7 +33,9 @@ class DepartmentsApiController extends Controller
         $departmentQueryBuilder = Department::with(['city', 'category'])->filter($this->filter);
 
         $city_id = $request['city_id'];
+
         $category_id = $request['category_id'];
+
         $about = $request['about'];
 
         if (isset($city_id)) {

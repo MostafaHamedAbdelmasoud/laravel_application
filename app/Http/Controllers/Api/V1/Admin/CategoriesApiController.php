@@ -21,6 +21,7 @@ class CategoriesApiController extends Controller
         if (isset($type)) {
             return new CategoryResource(Category::where('type', $type)->get());
         }
+
         return new CategoryResource(Category::all());
     }
 

@@ -33,7 +33,6 @@ class OrderProduct extends Model
      * @var array
      */
     protected $with = [
-        'order',
         'ProductVariant',
     ];
 

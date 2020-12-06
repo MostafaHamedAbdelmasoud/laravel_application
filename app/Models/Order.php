@@ -66,7 +66,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function OrderProducts()
     {

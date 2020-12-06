@@ -32,7 +32,7 @@ class JobOfferApiController extends Controller
         $jobOfferQueryBuilder = JobOffer::with(['specialization', 'city'])->filter($this->filter)->where('deleted_at', null);
         $details = $request['details'];
         if (isset($details)) {
-            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details', $details);
+            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details','like', "%$details%");
         }
         return new JobOfferResource($jobOfferQueryBuilder->latest()->get());
     }
