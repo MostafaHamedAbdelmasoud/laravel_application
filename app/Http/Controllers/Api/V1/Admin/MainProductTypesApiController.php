@@ -20,34 +20,34 @@ class MainProductTypesApiController extends Controller
 
     public function store(StoreMainProductTypeRequest $request)
     {
-        $category = MainProductType::create($request->all());
+        $main_product_type = MainProductType::create($request->all());
 
-        return (new MainProductTypeResource($category))
+        return (new MainProductTypeResource($main_product_type))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(MainProductType $category)
+    public function show( $main_product_type)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MainProductTypeResource($category);
+        return new MainProductTypeResource(MainProductType::findOrFail($main_product_type) );
     }
 
-    public function update(UpdateMainProductTypeRequest $request, MainProductType $category)
+    public function update(UpdateMainProductTypeRequest $request, MainProductType $main_product_type)
     {
-        $category->update($request->all());
+        $main_product_type->update($request->all());
 
-        return (new MainProductTypeResource($category))
+        return (new MainProductTypeResource($main_product_type))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(MainProductType $category)
+    public function destroy(MainProductType $main_product_type)
     {
         //abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $category->delete();
+        $main_product_type->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

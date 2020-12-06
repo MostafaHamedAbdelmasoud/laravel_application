@@ -18,6 +18,10 @@ class Notification extends Model
         'deleted_at',
     ];
 
+    protected $with =[
+        'city'
+    ];
+
     protected $fillable = [
         'title',
         'content',

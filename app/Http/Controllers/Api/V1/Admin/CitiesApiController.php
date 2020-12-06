@@ -29,11 +29,11 @@ class CitiesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(City $city)
+    public function show( $city)
     {
         //abort_if(Gate::denies('city_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CityResource($city);
+        return new CityResource(City::findOrFail($city));
     }
 
     public function update(UpdateCityRequest $request, City $city)

@@ -15,45 +15,39 @@ class NewsSubCategoriesApiController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request['type'];
-
-        //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (isset($type)) {
-            return new NewsSubCategoryResource(NewsSubCategory::where('type', $type)->get());
-        }
         return new NewsSubCategoryResource(NewsSubCategory::all());
     }
 
     public function store(StoreNewsSubCategoryRequest $request)
     {
-        $category = NewsSubCategory::create($request->all());
+        $sub_category = NewsSubCategory::create($request->all());
 
-        return (new NewsSubCategoryResource($category))
+        return (new NewsSubCategoryResource($sub_category))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(NewsSubCategory $category)
+    public function show( $sub_category)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NewsSubCategoryResource($category);
+        return new NewsSubCategoryResource(NewsSubCategory::findOrFail($sub_category));
     }
 
-    public function update(UpdateNewsSubCategoryRequest $request, NewsSubCategory $category)
+    public function update(UpdateNewsSubCategoryRequest $request, NewsSubCategory $sub_category)
     {
-        $category->update($request->all());
+        $sub_category->update($request->all());
 
-        return (new NewsSubCategoryResource($category))
+        return (new NewsSubCategoryResource($sub_category))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(NewsSubCategory $category)
+    public function destroy(NewsSubCategory $sub_category)
     {
         //abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $category->delete();
+        $sub_category->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

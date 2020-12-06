@@ -42,11 +42,11 @@ class JobOfferApiController extends Controller
         $jobOffer = JobOffer::create($request->all());
 
         if ($request->input('photo', false)) {
-            $jobOffer->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
+            $jobOffer->addMedia(  $request->input('photo'))->toMediaCollection('photo');
         }
 
         if ($request->input('cv', false)) {
-            $jobOffer->addMedia(storage_path('tmp/uploads/' . $request->input('cv')))->toMediaCollection('cv');
+            $jobOffer->addMedia(  $request->input('cv'))->toMediaCollection('cv');
         }
 
         return (new JobOfferResource($jobOffer))
@@ -54,11 +54,11 @@ class JobOfferApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(JobOffer $jobOffer)
+    public function show( $jobOffer)
     {
         //abort_if(Gate::denies('job_offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new JobOfferResource($jobOffer->load(['specialization', 'city']));
+        return new JobOfferResource(JobOffer::findOrFail($jobOffer)->load(['specialization', 'city']));
     }
 
     public function update(UpdateJobOfferRequest $request, JobOffer $jobOffer)

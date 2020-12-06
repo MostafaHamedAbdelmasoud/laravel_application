@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Resources\Admin\CategoryResource;
-use App\Models\Category;
+use App\Http\Requests\StoreSubCategoryRequest;
+use App\Http\Requests\UpdateSubCategoryRequest;
+use App\Http\Resources\Admin\SubCategoryResource;
 use App\Models\SubCategory;
 use Gate;
 use Illuminate\Http\Request;
@@ -18,43 +17,46 @@ class SubCategoriesApiController extends Controller
     {
         $type = $request['type'];
 
-        //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('sub_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (isset($type)) {
-            return new CategoryResource(Category::where('type', $type)->get());
+            return new SubCategoryResource(SubCategory::whereHas('category',function ($q) use($type){
+                $q->where('type', $type);
+            })->get());
         }
-        return new CategoryResource(Category::all());
+
+        return new SubCategoryResource(SubCategory::all());
     }
 
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreSubCategoryRequest $request)
     {
-        $category = Category::create($request->all());
+        $sub_category = SubCategory::create($request->all());
 
-        return (new CategoryResource($category))
+        return (new SubCategoryResource($sub_category))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Category $category)
+    public function show( $sub_category)
     {
-        //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('sub_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CategoryResource($category);
+        return new SubCategoryResource(SubCategory::findOrFail($sub_category));
     }
 
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateSubCategoryRequest $request, SubCategory $sub_category)
     {
-        $category->update($request->all());
+        $sub_category->update($request->all());
 
-        return (new CategoryResource($category))
+        return (new SubCategoryResource($sub_category))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(Category $category)
+    public function destroy(SubCategory $sub_category)
     {
-        //abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('sub_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $category->delete();
+        $sub_category->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
@@ -64,7 +66,7 @@ class SubCategoriesApiController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCategoryAjax($id)
+    public function getSubCategoryAjax($id)
     {
         $sub_categories = SubCategory::select('id', 'name')->where('category_id', $id)->get();
 

@@ -15,45 +15,39 @@ class NewsCategoriesApiController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request['type'];
-
-        //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (isset($type)) {
-            return new NewsCategoryResource(NewsCategory::where('type', $type)->get());
-        }
         return new NewsCategoryResource(NewsCategory::all());
     }
 
     public function store(StoreNewsCategoryRequest $request)
     {
-        $category = NewsCategory::create($request->all());
+        $news_category = NewsCategory::create($request->all());
 
-        return (new NewsCategoryResource($category))
+        return (new NewsCategoryResource($news_category))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(NewsCategory $category)
+    public function show( $news_category)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NewsCategoryResource($category);
+        return new NewsCategoryResource(NewsCategory::findOrFail($news_category));
     }
 
-    public function update(UpdateNewsCategoryRequest $request, NewsCategory $category)
+    public function update(UpdateNewsCategoryRequest $request, NewsCategory $news_category)
     {
-        $category->update($request->all());
+        $news_category->update($request->all());
 
-        return (new NewsCategoryResource($category))
+        return (new NewsCategoryResource($news_category))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(NewsCategory $category)
+    public function destroy(NewsCategory $news_category)
     {
         //abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $category->delete();
+        $news_category->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

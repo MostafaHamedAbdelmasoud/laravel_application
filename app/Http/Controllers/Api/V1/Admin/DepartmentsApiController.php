@@ -34,12 +34,16 @@ class DepartmentsApiController extends Controller
 
         $city_id = $request['city_id'];
         $category_id = $request['category_id'];
+        $about = $request['about'];
 
         if (isset($city_id)) {
             $departmentQueryBuilder = $departmentQueryBuilder->where(['city_id'=>$city_id]);
         }
         if (isset($category_id)) {
             $departmentQueryBuilder = $departmentQueryBuilder->where(['category_id'=>$category_id]);
+        }
+        if (isset($about)) {
+            $departmentQueryBuilder = $departmentQueryBuilder->where('about', 'like', "%" . $about . "%");
         }
 
         return new DepartmentResource($departmentQueryBuilder->orderBy('created_at', 'desc')->get());
@@ -58,11 +62,11 @@ class DepartmentsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Department $department)
+    public function show( $department)
     {
         //abort_if(Gate::denies('department_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DepartmentResource($department->load(['city', 'category']));
+        return new DepartmentResource(Department::findOrFail($department));
     }
 
     public function update(UpdateDepartmentRequest $request, Department $department)

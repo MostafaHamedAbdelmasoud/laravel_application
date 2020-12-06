@@ -38,11 +38,11 @@ Route::group(
 
 
         // تصنيف منتجات رئيسي
-        Route::apiResource('main_product_types', 'MainProductTypesController');
+        Route::apiResource('main_product_types', 'MainProductTypesApiController');
 
 
         //تصنيف خدمات منتجات رئيسي
-        Route::apiResource('main_product_service_types', 'MainProductServiceTypesController');
+        Route::apiResource('main_product_service_types', 'MainProductServiceTypesApiController');
 
 
         // تصنيف قسم التسوق الفرعية

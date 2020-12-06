@@ -27,11 +27,11 @@ class SubProductServiceTypesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(SubProductServiceType $sub_product_service_type)
+    public function show( $sub_product_service_type)
     {
         //abort_if(Gate::denies('$sub_product_service_type_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SubProductServiceTypeResource($sub_product_service_type);
+        return new SubProductServiceTypeResource(SubProductServiceType::findOrFail($sub_product_service_type));
     }
 
     public function update(UpdateMainProductServiceTypeRequest $request, SubProductServiceType $sub_product_service_type)

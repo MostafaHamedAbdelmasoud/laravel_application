@@ -29,11 +29,11 @@ class PermissionsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Permission $permission)
+    public function show( $permission)
     {
         //abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PermissionResource($permission);
+        return new PermissionResource(Permission::findOrFail($permission));
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission)

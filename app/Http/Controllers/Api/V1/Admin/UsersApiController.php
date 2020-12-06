@@ -31,11 +31,11 @@ class UsersApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(User $user)
+    public function show( $user)
     {
         //abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new UserResource($user->load(['roles']));
+        return new UserResource(User::findOrFail($user)->load(['roles']));
     }
 
     public function update(UpdateUserRequest $request, User $user)

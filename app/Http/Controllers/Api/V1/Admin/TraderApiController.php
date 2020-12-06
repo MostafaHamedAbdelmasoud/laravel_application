@@ -16,11 +16,16 @@ class TraderApiController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         //abort_if(Gate::denies('trader_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TraderResource(Trader::all());
+        $traderQuery =  Trader::with('products');
+        $details = $request['details'];
+        if (isset($details)) {
+            $traderQuery = $traderQuery->where('details', 'like', "%$details%");
+        }
+        return new TraderResource($traderQuery->get());
     }
 
     public function store(StoreTraderRequest $request)
@@ -36,11 +41,11 @@ class TraderApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Trader $trader)
+    public function show($trader)
     {
         //abort_if(Gate::denies('trader_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TraderResource($trader);
+        return new TraderResource(Trader::findOrFail($trader));
     }
 
     public function update(UpdateTraderRequest $request, Trader $trader)

@@ -20,20 +20,20 @@ class VariantsApiController extends Controller
     use MediaUploadingTrait;
 
 
-    public function index(Product $product)
+    public function index(Product $variant)
     {
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new VariantResource($product->variants);
+        return new VariantResource($variant->variants);
     }
 
 
-    public function store(Product $product, Request $request)
+    public function store(Product $variant, Request $request)
     {
         $variant = Variant::create($request->all());
 
-        $product_variant = ProductVariant::create([
-            'product_id'=>$product->id,
+        $variant_variant = ProductVariant::create([
+            'product_id'=>$variant->id,
             'variant_id'=>$variant->id,
         ]);
 
@@ -42,48 +42,48 @@ class VariantsApiController extends Controller
         }
 
         return (new VariantResource($variant))
-            ->additional(['product_variants' => $product->variants])
+            ->additional(['product_variants' => $variant->variants])
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Product $product)
+    public function show( $variant)
     {
         //abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProductResource($product->load(['trader']));
+        return new ProductResource(Product::findOrFail($variant)->load(['trader']));
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $variant)
     {
         $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
 
         $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
 
-        $product->update($request->all());
+        $variant->update($request->all());
 
         if ($request->input('image', false)) {
-            if (!$product->image || $request->input('image') !== $product->image->file_name) {
-                if ($product->image) {
-                    $product->image->delete();
+            if (!$variant->image || $request->input('image') !== $variant->image->file_name) {
+                if ($variant->image) {
+                    $variant->image->delete();
                 }
 
-                $product->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+                $variant->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
             }
-        } elseif ($product->image) {
-            $product->image->delete();
+        } elseif ($variant->image) {
+            $variant->image->delete();
         }
 
-        return (new ProductResource($product))
+        return (new ProductResource($variant))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $variant)
     {
         //abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->delete();
+        $variant->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

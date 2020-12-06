@@ -19,9 +19,9 @@ class Product extends Model implements HasMedia
         'image',
     ];
 
-    // protected $with = [
-    //     'variants',
-    // ];
+     protected $with = [
+         'variants',
+     ];
 
     protected $dates = [
         'created_at',

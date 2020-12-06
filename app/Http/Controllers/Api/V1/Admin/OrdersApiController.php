@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\Admin\OrderResource;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use Exception;
@@ -30,6 +31,16 @@ class OrdersApiController extends Controller
         try {
             $order = Order::create($request->all());
 
+            if($request->coupon_code){
+                $coupon = Coupon::where('code',$request->coupon_code)->first();
+                if(!$coupon || $coupon->max_usage_per_user <= 0){
+                    return response()->json([
+                       'message' => 'الكوبون غير صالح!'
+                    ]);
+                }else{
+                    $coupon->max_usage_per_user -= 1;
+                }
+            }
 
             foreach ($request->product_variant as $product_variant) {
                 OrderProduct::create([
@@ -52,15 +63,15 @@ class OrdersApiController extends Controller
 
             return ($e->getMessage());
         }
-        
-        
+
+
     }
 
-    public function show(Order $order)
+    public function show( $order)
     {
         //abort_if(Gate::denies('Order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new OrderResource($order->load(['OrderProducts']));
+        return new OrderResource(Order::findOrFail($order)->load(['OrderProducts']));
     }
 
     public function update(UpdateOrderRequest $request, Order $order)
@@ -68,11 +79,11 @@ class OrdersApiController extends Controller
         $order->update($request->all());
 
         $order_product_ids = $order->OrderProducts->pluck('id');
-        
+
         foreach($order_product_ids as $id){
             OrderProduct::where('id',$id)->delete();
         }
-        
+
         foreach ($request->product_variant as $id) {
             $order->OrderProducts()->create([
                 'product_variant_id' => $id,

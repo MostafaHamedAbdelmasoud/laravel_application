@@ -27,7 +27,7 @@ class ProductsApiController extends Controller
         $details = $request['details'];
 
         if (isset($details)) {
-            $productQuery = $productQuery->where('details', $details);
+            $productQuery = $productQuery->where('details', 'like',"%$details%");
         }
         if (isset($trader_id)) {
             $productQuery = $productQuery->where('trader_id', $trader_id);
@@ -52,11 +52,11 @@ class ProductsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Product $product)
+    public function show($product)
     {
         //abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProductResource($product->load(['trader']));
+        return new ProductResource(Product::findOrFail($product));
     }
 
     public function update(UpdateProductRequest $request, Product $product)

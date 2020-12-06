@@ -17,11 +17,10 @@ class JobsApiController extends Controller
 {
     use MediaUploadingTrait;
 
-
     /**
      * @var JobsFilter
      */
-    protected $filter;
+    public $filter;
 
     public function __construct(JobsFilter $filter)
     {
@@ -31,14 +30,16 @@ class JobsApiController extends Controller
     public function index(Request $request)
     {
 //        abort_if(Gate::denies('index'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $jobQueryBuilder = Job::filter($this->filter)->with(['city', 'specialization'])->where([['approved',1],['deleted_at'=>null]]);
+        $jobQueryBuilder = Job::with(['city', 'specialization'])->where('approved', 1)->whereNull('deleted_at');
 
         $city_id = $request['city_id'];
+
         $specialization_id = $request['specialization_id'];
+
         $details = $request['details'];
 
         if (isset($details)) {
-            $jobQueryBuilder = $jobQueryBuilder->where('details', $details);
+            $jobQueryBuilder = $jobQueryBuilder->where('details', 'like', "%" . $details . "%");
         }
         if (isset($city_id)) {
             $jobQueryBuilder = $jobQueryBuilder->where('city_id', $city_id);
@@ -55,7 +56,7 @@ class JobsApiController extends Controller
         $job = Job::create($request->all());
 
         if ($request->input('image', false)) {
-            $job->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+            $job->addMedia($request->input('image'))->toMediaCollection('image');
         }
 
         return (new JobResource($job))
@@ -63,11 +64,11 @@ class JobsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Job $job)
+    public function show( $job)
     {
         //abort_if(Gate::denies('job_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new JobResource($job->load(['city', 'specialization']));
+        return new JobResource(Job::findOrFail($job)->load(['city', 'specialization']));
     }
 
     public function update(UpdateJobRequest $request, Job $job)

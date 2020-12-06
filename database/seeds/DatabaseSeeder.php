@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
             SubProductsServiceTypesTableSeeder::class,
             CategoriesTableSeeder::class,
             SubCategoriesTableSeeder::class,
+            CouponsTableSeeder::class,
+            TraderTableSeeder::class,
+            SpecializationTableSeeder::class,
         ]);
     }
 }

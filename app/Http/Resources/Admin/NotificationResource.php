@@ -8,6 +8,6 @@ class NotificationResource extends JsonResource
 {
     public function toArray($request)
     {
-        return [parent::toArray($request->except('city_id')),'city' => $this->city->name];
+        return [parent::toArray(array_merge($request->except('city_id')),['city' => $request->city?$request->city->name:""])];
     }
 }

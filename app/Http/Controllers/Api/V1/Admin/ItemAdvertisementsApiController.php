@@ -36,11 +36,11 @@ class ItemAdvertisementsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(ItemAdvertisement $item_advertisement)
+    public function show( $item_advertisement)
     {
         //abort_if(Gate::denies('advertisement_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ItemAdvertisementResource($item_advertisement);
+        return new ItemAdvertisementResource(ItemAdvertisement::findOrFail($item_advertisement));
     }
 
     public function update(UpdateItemAdvertisementRequest $request, ItemAdvertisement $item_advertisement)

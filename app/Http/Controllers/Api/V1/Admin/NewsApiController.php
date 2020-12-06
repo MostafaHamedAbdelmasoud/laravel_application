@@ -37,13 +37,7 @@ class NewsApiController extends Controller  implements ShouldQueue
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $news_query_builder = News::with(['news_category', 'city'])->whereNull('deleted_at')->filter($this->filter)->latest();
-
-        $details = $request['details'];
-
-        if (isset($details)) {
-            $news_query_builder = $news_query_builder->where('details', $details);
-        }
+        $news_query_builder = News::with(['news_category', 'city'])->where('approved',1)->whereNull('deleted_at')->filter($this->filter)->latest();
 
         return new NewsResource($news_query_builder->get());
     }
@@ -61,11 +55,11 @@ class NewsApiController extends Controller  implements ShouldQueue
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(News $news)
+    public function show( $news)
     {
         //abort_if(Gate::denies('news_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NewsResource($news->load(['news_category', 'city']));
+        return new NewsResource(News::findOrFail($news)->load(['news_category', 'city']));
     }
 
     public function update(UpdateNewsRequest $request, News $news)

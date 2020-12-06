@@ -21,34 +21,34 @@ class SubProductTypesApiController extends Controller
 
     public function store(StoreMainProductTypeRequest $request)
     {
-        $category = MainProductType::create($request->all());
+        $sub_product_type = MainProductType::create($request->all());
 
-        return (new SubProductTypeResource($category))
+        return (new SubProductTypeResource($sub_product_type))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(MainProductType $category)
+    public function show( $sub_product_type)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SubProductTypeResource($category);
+        return new SubProductTypeResource(MainProductType::findOrFail($sub_product_type));
     }
 
-    public function update(UpdateMainProductTypeRequest $request, MainProductType $category)
+    public function update(UpdateMainProductTypeRequest $request, MainProductType $sub_product_type)
     {
-        $category->update($request->all());
+        $sub_product_type->update($request->all());
 
-        return (new SubProductTypeResource($category))
+        return (new SubProductTypeResource($sub_product_type))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(MainProductType $category)
+    public function destroy(MainProductType $sub_product_type)
     {
         //abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $category->delete();
+        $sub_product_type->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
