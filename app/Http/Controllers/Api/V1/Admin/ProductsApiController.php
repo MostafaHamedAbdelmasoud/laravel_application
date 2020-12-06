@@ -21,8 +21,11 @@ class ProductsApiController extends Controller
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $productQuery = Product::with(['trader']);
+
         $trader_id = $request['trader_id'];
+
         $details = $request['details'];
+
         if (isset($details)) {
             $productQuery = $productQuery->where('details', $details);
         }
