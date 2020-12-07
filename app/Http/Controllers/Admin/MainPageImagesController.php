@@ -91,9 +91,10 @@ class MainPageImagesController extends Controller
         return redirect()->route('admin.mainpageimages.index');
     }
 
-    public function edit(Advertisement $advertisement)
+    public function edit($advertisement)
     {
         //abort_if(Gate::denies('advertisement_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $advertisement = Advertisement::findOrFail($advertisement);
 
         return view('admin.mainpageimages.edit', compact('advertisement'));
     }
@@ -121,18 +122,19 @@ class MainPageImagesController extends Controller
         return redirect()->route('admin.mainpageimages.index');
     }
 
-    public function show(Advertisement $advertisement)
+    public function show( $advertisement)
     {
         //abort_if(Gate::denies('advertisement_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $advertisement = Advertisement::findOrFail($advertisement);
 
         return view('admin.mainpageimages.show', compact('advertisement'));
     }
 
-    public function destroy(Advertisement $advertisement)
+    public function destroy( $advertisement)
     {
         //abort_if(Gate::denies('advertisement_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $advertisement->delete();
+        Advertisement::findOrFail($advertisement)->delete();
 
         return back();
     }

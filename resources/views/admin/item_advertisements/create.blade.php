@@ -3,14 +3,14 @@
 
     <div class="card">
         <div class="card-header">
-            {{ trans('global.create') }} {{ trans('cruds.item_advertisement.title_singular') }}
+            {{ trans('global.create') }} {{ trans('cruds.advertisement.title_singular') }}
         </div>
 
         <div class="card-body">
             <form method="POST" action="{{ route("admin.item_advertisements.store") }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label class="required" for="images">{{ trans('cruds.item_advertisement.fields.images') }}</label>
+                    <label class="required" for="images">{{ trans('cruds.advertisement.fields.images') }}</label>
                     <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}" id="images-dropzone">
                     </div>
                     @if($errors->has('images'))
@@ -18,8 +18,9 @@
                             {{ $errors->first('images') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.item_advertisement.fields.images_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.advertisement.fields.images_helper') }}</span>
                 </div>
+
                 <div class="form-group">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
@@ -37,7 +38,7 @@
     <script>
         var uploadedImagesMap = {}
         Dropzone.options.imagesDropzone = {
-            url: '{{ route('admin.item_advertisements.storeMedia') }}',
+            url: '{{ route('admin.mainpageimages.storeMedia') }}',
             maxFilesize: 5, // MB
             acceptedFiles: '.jpeg,.jpg,.png,.gif',
             addRemoveLinks: true,
