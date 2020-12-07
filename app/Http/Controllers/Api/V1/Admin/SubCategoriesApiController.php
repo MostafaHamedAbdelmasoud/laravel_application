@@ -66,7 +66,7 @@ class SubCategoriesApiController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSubCategoryAjax($id)
+    public function getCategoryAjax($id)
     {
         $sub_categories = SubCategory::select('id', 'name')->where('category_id', $id)->get();
 
