@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Filters\ProductsFilter;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\Admin\ProductResource;
@@ -16,11 +17,21 @@ class ProductsApiController extends Controller
 {
     use MediaUploadingTrait;
 
+    /**
+     * @var ProductsFilter
+     */
+    private $filter;
+
+    public function __construct(ProductsFilter $filter)
+    {
+        $this->filter = $filter;
+    }
+
     public function index(Request $request)
     {
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productQuery = Product::with(['trader']);
+        $productQuery = Product::filter($this->filter)->with(['trader']);
 
         $trader_id = $request['trader_id'];
 
@@ -32,7 +43,7 @@ class ProductsApiController extends Controller
         if (isset($trader_id)) {
             $productQuery = $productQuery->where('trader_id', $trader_id);
         }
-        return new ProductResource($productQuery->get());
+        return new ProductResource($productQuery->latest()->get());
     }
 
     public function store(StoreProductRequest $request)

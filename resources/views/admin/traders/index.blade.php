@@ -25,6 +25,9 @@
                         {{ trans('cruds.trader.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.trader.fields.activeness') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.trader.fields.images') }}
                     </th>
                     <th>
@@ -51,6 +54,9 @@
                 </tr>
                 <tr>
                     <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -131,6 +137,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'activeness', name: 'activeness' },
 { data: 'images', name: 'images', sortable: false, searchable: false },
 { data: 'name', name: 'name' },
 { data: 'address', name: 'address' },

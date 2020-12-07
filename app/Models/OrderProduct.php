@@ -14,7 +14,7 @@ class OrderProduct extends Model
     /**
      * @var string
      */
-    public $table = 'order_products';
+    protected $table = 'order_products';
 
 
     /**
@@ -22,7 +22,7 @@ class OrderProduct extends Model
      *
      * @var array
      */
-    public $fillable = [
+    protected $fillable = [
         'order_id',
         'product_variant_id',
     ];

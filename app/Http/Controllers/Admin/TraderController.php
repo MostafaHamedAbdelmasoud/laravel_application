@@ -47,6 +47,9 @@ class TraderController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
+            $table->editColumn('activeness', function ($row) {
+                return $row->activeness ? "نعم" : "لا";
+            });
             $table->editColumn('images', function ($row) {
                 if (!$row->images) {
                     return '';
@@ -96,6 +99,8 @@ class TraderController extends Controller
 
     public function store(StoreTraderRequest $request)
     {
+
+        $request['activeness'] = $request['activeness']?1:0;
         $trader = Trader::create($request->all());
 
         foreach ($request->input('images', []) as $file) {
@@ -118,6 +123,8 @@ class TraderController extends Controller
 
     public function update(UpdateTraderRequest $request, Trader $trader)
     {
+        $request['activeness'] = $request['activeness']?1:0;
+
         $trader->update($request->all());
 
         if (count($trader->images) > 0) {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -11,13 +12,14 @@ use \DateTimeInterface;
 
 class Product extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, HasMediaTrait, Filterable;
 
     public $table = 'products';
 
     protected $appends = [
         'image',
     ];
+
 
      protected $with = [
          'variants',
@@ -38,6 +40,7 @@ class Product extends Model implements HasMedia
         'detailed_title',
         'price_after_discount',
         'product_code',
+        'brand',
         'show_in_trader_page',
         'show_in_main_page',
         'price',

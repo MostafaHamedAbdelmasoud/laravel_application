@@ -49,6 +49,20 @@
 
 
                 <div class="form-group">
+                    <label for="brand">{{ trans('cruds.product.fields.brand') }}</label>
+                    <input class="form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" type="text"
+                           name="brand"
+                           id="brand" value="{{ old('brand', '') }}">
+                    @if($errors->has('brand'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('brand') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.product.fields.brand_helper') }}</span>
+                </div>
+
+
+                <div class="form-group">
                     <label class="required"
                            for="main_product_type_id">{{ trans('cruds.product.fields.main_product_type_name') }}</label>
                     <select class="form-control select2 {{ $errors->has('main_product_type') ? 'is-invalid' : '' }}"
@@ -274,6 +288,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.product.fields.show_trader_name_helper') }}</span>
                 </div>
+
 
 
                 <div class="form-group">

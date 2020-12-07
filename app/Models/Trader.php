@@ -28,6 +28,7 @@ class Trader extends Model implements HasMedia
     protected $fillable = [
         'name',
         'address',
+        'activeness',
         'phone_number',
         'details',
         'facebook_url',
@@ -63,5 +64,9 @@ class Trader extends Model implements HasMedia
     public function products()
     {
         return $this->hasMany(Product::class, 'trader_id', 'id');
+    }
+    public function offers()
+    {
+        return $this->hasMany(Offer::class, 'trader_id', 'id');
     }
 }

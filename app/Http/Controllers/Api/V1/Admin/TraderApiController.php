@@ -20,7 +20,7 @@ class TraderApiController extends Controller
     {
         //abort_if(Gate::denies('trader_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $traderQuery =  Trader::with('products');
+        $traderQuery =  Trader::with('products','offers');
         $details = $request['details'];
         if (isset($details)) {
             $traderQuery = $traderQuery->where('details', 'like', "%$details%");
@@ -45,7 +45,7 @@ class TraderApiController extends Controller
     {
         //abort_if(Gate::denies('trader_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TraderResource(Trader::findOrFail($trader));
+        return new TraderResource(Trader::findOrFail($trader)->load(['products','offers']));
     }
 
     public function update(UpdateTraderRequest $request, Trader $trader)

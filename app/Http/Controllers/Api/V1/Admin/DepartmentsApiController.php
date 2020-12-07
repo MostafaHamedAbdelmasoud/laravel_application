@@ -30,7 +30,7 @@ class DepartmentsApiController extends Controller
     public function index(Request $request)
     {
         //abort_if(Gate::denies('department_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $departmentQueryBuilder = Department::with(['city', 'category'])->filter($this->filter);
+        $departmentQueryBuilder = Department::with(['city', 'category','sub_category'])->filter($this->filter);
 
         $city_id = $request['city_id'];
 
@@ -68,7 +68,7 @@ class DepartmentsApiController extends Controller
     {
         //abort_if(Gate::denies('department_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DepartmentResource(Department::findOrFail($department));
+        return new DepartmentResource(Department::findOrFail($department)->load(['sub_category','city','category']));
     }
 
     public function update(UpdateDepartmentRequest $request, Department $department)

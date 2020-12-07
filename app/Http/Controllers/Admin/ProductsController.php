@@ -159,10 +159,13 @@ class ProductsController extends Controller
         //abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $departments = Department::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $main_product_types = MainProductType::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $main_product_service_types = MainProductServiceType::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.products.create', compact('traders', 'main_product_types', 'main_product_service_types', 'departments', 'cities'));

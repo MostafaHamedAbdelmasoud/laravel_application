@@ -36,10 +36,13 @@ class NewsApiController extends Controller  implements ShouldQueue
     public function index(Request $request)
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $details = $request['details'];
+        $news_query_builder = News::with(['news_category', 'city'])->where('approved',1)->whereNull('deleted_at')->filter($this->filter);
 
-        $news_query_builder = News::with(['news_category', 'city'])->where('approved',1)->whereNull('deleted_at')->filter($this->filter)->latest();
-
-        return new NewsResource($news_query_builder->get());
+        if (isset($details)){
+            $news_query_builder->where('details','like',"%$details%");
+        }
+        return new NewsResource($news_query_builder->latest()->get());
     }
 
     public function store(StoreNewsRequest $request)

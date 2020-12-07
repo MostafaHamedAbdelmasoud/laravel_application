@@ -39,6 +39,7 @@ class JobOfferApiController extends Controller
 
     public function store(StoreJobOfferRequest $request)
     {
+//        return $request->all();
         $jobOffer = JobOffer::create($request->all());
 
         if ($request->input('photo', false)) {

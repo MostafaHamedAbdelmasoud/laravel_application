@@ -20,30 +20,30 @@ class StoreJobRequest extends FormRequest
         return [
             'name'              => [
                 'string',
-                'required',
+//                'required',
             ],
             'image'             => [
-                'required',
+//                'required',
             ],
             'whats_app_number'  => [
-                'required',
+//                'required',
             ],
             'email' => [
-                'required',
+//                'required',
             ],
             'city_id'           => [
-                'required',
+//                'required',
                 'integer',
             ],
             'add_date'          => [
-                'required',
+//                'required',
                 'date_format:' . config('panel.date_format'),
             ],
             'details'           => [
-                'required',
+//                'required',
             ],
             'specialization_id' => [
-                'required',
+//                'required',
                 'integer',
             ],
         ];

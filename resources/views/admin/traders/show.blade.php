@@ -45,6 +45,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.trader.fields.activeness') }}
+                        </th>
+                        <td>
+                            {{ $trader->activeness?'نعم' : 'لا'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.trader.fields.address') }}
                         </th>
                         <td>

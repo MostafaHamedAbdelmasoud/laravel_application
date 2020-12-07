@@ -80,6 +80,25 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.trader.fields.whatsapp_helper') }}</span>
             </div>
+
+
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('activeness') ? 'is-invalid' : '' }}">
+                    <input class="form-check-input" type="checkbox" name="activeness"
+                           id="activeness" value="1"
+                        {{ old('activeness', 0) == 1 ? 'checked' : '' }}>
+                    <label class="required form-check-label"
+                           for="activeness">{{ trans('cruds.trader.fields.activeness') }}</label>
+                </div>
+                @if($errors->has('activeness'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('activeness') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.trader.fields.activeness_helper') }}</span>
+            </div>
+
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

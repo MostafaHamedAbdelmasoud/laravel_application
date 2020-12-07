@@ -17,7 +17,7 @@ class CreateJobOffersTable extends Migration
             $table->boolean('approved')->default(0);
             $table->date('add_date')->nullable();
             $table->longText('about')->nullable();
-            $table->string('age')->nullable();
+            $table->integer('age')->nullable();
             $table->string('years_of_experience')->nullable();
             $table->timestamps();
             $table->softDeletes();
