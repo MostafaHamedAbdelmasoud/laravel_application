@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @can('main_product_service_create')
+    @can('main_product_service_type_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route('admin.main_product_service_types.create') }}">

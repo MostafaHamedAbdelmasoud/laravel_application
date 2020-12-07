@@ -3,6 +3,8 @@
 namespace App\Models\Helpers;
 
 use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -21,10 +23,12 @@ class PermissionHelper
         ];
         $attribute_Array = explode(' ', $attribute);
         $attribute_seperated = implode('_', $attribute_Array);
-        foreach ($permission_sufixs as $permission_sufix) {
-            Permission::create([
-                'title' => $attribute_seperated . $permission_sufix,
+
+        foreach ($permission_sufixs as $permission_suffix) {
+           $permission= Permission::create([
+                'title' => $attribute_seperated . $permission_suffix,
             ]);
+           Role::where('title','Admin')->first()->permissions()->attach($permission);
         }
 
         DB::beginTransaction();
