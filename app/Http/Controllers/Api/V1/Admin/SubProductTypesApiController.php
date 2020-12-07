@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMainProductTypeRequest;
-use App\Http\Requests\UpdateMainProductTypeRequest;
+use App\Http\Requests\StoreSubProductTypeRequest;
+use App\Http\Requests\UpdateSubProductTypeRequest;
 use App\Http\Resources\Admin\SubProductTypeResource;
-use App\Models\MainProductType;
 use App\Models\SubProductType;
 use Gate;
 use Illuminate\Http\Request;
@@ -16,12 +15,12 @@ class SubProductTypesApiController extends Controller
 {
     public function index(Request $request)
     {
-        return new SubProductTypeResource(MainProductType::all());
+        return new SubProductTypeResource(SubProductType::all());
     }
 
-    public function store(StoreMainProductTypeRequest $request)
+    public function store(StoreSubProductTypeRequest $request)
     {
-        $sub_product_type = MainProductType::create($request->all());
+        $sub_product_type = SubProductType::create($request->all());
 
         return (new SubProductTypeResource($sub_product_type))
             ->response()
@@ -32,10 +31,10 @@ class SubProductTypesApiController extends Controller
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SubProductTypeResource(MainProductType::findOrFail($sub_product_type));
+        return new SubProductTypeResource(SubProductType::findOrFail($sub_product_type));
     }
 
-    public function update(UpdateMainProductTypeRequest $request, MainProductType $sub_product_type)
+    public function update(UpdateSubProductTypeRequest $request, SubProductType $sub_product_type)
     {
         $sub_product_type->update($request->all());
 
@@ -44,7 +43,7 @@ class SubProductTypesApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(MainProductType $sub_product_type)
+    public function destroy(SubProductType $sub_product_type)
     {
         //abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
