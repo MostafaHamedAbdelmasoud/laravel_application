@@ -15,190 +15,114 @@
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
-                <table class=" table table-bordered table-striped table-hover datatable datatable-News">
-                    <thead>
-                    <tr>
-                        <th width="10">
+            <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-News">
+                <thead>
+                <tr>
+                    <th width="10">
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.id') }}
-                        </th>
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.id') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.city_name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.details') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.price') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.detailed_title') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.news_category_name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.news_sub_category_name') }}
+                    </th>
 
-                        <th>
-                            {{ trans('cruds.news.fields.approved') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.name') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.image') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.details') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.detailed_title') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.news_category') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.news_sub_category') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.city') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.add_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.phone_number') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.news.fields.price') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach($news_categories as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach($news_sub_categories as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach($cities as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($news as $key => $news)
-                        <tr data-entry-id="{{ $news->id }}">
-                            <td>
+                    <th>
+                        {{ trans('cruds.news.fields.add_date') }}
+                    </th>
 
-                            </td>
-                            <td>
-                                {{ $news->id ?? '' }}
-                            </td>
+                    <th>
+                        {{ trans('cruds.news.fields.phone_number') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.news.fields.approved') }}
+                    </th>
 
-                            <td>
-                                <span style="display:none">{{ $news->approved ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $news->approved ? 'checked' : '' }}>
-                            </td>
-                            <td>
-                                {{ $news->name ?? '' }}
-                            </td>
-                            <td>
-                                @if($news->image)
-                                    <a href="{{ $news->image->getUrl() }}" target="_blank"
-                                       style="display: inline-block">
-                                        <img src="{{ $news->image->getUrl('thumb') }}">
-                                    </a>
-                                @endif
-                            </td>
-                            <td>
-                                {{ $news->details ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->detailed_title ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->news_category->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->news_sub_category->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->city->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->add_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->phone_number ?? '' }}
-                            </td>
-                            <td>
-                                {{ $news->price_value ?? '' }}
-                            </td>
-                            <td>
-                                @can('news_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.news.show', $news->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                    <th>
+                        {{ trans('cruds.news.fields.image') }}
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($cities as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
 
-                                @can('news_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.news.edit', $news->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($news_categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($news_sub_categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
 
-                                @can('news_delete')
-                                    <form action="{{ route('admin.news.destroy', $news->id) }}" method="POST"
-                                          onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                          style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger"
-                                               value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    <td>
+                    </td>
+                </tr>
+                </thead>
+            </table>
         </div>
     </div>
 
@@ -211,14 +135,14 @@
         $(function () {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
             @can('news_delete')
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
                 url: "{{ route('admin.news.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
-                    var ids = $.map(dt.rows({selected: true}).nodes(), function (entry) {
-                        return $(entry).data('entry-id')
+                    var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                        return entry.id
                     });
 
                     if (ids.length === 0) {
@@ -243,12 +167,35 @@
             dtButtons.push(deleteButton)
             @endcan
 
-            $.extend(true, $.fn.dataTable.defaults, {
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.news.index') }}",
+                columns: [
+                    {data: 'placeholder', name: 'placeholder'},
+                    {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'city_name', name: 'city.name'},
+                    {data: 'details', name: 'details'},
+                    {data: 'price', name: 'price'},
+                    {data: 'detailed_title', name: 'detailed_title'},
+                    {data: 'news_category_name', name: 'news_category_name'},
+                    {data: 'news_sub_category_name', name: 'news_sub_category_name'},
+                    {data: 'add_date', name: 'add_date'},
+                    {data: 'phone_number', name: 'phone_number'},
+                    {data: 'approved', name: 'approved'},
+
+                    {data: 'image', name: 'image', sortable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}'}
+                ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],
                 pageLength: 50,
-            });
-            let table = $('.datatable-News:not(.ajaxTable)').DataTable({buttons: dtButtons})
+            };
+            let table = $('.datatable-News').DataTable(dtOverrideGlobals);
             $('a[data-toggle="tab"]').on('shown.bs.tab click', function (e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();
@@ -261,7 +208,7 @@
                     .search(value, strict)
                     .draw()
             });
-        })
+        });
 
     </script>
 @endsection

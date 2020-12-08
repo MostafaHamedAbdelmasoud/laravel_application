@@ -12,18 +12,127 @@ use App\Models\City;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsSubCategory;
+use App\Models\Offer;
+use App\Repositories\GateRepository;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class NewsController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    /**
+     * @var GateRepository
+     */
+    private $repo;
+
+
+    /**
+     * ProductsController constructor.
+     * @param GateRepository $repo
+     */
+    public function __construct(GateRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+    public function index(Request $request)
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $this->repo->user = auth()->user();
+
+        if ($request->ajax()) {
+            $query = News::with(['news_category', 'news_sub_category'])->select(sprintf('%s.*', (new News)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+
+                $parameters = [
+                    $row->news_category->name,
+                    $row->news_sub_category->name,
+                ];
+
+                $viewGate = $this->repo->get_gate($parameters, 'news', '_show');
+                $editGate = $this->repo->get_gate($parameters, 'news', '_edit');
+                $deleteGate = $this->repo->get_gate($parameters, 'news', '_delete');
+
+                $crudRoutePart = 'news';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : "";
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : "";
+            });
+
+            $table->editColumn('city_name', function ($row) {
+                return $row->city ? $row->city->name : "";
+            });
+
+            $table->editColumn('details', function ($row) {
+                return $row->details ? $row->details : "";
+            });
+
+            $table->editColumn('price', function ($row) {
+                return $row->price ? $row->price : "";
+            });
+
+            $table->editColumn('detailed_title', function ($row) {
+                return $row->detailed_title ? $row->detailed_title : "";
+            });
+
+            $table->addColumn('news_sub_category_name', function ($row) {
+                return $row->news_sub_category ? $row->news_sub_category->name : '';
+            });
+
+            $table->addColumn('news_category_name', function ($row) {
+                return $row->news_category ? $row->news_category->name : '';
+            });
+
+            $table->editColumn('add_date', function ($row) {
+                return $row->add_date ? $row->add_date : "";
+            });
+            $table->editColumn('phone_number', function ($row) {
+                return $row->phone_number ? $row->phone_number : "";
+            });
+
+            $table->editColumn('approved', function ($row) {
+                return $row->approved ? "نعم": "لا";
+            });
+
+            $table->editColumn('image', function ($row) {
+                if ($photo = $row->image) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'category', 'trader', 'image']);
+
+            return $table->make(true);
+        }
+
 
         $news = News::all();
 
