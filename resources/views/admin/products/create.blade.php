@@ -328,7 +328,7 @@
     {{--        'component_id'=>isset($product)?$product->sub_product_type_id:'0',--}}
     {{--        'main_name_id'=>'#custom_field',--}}
     {{--        'form_name'=>'CustomFieldForm',--}}
-    {{--        'api_url'=>'/api/v1/custom_fields',--}}
+    {{--        'api_url'=>'/public/index.php/api/v1/custom_fields',--}}
     {{--    ]);--}}
 
 
@@ -344,7 +344,7 @@
         'component_id'=>isset($product)?$product->sub_product_type_id:'0',
         'main_name_id'=>'#main_product_type_id',
         'sub_name_id'=>'sub_product_type_id',
-        'api_url'=>'/api/v1/get_main_product_type_ajax/',
+        'api_url'=>'/public/index.php/api/v1/get_main_product_type_ajax/',
     ]);
 
     @include('admin.products.components.form_scripts',[
@@ -352,7 +352,7 @@
         'component_id'=>isset($product)?$product->sub_product_service_type_id:'0',
         'main_name_id'=>'#main_product_service_type_id',
         'sub_name_id'=>'sub_product_service_type_id',
-        'api_url'=>'/api/v1/get_main_product_service_type_ajax/',
+        'api_url'=>'/public/index.php/api/v1/get_main_product_service_type_ajax/',
     ]);
 
     <script>
