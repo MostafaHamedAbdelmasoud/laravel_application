@@ -419,6 +419,8 @@ return [
             'id_helper' => ' ',
             'name' => 'اسم العرض',
             'name_helper' => ' ',
+            'city' => 'اسم المدينة',
+            'city_helper' => ' ',
             'show_in_trader_page' => 'إظهار في صفحة التاجر',
             'show_in_trader_page_helper' => ' ',
             'show_in_main_page' => 'إظهار في الصفحة الرئيسية',

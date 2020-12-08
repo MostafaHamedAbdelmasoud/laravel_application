@@ -32,7 +32,7 @@ class JobOfferApiController extends Controller
         $jobOfferQueryBuilder = JobOffer::with(['specialization', 'city'])->filter($this->filter)->where('deleted_at', null);
         $details = $request['details'];
         if (isset($details)) {
-            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details','like', "%$details%");
+            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details', 'like', "%$details%");
         }
         return new JobOfferResource($jobOfferQueryBuilder->latest()->get());
     }
@@ -43,11 +43,11 @@ class JobOfferApiController extends Controller
         $jobOffer = JobOffer::create($request->all());
 
         if ($request->input('photo', false)) {
-            $jobOffer->addMedia(  $request->input('photo'))->toMediaCollection('photo');
+            $jobOffer->addMedia($request->input('photo'))->toMediaCollection('photo');
         }
 
         if ($request->input('cv', false)) {
-            $jobOffer->addMedia(  $request->input('cv'))->toMediaCollection('cv');
+            $jobOffer->addMedia($request->input('cv'))->toMediaCollection('cv');
         }
 
         return (new JobOfferResource($jobOffer))
@@ -55,7 +55,7 @@ class JobOfferApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $jobOffer)
+    public function show($jobOffer)
     {
         //abort_if(Gate::denies('job_offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

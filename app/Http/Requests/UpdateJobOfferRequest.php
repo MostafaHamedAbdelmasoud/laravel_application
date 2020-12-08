@@ -40,7 +40,7 @@ class UpdateJobOfferRequest extends FormRequest
                 'nullable',
             ],
             'age'                 => [
-                'string',
+                'number',
                 'nullable',
             ],
             'years_of_experience' => [

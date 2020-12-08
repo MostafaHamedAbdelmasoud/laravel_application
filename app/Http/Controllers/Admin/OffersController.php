@@ -8,9 +8,11 @@ use App\Http\Requests\MassDestroyOfferRequest;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Offer;
 use App\Models\SubCategory;
 use App\Models\Trader;
+use App\Repositories\GateRepository;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -21,21 +23,48 @@ class OffersController extends Controller
 {
     use MediaUploadingTrait;
 
+
+    /**
+     * @var GateRepository
+     */
+    private $repo;
+
+
+    /**
+     * ProductsController constructor.
+     * @param GateRepository $repo
+     */
+    public function __construct(GateRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+
     public function index(Request $request)
     {
         //abort_if(Gate::denies('offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $this->repo->user = auth()->user();
+
         if ($request->ajax()) {
-            $query = Offer::with(['category', 'trader'])->select(sprintf('%s.*', (new Offer)->table));
+            $query = Offer::with(['category', 'sub_category', 'trader'])->select(sprintf('%s.*', (new Offer)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'offer_show';
-                $editGate = 'offer_edit';
-                $deleteGate = 'offer_delete';
+
+                $parameters = [
+                    $row->category->name,
+                    $row->category->type,
+                    $row->sub_category->name,
+                ];
+
+                $viewGate = $this->repo->get_gate($parameters, 'offer', '_show');
+                $editGate = $this->repo->get_gate($parameters, 'offer', '_edit');
+                $deleteGate = $this->repo->get_gate($parameters, 'offer', '_delete');
+
                 $crudRoutePart = 'offers';
 
                 return view('partials.datatablesActions', compact(
@@ -54,6 +83,10 @@ class OffersController extends Controller
                 return $row->name ? $row->name : "";
             });
 
+            $table->editColumn('city_name', function ($row) {
+                return $row->city ? $row->city->name : "";
+            });
+
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : "";
             });
@@ -62,7 +95,7 @@ class OffersController extends Controller
                 return $row->showInTraderPage();
             });
             $table->editColumn('show_in_main_page', function ($row) {
-                return $row->showInMainPage() ;
+                return $row->showInMainPage();
             });
 
             $table->addColumn('category_name', function ($row) {
@@ -108,8 +141,9 @@ class OffersController extends Controller
         $categories = Category::get();
         $sub_categories = SubCategory::get();
         $traders = Trader::get();
+        $cities = City::get();
 
-        return view('admin.offers.index', compact('categories', 'traders', 'sub_categories'));
+        return view('admin.offers.index', compact('categories', 'cities', 'traders', 'sub_categories'));
     }
 
     public function create()
@@ -118,18 +152,20 @@ class OffersController extends Controller
 
         $categories = Category::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $sub_categories = SubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.offers.create', compact('categories', 'traders', 'sub_categories'));
+        return view('admin.offers.create', compact('categories', 'traders', 'sub_categories', 'cities'));
     }
 
     public function store(StoreOfferRequest $request)
     {
-        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+        $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
-        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+        $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
 
         $offer = Offer::create($request->all());
 
@@ -152,18 +188,20 @@ class OffersController extends Controller
 
         $sub_categories = SubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $cities = City::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $traders = Trader::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $offer->load('category', 'trader');
 
-        return view('admin.offers.edit', compact('categories', 'traders', 'offer', 'sub_categories'));
+        return view('admin.offers.edit', compact('categories', 'traders', 'offer', 'sub_categories', 'cities'));
     }
 
     public function update(UpdateOfferRequest $request, Offer $offer)
     {
-        $request['show_in_main_page']= $request->has('show_in_main_page')?1:0;
+        $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
-        $request['show_in_trader_page']= $request->has('show_in_trader_page')?1:0;
+        $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;
 
         $offer->update($request->all());
 

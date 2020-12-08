@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Department;
 use App\Models\SubCategory;
+use App\Repositories\GateRepository;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -22,21 +23,48 @@ class DepartmentsController extends Controller
 {
     use MediaUploadingTrait;
 
+
+    /**
+     * @var GateRepository
+     */
+    private $repo;
+
+
+    /**
+     * ProductsController constructor.
+     * @param GateRepository $repo
+     */
+    public function __construct(GateRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+
     public function index(Request $request)
     {
         //abort_if(Gate::denies('department_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $this->repo->user = auth()->user();
+
         if ($request->ajax()) {
-            $query = Department::with(['city', 'category','trader'])->select(sprintf('%s.*', (new Department)->table));
+            $query = Department::with(['city', 'category', 'trader'])->select(sprintf('%s.*', (new Department)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'department_show';
-                $editGate      = 'department_edit';
-                $deleteGate    = 'department_delete';
+
+                $parameters = [
+                    $row->category->name,
+                    $row->category->type,
+                    $row->sub_category->name,
+                ];
+
+                $viewGate = $this->repo->get_gate($parameters, 'department', '_show');
+                $editGate = $this->repo->get_gate($parameters, 'department', '_edit');
+                $deleteGate = $this->repo->get_gate($parameters, 'department', '_delete');
+
                 $crudRoutePart = 'departments';
 
                 return view('partials.datatablesActions', compact(
@@ -89,10 +117,10 @@ class DepartmentsController extends Controller
             return $table->make(true);
         }
 
-        $cities     = City::get();
+        $cities = City::get();
         $categories = Category::get();
         $sub_categories = SubCategory::get();
-        $traders    = Trader::get();
+        $traders = Trader::get();
 
         return view('admin.departments.index', compact('sub_categories', 'cities', 'categories', 'traders'));
     }
@@ -189,10 +217,10 @@ class DepartmentsController extends Controller
     {
         //abort_if(Gate::denies('department_create') && Gate::denies('department_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Department();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Department();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

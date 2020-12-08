@@ -27,7 +27,7 @@ class CouponsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $coupon)
+    public function show($coupon)
     {
         //abort_if(Gate::denies('coupon_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

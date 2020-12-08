@@ -21,6 +21,9 @@ class Offer extends Model implements HasMedia
         'images',
     ];
 
+    protected $with=[
+        'city'
+    ];
     protected $dates = [
         'add_date',
         'date_end',
@@ -31,6 +34,7 @@ class Offer extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'city_id',
         'description',
         'show_in_trader_page',
         'show_in_main_page',
@@ -91,6 +95,11 @@ class Offer extends Model implements HasMedia
     public function trader()
     {
         return $this->belongsTo(Trader::class, 'trader_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
     }
 
     public function getImagesAttribute()

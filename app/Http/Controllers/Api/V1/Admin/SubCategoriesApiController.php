@@ -19,7 +19,7 @@ class SubCategoriesApiController extends Controller
 
         //abort_if(Gate::denies('sub_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (isset($type)) {
-            return new SubCategoryResource(SubCategory::whereHas('category',function ($q) use($type){
+            return new SubCategoryResource(SubCategory::whereHas('category', function ($q) use ($type) {
                 $q->where('type', $type);
             })->get());
         }
@@ -36,7 +36,7 @@ class SubCategoriesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $sub_category)
+    public function show($sub_category)
     {
         //abort_if(Gate::denies('sub_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

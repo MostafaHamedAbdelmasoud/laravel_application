@@ -82,14 +82,10 @@
             </div>
 
 
+
             <div class="form-group">
-                <div class="form-check {{ $errors->has('activeness') ? 'is-invalid' : '' }}">
-                    <input class="form-check-input" type="checkbox" name="activeness"
-                           id="activeness" value="1"
-                        {{ old('activeness', 0) == 1 ? 'checked' : '' }}>
-                    <label class="required form-check-label"
-                           for="activeness">{{ trans('cruds.trader.fields.activeness') }}</label>
-                </div>
+                <label for="activeness">{{ trans('cruds.trader.fields.activeness') }}</label>
+                <input class="form-control {{ $errors->has('activeness') ? 'is-invalid' : '' }}" type="text" name="activeness" id="activeness" value="{{ old('activeness', '') }}">
                 @if($errors->has('activeness'))
                     <div class="invalid-feedback">
                         {{ $errors->first('activeness') }}

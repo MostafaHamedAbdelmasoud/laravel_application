@@ -8,5 +8,4 @@ use App\Models\Permission;
 
 class CategoryRepository
 {
-    
 }

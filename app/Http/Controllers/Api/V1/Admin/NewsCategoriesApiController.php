@@ -27,7 +27,7 @@ class NewsCategoriesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $news_category)
+    public function show($news_category)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

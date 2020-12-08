@@ -10,9 +10,10 @@ Route::get('/home', function () {
 });
 
 Auth::routes();
+//Route::group(['middleware' => ['web','auth']], function () {
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
-//    , 'middleware' => ['auth']
+//    , 'middleware' => ['web']
 ], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
@@ -149,6 +150,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('variants/ckmedia', 'VariantsController@storeCKEditorImages')->name('variants.storeCKEditorImages');
     Route::resource('products.variants', 'VariantsController');
 });
+//});
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

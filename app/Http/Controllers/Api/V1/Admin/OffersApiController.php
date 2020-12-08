@@ -37,7 +37,7 @@ class OffersApiController extends Controller
         $description = $request['description'];
 
         if (isset($description)) {
-            $offerQueryBuilder = $offerQueryBuilder->where('description', 'like',"%$description%");
+            $offerQueryBuilder = $offerQueryBuilder->where('description', 'like', "%$description%");
         }
         if (isset($trader_id)) {
             $offerQueryBuilder = $offerQueryBuilder->where('trader_id', $trader_id);
@@ -66,7 +66,7 @@ class OffersApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $offer)
+    public function show($offer)
     {
         //abort_if(Gate::denies('offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

@@ -48,7 +48,7 @@
                             {{ trans('cruds.trader.fields.activeness') }}
                         </th>
                         <td>
-                            {{ $trader->activeness?'نعم' : 'لا'}}
+                            {{ $trader->activeness}}
                         </td>
                     </tr>
                     <tr>

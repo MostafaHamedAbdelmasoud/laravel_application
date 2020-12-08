@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PermissionHelper
 {
-
     public static function createPermissionWithModelAttribute($attribute)
     {
         $permission_sufixs = [
@@ -25,31 +24,38 @@ class PermissionHelper
         $attribute_seperated = implode('_', $attribute_Array);
 
         foreach ($permission_sufixs as $permission_suffix) {
-           $permission= Permission::create([
+            $permission = Permission::create([
                 'title' => $attribute_seperated . $permission_suffix,
             ]);
-           Role::where('title','Admin')->first()->permissions()->attach($permission);
+            $lol = Role::where('title', 'Admin')->first()->permissions()->attach($permission);
+//            dd($lol);
         }
 
         DB::beginTransaction();
         try {
-
-            $permissions = Permission::pluck('title','id');
+            $permissions = Permission::pluck('title', 'id');
 
             $path = base_path() . '/resources/lang/ar/permissions.php';
+            $path_of_permissions_of_main_components = base_path() . '/resources/lang/ar/permissions_of_main_components.php';
+            $explodes = explode("=>", file_get_contents($path_of_permissions_of_main_components));
+            $cnt_of_permission_copy = count($explodes) - 1;
 
             $content = "<?php\n\nreturn\n[\n";
 
             foreach ($permissions as $key => $permission) {
-                if($key>124) break;
-                $content .= "\t'" . $permission . "' => '" . trans('permissions_copy.'.$permission)  . "',\n";
+                if ($key <= $cnt_of_permission_copy) {
+                    $content .= "\t'" . $permission . "' => '" . trans('permissions_of_main_components.' . $permission) . "',\n";
+                } else {
+
+                    $content .= "\t'" . $permission . "' => '" . trans('permissions.' . $permission) . "',\n";
+                }
             }
 
-            $content .= "\t'" . $attribute_seperated . '_create' . "' => '" .  $attribute_seperated . '_' . trans('global.add') . "',\n";
-            $content .= "\t'" . $attribute_seperated . '_edit' . "' => '" .  $attribute_seperated . '_' . trans('global.edit') . "',\n";
-            $content .= "\t'" . $attribute_seperated . '_show' . "' => '" .  $attribute_seperated .  '_' . trans('global.show') . "',\n";
-            $content .= "\t'" . $attribute_seperated . '_delete' . "' => '" .  $attribute_seperated .  '_' . trans('global.delete') . "',\n";
-            $content .= "\t'" . $attribute_seperated . '_access' . "' => '" .  $attribute_seperated .  '_' . trans('global.access') . "',\n";
+            $content .= "\t'" . $attribute_seperated . '_create' . "' => '" . $attribute .' ' . trans('global.add') . "',\n";
+            $content .= "\t'" . $attribute_seperated . '_edit' . "' => '" . $attribute .' ' . trans('global.edit') . "',\n";
+            $content .= "\t'" . $attribute_seperated . '_show' . "' => '" . $attribute .' ' . trans('global.show') . "',\n";
+            $content .= "\t'" . $attribute_seperated . '_delete' . "' => '" . $attribute .' ' . trans('global.delete') . "',\n";
+            $content .= "\t'" . $attribute_seperated . '_access' . "' => '" . $attribute .' ' . trans('global.access') . "',\n";
             // }
 
             $content .= "];";

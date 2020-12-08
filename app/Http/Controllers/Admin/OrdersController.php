@@ -62,7 +62,6 @@ class OrdersController extends Controller
 
             return redirect()->route('admin.orders.index');
         } catch (Exception $e) {
-
             DB::rollback();
 
             var_dump($e->getMessage());
@@ -80,7 +79,7 @@ class OrdersController extends Controller
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $order_product_ids = $order->OrderProducts->pluck('product_variant_id');
         
-        return view('admin.orders.edit', compact('users', 'product_variants', 'order', 'coupons','order_product_ids'));
+        return view('admin.orders.edit', compact('users', 'product_variants', 'order', 'coupons', 'order_product_ids'));
     }
 
     public function update(UpdateOrderRequest $request, Order $order)
@@ -89,8 +88,8 @@ class OrdersController extends Controller
 
         $order_product_ids = $order->OrderProducts->pluck('id');
         
-        foreach($order_product_ids as $id){
-            OrderProduct::where('id',$id)->delete();
+        foreach ($order_product_ids as $id) {
+            OrderProduct::where('id', $id)->delete();
         }
         
         foreach ($request->product_variant as $id) {
@@ -124,5 +123,4 @@ class OrdersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

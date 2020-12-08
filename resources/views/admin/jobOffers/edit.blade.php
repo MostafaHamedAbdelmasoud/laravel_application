@@ -134,7 +134,7 @@
             </div>
             <div class="form-group">
                 <label for="age">{{ trans('cruds.jobOffer.fields.age') }}</label>
-                <input class="form-control {{ $errors->has('age') ? 'is-invalid' : '' }}" type="text" name="age" id="age" value="{{ old('age', $jobOffer->age) }}">
+                <input class="form-control {{ $errors->has('age') ? 'is-invalid' : '' }}" type="number" name="age" id="age" value="{{ old('age', $jobOffer->age) }}">
                 @if($errors->has('age'))
                     <div class="invalid-feedback">
                         {{ $errors->first('age') }}

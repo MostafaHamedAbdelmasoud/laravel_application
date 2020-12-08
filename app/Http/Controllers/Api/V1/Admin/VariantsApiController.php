@@ -47,7 +47,7 @@ class VariantsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $variant)
+    public function show($variant)
     {
         //abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

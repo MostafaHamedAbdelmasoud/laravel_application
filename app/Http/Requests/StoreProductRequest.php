@@ -23,15 +23,27 @@ class StoreProductRequest extends FormRequest
             ],
             'price' => [
                 'string',
-                'nullable',
+                'required',
             ],
             'main_product_type_id' => [
-                'required',
-                'exists:main_product_types,id',
+//                'required',
+                'required_without:main_product_service_type_id',
+//                'exists:main_product_types,id',
             ],
             'sub_product_type_id' => [
-                'required',
+//                'required',
+                'required_with:main_product_type_id',
                 'exists:sub_product_types,id',
+            ],
+            'main_product_service_type_id' => [
+//                'required',
+                'required_without:main_product_type_id',
+//                'exists:main_product_service_types,id',
+            ],
+            'sub_product_service_id' => [
+//                'required',
+                'required_with:main_product_service_type_id',
+                'exists:sub_product_service_types,id',
             ],
         ];
     }

@@ -29,11 +29,9 @@ class SubProductTypesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $name_seperated = explode(' ',$row->name);
-                $name_imploded_with_underscore  = implode('_',$name_seperated);
-                $viewGate      = $name_imploded_with_underscore.'_show';
-                $editGate      = $name_imploded_with_underscore.'_edit';
-                $deleteGate    = $name_imploded_with_underscore.'_delete';
+                $viewGate      = 'sub_product_type_show';
+                $editGate      = 'sub_product_type_edit';
+                $deleteGate    = 'sub_product_type_delete';
                 $crudRoutePart = 'sub_product_types';
 
                 return view('partials.datatablesActions', compact(

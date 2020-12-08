@@ -30,9 +30,9 @@ class TraderController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'trader_show';
-                $editGate      = 'trader_edit';
-                $deleteGate    = 'trader_delete';
+                $viewGate = 'trader_show';
+                $editGate = 'trader_edit';
+                $deleteGate = 'trader_delete';
                 $crudRoutePart = 'traders';
 
                 return view('partials.datatablesActions', compact(
@@ -47,9 +47,11 @@ class TraderController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
+
             $table->editColumn('activeness', function ($row) {
-                return $row->activeness ? "نعم" : "لا";
+                return $row->activeness ? $row->activeness : "";
             });
+
             $table->editColumn('images', function ($row) {
                 if (!$row->images) {
                     return '';
@@ -100,7 +102,6 @@ class TraderController extends Controller
     public function store(StoreTraderRequest $request)
     {
 
-        $request['activeness'] = $request['activeness']?1:0;
         $trader = Trader::create($request->all());
 
         foreach ($request->input('images', []) as $file) {
@@ -123,8 +124,6 @@ class TraderController extends Controller
 
     public function update(UpdateTraderRequest $request, Trader $trader)
     {
-        $request['activeness'] = $request['activeness']?1:0;
-
         $trader->update($request->all());
 
         if (count($trader->images) > 0) {
@@ -173,10 +172,10 @@ class TraderController extends Controller
     {
         //abort_if(Gate::denies('trader_create') && Gate::denies('trader_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Trader();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Trader();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

@@ -138,6 +138,24 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.offer.fields.trader_helper') }}</span>
                 </div>
+
+                <div class="form-group">
+                    <label for="city_id">{{ trans('cruds.offer.fields.city') }}</label>
+                    <select class="form-control select2 {{ $errors->has('city') ? 'is-invalid' : '' }}"
+                            name="city_id" id="city_id">
+                        @foreach($cities as $id => $city)
+                            <option
+                                value="{{ $id }}" {{ old('city_id') == $id ? 'selected' : '' }}>{{ $city }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('city'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('city') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.offer.fields.city_helper') }}</span>
+                </div>
+
                 <div class="form-group">
                     <label for="images">{{ trans('cruds.offer.fields.images') }}</label>
                     <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}"

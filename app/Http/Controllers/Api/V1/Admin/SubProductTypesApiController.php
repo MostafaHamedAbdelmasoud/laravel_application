@@ -27,7 +27,7 @@ class SubProductTypesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $sub_product_type)
+    public function show($sub_product_type)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

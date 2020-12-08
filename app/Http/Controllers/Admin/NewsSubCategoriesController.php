@@ -29,9 +29,9 @@ class NewsSubCategoriesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'category_show';
-                $editGate      = 'category_edit';
-                $deleteGate    = 'category_delete';
+                $viewGate      = 'news_sub_category_show';
+                $editGate      = 'news_sub_category_edit';
+                $deleteGate    = 'news_sub_category_delete';
                 $crudRoutePart = 'news_sub_categories';
 
                 return view('partials.datatablesActions', compact(

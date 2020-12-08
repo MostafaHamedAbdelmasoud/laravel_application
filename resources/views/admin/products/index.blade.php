@@ -80,10 +80,12 @@
                     <th>
                         {{ trans('cruds.product.fields.price_after_discount') }}
                     </th>
+
                     <th>
                         &nbsp;
                     </th>
                 </tr>
+
                 <tr>
                     <td>
                     </td>
@@ -187,6 +189,7 @@
                     <td>
                     </td>
                 </tr>
+
                 </thead>
             </table>
         </div>
@@ -240,6 +243,11 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.products.index') }}",
+                rowCallback: function (row, data, index) {
+                    if (data['column'] <= 0) {
+                        $(row).hide();
+                    }
+                },
                 columns: [
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'id', name: 'id'},
@@ -261,7 +269,6 @@
                     {data: 'details', name: 'details'},
                     {data: 'detailed_title', name: 'detailed_title'},
                     {data: 'price_after_discount', name: 'price_after_discount'},
-
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
@@ -269,10 +276,13 @@
                 pageLength: 50,
             };
             let table = $('.datatable-Product').DataTable(dtOverrideGlobals);
+
             $('a[data-toggle="tab"]').on('shown.bs.tab click', function (e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();
             });
+            var table1 = document.getElementById(".datatable-Product");
+
             $('.datatable thead').on('input', '.search', function () {
                 let strict = $(this).attr('strict') || false
                 let value = strict && this.value ? "^" + this.value + "$" : this.value
@@ -281,6 +291,8 @@
                     .search(value, strict)
                     .draw()
             });
+
+
         });
 
     </script>

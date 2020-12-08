@@ -20,7 +20,7 @@ class TraderApiController extends Controller
     {
         //abort_if(Gate::denies('trader_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $traderQuery =  Trader::with('products','offers');
+        $traderQuery =  Trader::with('products', 'offers');
         $details = $request['details'];
         if (isset($details)) {
             $traderQuery = $traderQuery->where('details', 'like', "%$details%");

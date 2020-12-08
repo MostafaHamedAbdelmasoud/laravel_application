@@ -27,11 +27,11 @@ class MainProductTypesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $main_product_type)
+    public function show($main_product_type)
     {
         //abort_if(Gate::denies('category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MainProductTypeResource(MainProductType::findOrFail($main_product_type) );
+        return new MainProductTypeResource(MainProductType::findOrFail($main_product_type));
     }
 
     public function update(UpdateMainProductTypeRequest $request, MainProductType $main_product_type)

@@ -29,7 +29,7 @@ class SpecializationsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $specialization)
+    public function show($specialization)
     {
         //abort_if(Gate::denies('specialization_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

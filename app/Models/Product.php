@@ -21,7 +21,7 @@ class Product extends Model implements HasMedia
     ];
 
 
-     protected $with = [
+    protected $with = [
          'variants',
      ];
 
@@ -132,4 +132,5 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsToMany(\App\Models\Variant::class);
     }
+
 }

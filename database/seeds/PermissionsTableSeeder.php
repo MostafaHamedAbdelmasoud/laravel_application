@@ -550,6 +550,56 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'sub_product_service_type_edit',
 
             ],
+            [
+                'id' => 125,
+                'title' => 'service_create',
+
+            ],
+            [
+                'id' => 126,
+                'title' => 'service_access',
+
+            ],
+            [
+                'id' => 127,
+                'title' => 'service_delete',
+
+            ],
+            [
+                'id' => 128,
+                'title' => 'service_show',
+
+            ],
+            [
+                'id' => 129,
+                'title' => 'service_edit',
+
+            ],
+            [
+                'id' => 130,
+                'title' => 'commercial_create',
+
+            ],
+            [
+                'id' => 131,
+                'title' => 'commercial_access',
+
+            ],
+            [
+                'id' => 132,
+                'title' => 'commercial_delete',
+
+            ],
+            [
+                'id' => 133,
+                'title' => 'commercial_show',
+
+            ],
+            [
+                'id' => 134,
+                'title' => 'commercial_edit',
+
+            ],
         ];
 
         Permission::insert($permissions);

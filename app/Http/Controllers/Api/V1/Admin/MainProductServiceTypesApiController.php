@@ -27,7 +27,7 @@ class MainProductServiceTypesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $main_product_service_type)
+    public function show($main_product_service_type)
     {
         //abort_if(Gate::denies('main_product_service_type'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

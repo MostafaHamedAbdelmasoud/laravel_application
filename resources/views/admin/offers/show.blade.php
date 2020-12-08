@@ -89,6 +89,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.offer.fields.city') }}
+                        </th>
+                        <td>
+                            {{ $offer->city->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.offer.fields.images') }}
                         </th>
                         <td>

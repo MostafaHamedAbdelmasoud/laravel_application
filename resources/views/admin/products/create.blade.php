@@ -66,7 +66,7 @@
                     <label class="required"
                            for="main_product_type_id">{{ trans('cruds.product.fields.main_product_type_name') }}</label>
                     <select class="form-control select2 {{ $errors->has('main_product_type') ? 'is-invalid' : '' }}"
-                            name="main_product_type_id" id="main_product_type_id" required>
+                            name="main_product_type_id" id="main_product_type_id" >
                         @foreach($main_product_types as $id => $main_product)
                             <option
                                 value="{{ $id }}" {{ old('main_product_type_id') == $id ? 'selected' : '' }}>{{ $main_product }}</option>
@@ -85,7 +85,7 @@
                     <label class="required"
                            for="sub_product_type_id">{{ trans('cruds.product.fields.sub_product_type_name') }}</label>
                     <select class="form-control select2 {{ $errors->has('sub_product_type') ? 'is-invalid' : '' }}"
-                            name="sub_product_type_id" id="sub_product_type_id" required>
+                            name="sub_product_type_id" id="sub_product_type_id" >
 
                     </select>
                     @if($errors->has('sub_product_type'))
@@ -102,7 +102,7 @@
                            for="main_product_service_type_id">{{ trans('cruds.product.fields.main_product_service_type_name') }}</label>
                     <select
                         class="form-control select2 {{ $errors->has('main_product_service_type') ? 'is-invalid' : '' }}"
-                        name="main_product_service_type_id" id="main_product_service_type_id" required>
+                        name="main_product_service_type_id" id="main_product_service_type_id" >
                         @foreach($main_product_service_types as $id => $main_product)
                             <option
                                 value="{{ $id }}" {{ old('main_product_service_type_id') == $id ? 'selected' : '' }}>{{ $main_product }}</option>
@@ -123,7 +123,7 @@
                            for="sub_product_service_type_id">{{ trans('cruds.product.fields.sub_product_service_type_name') }}</label>
                     <select
                         class="form-control select2 {{ $errors->has('sub_product_service_type') ? 'is-invalid' : '' }}"
-                        name="sub_product_service_type_id" id="sub_product_service_type_id" required>
+                        name="sub_product_service_type_id" id="sub_product_service_type_id" >
 
                     </select>
                     @if($errors->has('sub_product_service_type'))
@@ -139,7 +139,7 @@
                 <div class="form-group">
                     <label for="price">{{ trans('cruds.product.fields.price') }}</label>
                     <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="text" name="price"
-                           id="price" value="{{ old('price', '') }}">
+                           id="price" value="{{ old('price', '') }}" required>
                     @if($errors->has('price'))
                         <div class="invalid-feedback">
                             {{ $errors->first('price') }}

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class NewsApiController
  * @package App\Http\Controllers\Api\V1\Admin
  */
-class NewsApiController extends Controller  implements ShouldQueue
+class NewsApiController extends Controller implements ShouldQueue
 {
     use MediaUploadingTrait;
 
@@ -37,10 +37,10 @@ class NewsApiController extends Controller  implements ShouldQueue
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $details = $request['details'];
-        $news_query_builder = News::with(['news_category', 'city'])->where('approved',1)->whereNull('deleted_at')->filter($this->filter);
+        $news_query_builder = News::with(['news_category', 'city'])->where('approved', 1)->whereNull('deleted_at')->filter($this->filter);
 
-        if (isset($details)){
-            $news_query_builder->where('details','like',"%$details%");
+        if (isset($details)) {
+            $news_query_builder->where('details', 'like', "%$details%");
         }
         return new NewsResource($news_query_builder->latest()->get());
     }
@@ -58,7 +58,7 @@ class NewsApiController extends Controller  implements ShouldQueue
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $news)
+    public function show($news)
     {
         //abort_if(Gate::denies('news_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

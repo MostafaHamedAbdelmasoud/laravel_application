@@ -31,13 +31,13 @@ class OrdersApiController extends Controller
         try {
             $order = Order::create($request->all());
 
-            if($request->coupon_code){
-                $coupon = Coupon::where('code',$request->coupon_code)->first();
-                if(!$coupon || $coupon->max_usage_per_user <= 0){
+            if ($request->coupon_code) {
+                $coupon = Coupon::where('code', $request->coupon_code)->first();
+                if (!$coupon || $coupon->max_usage_per_user <= 0) {
                     return response()->json([
                        'message' => 'الكوبون غير صالح!'
                     ]);
-                }else{
+                } else {
                     $coupon->max_usage_per_user -= 1;
                 }
             }
@@ -56,18 +56,14 @@ class OrdersApiController extends Controller
             return (new OrderResource($order))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
-
         } catch (Exception $e) {
-
             DB::rollback();
 
             return ($e->getMessage());
         }
-
-
     }
 
-    public function show( $order)
+    public function show($order)
     {
         //abort_if(Gate::denies('Order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -80,8 +76,8 @@ class OrdersApiController extends Controller
 
         $order_product_ids = $order->OrderProducts->pluck('id');
 
-        foreach($order_product_ids as $id){
-            OrderProduct::where('id',$id)->delete();
+        foreach ($order_product_ids as $id) {
+            OrderProduct::where('id', $id)->delete();
         }
 
         foreach ($request->product_variant as $id) {

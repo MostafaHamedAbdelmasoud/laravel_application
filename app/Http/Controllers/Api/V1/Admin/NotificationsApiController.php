@@ -17,8 +17,8 @@ class NotificationsApiController extends Controller
     {
         $city_id = $request['city_id'];
         $notificationQuery = Notification::with('city');
-        if(isset($city_id)){
-            $notificationQuery = $notificationQuery->where('city_id',$city_id);
+        if (isset($city_id)) {
+            $notificationQuery = $notificationQuery->where('city_id', $city_id);
         }
 
         //abort_if(Gate::denies('notification_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -40,7 +40,7 @@ class NotificationsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $notification)
+    public function show($notification)
     {
         //abort_if(Gate::denies('notification_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

@@ -15,9 +15,12 @@ use App\Models\Product;
 use App\Models\SubProductServiceType;
 use App\Models\SubProductType;
 use App\Models\Trader;
-use App\Repositories\ProductRepository;
+use App\Repositories\GateRepository;
 use Gate;
+
 use Illuminate\Http\Request;
+
+//use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,19 +29,26 @@ class ProductsController extends Controller
 {
     use MediaUploadingTrait;
 
-
     /**
-     * @var ProductRepository
+     * @var GateRepository
      */
     private $repo;
 
-    public function __construct(ProductRepository $repo)
+
+    /**
+     * ProductsController constructor.
+     * @param GateRepository $repo
+     */
+    public function __construct(GateRepository $repo)
     {
         $this->repo = $repo;
+
     }
 
     public function index(Request $request)
     {
+        $this->repo->user = auth()->user();
+
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -49,9 +59,19 @@ class ProductsController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'product_show';
-                $editGate = 'product_edit';
-                $deleteGate = 'product_delete';
+
+                $parameters = [
+                    $row->MainProductType? $row->MainProductType->name:"",
+                     $row->SubProductType? $row->SubProductType->name:'',
+                    $row->MainProductServiceType? $row->MainProductServiceType->name:'',
+                     $row->SubProductServiceType? $row->SubProductServiceType->name : ''
+                ];
+
+                $viewGate = $this->repo->get_gate($parameters, 'product','_show');
+                $editGate = $this->repo->get_gate($parameters, 'product','_edit');
+                $deleteGate = $this->repo->get_gate($parameters, 'product','_delete');
+
+//                $checkNull = $viewGate ?? $editGate ?? $deleteGate ?? '';
                 $crudRoutePart = 'products';
 
                 return view('partials.datatablesActions', compact(
@@ -86,6 +106,9 @@ class ProductsController extends Controller
             $table->addColumn('sub_product_type_name', function ($row) {
                 return $row->SubProductType ? $row->SubProductType->name : "";
             });
+//            $table->addColumn('checkNull', function ($row) {
+//                return  "";
+//            });
             $table->addColumn('main_product_service_type_name', function ($row) {
                 return $row->MainProductServiceType ? $row->MainProductServiceType->name : "";
             });
@@ -142,7 +165,7 @@ class ProductsController extends Controller
         $sub_product_service_types = SubProductServiceType::get();
         $departments = Department::get();
         $cities = City::get();
-        // dd($cities);
+
         return view('admin.products.index', compact(
             'traders',
             'main_product_types',
@@ -263,6 +286,7 @@ class ProductsController extends Controller
         //abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $product->delete();
+
 
         return back();
     }

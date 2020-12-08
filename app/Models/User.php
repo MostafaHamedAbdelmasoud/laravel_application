@@ -18,7 +18,7 @@ class User extends Authenticatable
 {
     use SoftDeletes, Notifiable, HasApiTokens;
 
-    public $table = 'users';
+    protected $table = 'users';
 
     protected $hidden = [
         'remember_token',

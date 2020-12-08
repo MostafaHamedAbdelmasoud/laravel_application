@@ -12,7 +12,7 @@ class StoreJobRequest extends FormRequest
 {
     public function authorize(Request $request)
     {
-         return $request->expectsJson()?true: Gate::allows('job_create');
+        return $request->expectsJson()?true: Gate::allows('job_create');
     }
 
     public function rules()

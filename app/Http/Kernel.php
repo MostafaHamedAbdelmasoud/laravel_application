@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\HandlePutFormData;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -36,7 +37,7 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        'csrf' => \Http\Middleware\VerifyCsrfToken::class,
+        'csrf' =>           VerifyCsrfToken::class,
         'auth'             => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings'         => \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -46,5 +47,6 @@ class Kernel extends HttpKernel
         'signed'           => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle'         => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+
     ];
 }

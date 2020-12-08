@@ -61,6 +61,9 @@
                         {{ trans('cruds.offer.fields.trader') }}
                     </th>
                     <th>
+                        {{ trans('cruds.offer.fields.city') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.offer.fields.images') }}
                     </th>
                     <th>
@@ -116,6 +119,14 @@
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($traders as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($cities as $key => $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
@@ -190,6 +201,7 @@
 { data: 'location', name: 'location' },
 { data: 'price', name: 'price' },
 { data: 'trader_name', name: 'trader.name' },
+{ data: 'city_name', name: 'city.name' },
 { data: 'images', name: 'images', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

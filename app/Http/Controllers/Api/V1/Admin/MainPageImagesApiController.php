@@ -36,7 +36,7 @@ class MainPageImagesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $advertisement)
+    public function show($advertisement)
     {
         //abort_if(Gate::denies('advertisement_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

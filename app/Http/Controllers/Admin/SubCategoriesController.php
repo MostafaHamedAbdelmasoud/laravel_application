@@ -28,14 +28,9 @@ class SubCategoriesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $name_seperated = explode(' ',$row->name);
-                $name_imploded_with_underscore  = implode('_',$name_seperated);
-//                $viewGate      = 'category_show';
-                $viewGate      = $name_imploded_with_underscore.'_show';
-//                $editGate      = 'category_edit';
-                $editGate      = $name_imploded_with_underscore.'_edit';
-//                $deleteGate    = 'category_delete';
-                $deleteGate    = $name_imploded_with_underscore.'_delete';
+                $viewGate      = 'sub_category_show';
+                $editGate      = 'sub_category_edit';
+                $deleteGate    = 'sub_category_delete';
                 $crudRoutePart = 'sub_categories';
 
                 return view('partials.datatablesActions', compact(

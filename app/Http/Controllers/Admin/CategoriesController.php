@@ -11,12 +11,12 @@ use App\Models\Helpers\PermissionHelper;
 use App\Repositories\CouponRepository;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoriesController extends Controller
 {
-
     protected $repo;
 
     public function __construct(CouponRepository $repo)
@@ -36,14 +36,14 @@ class CategoriesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $name_seperated = explode(' ',$row->name);
-                $name_imploded_with_underscore  = implode('_',$name_seperated);
-//                $viewGate      = 'category_show';
-                $viewGate      = $name_imploded_with_underscore.'_show';
-//                $editGate      = 'category_edit';
-                $editGate      = $name_imploded_with_underscore.'_edit';
-//                $deleteGate    = 'category_delete';
-                $deleteGate    = $name_imploded_with_underscore.'_delete';
+//                $name_seperated = explode(' ',$row->name);
+//                $name_imploded_with_underscore  = implode('_',$name_seperated);
+                $viewGate      = 'category_show';
+//                $viewGate      = $name_imploded_with_underscore.'_show';
+                $editGate      = 'category_edit';
+//                $editGate      = $name_imploded_with_underscore.'_edit';
+                $deleteGate    = 'category_delete';
+//                $deleteGate    = $name_imploded_with_underscore.'_delete';
                 $crudRoutePart = 'categories';
 
                 return view('partials.datatablesActions', compact(

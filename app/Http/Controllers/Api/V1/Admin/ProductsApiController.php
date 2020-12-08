@@ -38,7 +38,7 @@ class ProductsApiController extends Controller
         $details = $request['details'];
 
         if (isset($details)) {
-            $productQuery = $productQuery->where('details', 'like',"%$details%");
+            $productQuery = $productQuery->where('details', 'like', "%$details%");
         }
         if (isset($trader_id)) {
             $productQuery = $productQuery->where('trader_id', $trader_id);

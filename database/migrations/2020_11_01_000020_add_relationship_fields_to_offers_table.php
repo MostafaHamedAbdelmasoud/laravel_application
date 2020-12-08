@@ -15,6 +15,8 @@ class AddRelationshipFieldsToOffersTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('trader_id')->nullable();
             $table->foreign('trader_id', 'trader_fk_2504442')->references('id')->on('traders');
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreign('city_id')->references('id')->on('cities');
         });
         Schema::enableForeignKeyConstraints();
     }

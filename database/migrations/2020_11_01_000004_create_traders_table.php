@@ -13,7 +13,7 @@ class CreateTradersTable extends Migration
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
-            $table->boolean('activeness')->default(0);
+            $table->string('activeness')->nullable();
             $table->string('details')->nullable();
             $table->string('facebook_url')->nullable();
             $table->string('whatsapp')->nullable();

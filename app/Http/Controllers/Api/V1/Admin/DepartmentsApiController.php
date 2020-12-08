@@ -64,7 +64,7 @@ class DepartmentsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show( $department)
+    public function show($department)
     {
         //abort_if(Gate::denies('department_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

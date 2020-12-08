@@ -25,6 +25,10 @@ class StoreOfferRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'sub_category_id'  => [
+                'required',
+                'integer',
+            ],
             'add_date'     => [
                 'required',
                 'date_format:' . config('panel.date_format'),
