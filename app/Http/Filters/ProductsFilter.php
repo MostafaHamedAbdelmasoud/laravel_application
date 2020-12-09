@@ -17,9 +17,73 @@ class ProductsFilter extends BaseFilters
         'LowerPrice',
         'Brand',
         'Color',
+        'main_product_type_id',
+        'main_product_service_type_id',
+        'sub_product_type_id',
+        'sub_product_service_type_id',
         'Size',
     ];
 
+
+    /**
+     * Filter the query by a given color.
+     *
+     * @param string|int $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function main_product_type_id($value)
+    {
+        if ($value) {
+            return $this->builder->where('main_product_type_id', "$value");
+        }
+
+        return $this->builder;
+    }
+
+    /**
+     * Filter the query by a given size.
+     *
+     * @param string|int $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function main_product_service_type_id($value)
+    {
+        if ($value) {
+            return $this->builder->where('main_product_service_type_id', "$value");
+        }
+
+        return $this->builder;
+    }
+
+    /**
+     * Filter the query by a given size.
+     *
+     * @param string|int $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function sub_product_type_id($value)
+    {
+        if ($value) {
+            return $this->builder->where('sub_product_type_id', "$value");
+        }
+
+        return $this->builder;
+    }
+
+    /**
+     * Filter the query by a given size.
+     *
+     * @param string|int $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function sub_product_service_type_id($value)
+    {
+        if ($value) {
+            return $this->builder->where('sub_product_service_type_id', "$value");
+        }
+
+        return $this->builder;
+    }
     /**
      * Filter the query by a price.
      *

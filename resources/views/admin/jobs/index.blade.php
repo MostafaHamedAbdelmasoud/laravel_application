@@ -161,9 +161,9 @@
                     {data: 'city_name', name: 'city.name'},
                     {data: 'add_date', name: 'add_date'},
                     {data: 'whats_app_number', name: 'whats_app_number'},
-                    {data: 'email', name: 'email'},
-                    {data: 'details', name: 'details'},
                     {data: 'specialization_name', name: 'specialization.name'},
+                    {data: 'details', name: 'details'},
+                    {data: 'email', name: 'email'},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
