@@ -3,7 +3,7 @@
 Route::group(
     ['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin',
 //    'middleware' => ['auth:api']
-],
+    ],
     function () {
         // Permissions
         Route::apiResource('permissions', 'PermissionsApiController');
@@ -19,7 +19,6 @@ Route::group(
         // MainPageImages
         Route::post('mainpageimages/media', 'MainPageImagesApiController@storeMedia')->name('mainpageimages.storeMedia');
         Route::apiResource('mainpageimages', 'MainPageImagesApiController');
-
 
 
         // MainPageImages
@@ -113,11 +112,7 @@ Route::namespace('Api\V1\Admin')->group(function () {
     Route::get('/select/cities', 'CitiesSelectController@select_city')->name('cities.select');
 });
 
-Route::group(
-    ['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Auth',
-//    'middleware' => ['auth:api']
-],
-    function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Auth',],function () {
         //Auth API
         Route::post('register', 'AuthApiController@register');
         Route::post('login', 'AuthApiController@login');

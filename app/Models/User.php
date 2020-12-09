@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyUserNotification;
+//use App\Notifications\VerifyUserNotification;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -18,7 +18,7 @@ class User extends Authenticatable
 {
     use SoftDeletes, Notifiable, HasApiTokens;
 
-    protected $table = 'users';
+    public $table = 'users';
 
     protected $hidden = [
         'remember_token',
@@ -41,7 +41,6 @@ class User extends Authenticatable
         'name',
         'phone_number',
         'accept_notifications',
-        'phone_verified',
         'city_id',
         'email',
         'email_verified_at',

@@ -40,9 +40,6 @@
                         {{ trans('cruds.user.fields.phone_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.user.fields.phone_verified') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -68,9 +65,6 @@
                                 <option value="{{ $item->title }}">{{ $item->title }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -136,7 +130,6 @@
 { data: 'email', name: 'email' },
 { data: 'roles', name: 'roles.title' },
 { data: 'phone_number', name: 'phone_number' },
-{ data: 'phone_verified', name: 'phone_verified' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

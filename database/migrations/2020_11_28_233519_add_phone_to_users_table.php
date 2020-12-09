@@ -16,8 +16,7 @@ class AddPhoneToUsersTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('phone_verified')->after('email_verified_at')->nullable();
-            $table->unsignedBigInteger('city_id')->after('phone_verified')->nullable();
+            $table->unsignedBigInteger('city_id')->after('phone_number')->nullable();
             $table->foreign('city_id')->references('id')
                 ->on('cities')
                 ->cascadeOnDelete();

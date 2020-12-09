@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Resources\Admin\CategoryResource;
-use App\Models\Category;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 class AuthApiController extends Controller
 {
@@ -23,19 +18,20 @@ class AuthApiController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6'
+            'phone_number' => 'required|unique:users,phone_number',
         ]);
 
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'phone_number' => $request->phone_number,
         ]);
 
-        return response()->json($user);
+        $token = $user->createToken($user->phone_number . '-' . now());
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ]);
     }
 
     /**
@@ -45,18 +41,21 @@ class AuthApiController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required'
+            'phone_number' => 'required|exists:users,phone_number',
         ]);
+        $user = User::where('phone_number',$request->phone_number)->first();
 
-        if (Auth::attempt(['email'=>$request->email, 'password'=>$request->password])) {
-            $user = Auth::user();
+        if ($user) {
 
-            $token = $user->createToken($user->email.'-'.now());
+            $token = $user->createToken($user->phone_number . '-' . now());
 
             return response()->json([
                 'token' => $token->accessToken
             ]);
         }
+
+        return response()->json([
+            'message' => 'البيانات خاطئة'
+        ]);
     }
 }
