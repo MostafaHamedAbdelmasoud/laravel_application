@@ -36,14 +36,14 @@ class StoreJobOfferRequest extends FormRequest
                 'required',
             ],
             'approved'            => [
-                'required',
+//                'required',
             ],
             'add_date'            => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'age'                 => [
-                'number',
+                'integer',
                 'nullable',
             ],
             'years_of_experience' => [

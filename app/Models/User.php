@@ -25,6 +25,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected  $with = [
+        'roles',
+    ];
+
     protected $dates = [
         'email_verified_at',
         'created_at',

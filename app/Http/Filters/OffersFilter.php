@@ -12,7 +12,7 @@ class OffersFilter extends BaseFilters
     protected $filters = [
         'description',
         'type',
-        ' sub_category_id',
+        'sub_category_id',
     ];
 
     /**
