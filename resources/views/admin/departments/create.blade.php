@@ -146,7 +146,7 @@
 
 
 @section('scripts')
-@include('admin.departments.components.form_scripts',['token'=>$token,'sub_category_id'=>isset($offer)?$deparment->sub_category_id:'0'])
+@include('admin.departments.components.form_scripts',['token'=>$token,'sub_category_id'=>isset($deparment)?$deparment->sub_category_id:'0'])
     <script>
 
 
