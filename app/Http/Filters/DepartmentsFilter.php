@@ -11,7 +11,6 @@ class DepartmentsFilter extends BaseFilters
      */
     protected $filters = [
         'about',
-        'sub_category_id',
         'type',
     ];
 
@@ -47,18 +46,4 @@ class DepartmentsFilter extends BaseFilters
         return $this->builder;
     }
 
-    /**
-     * Filter the query by a given type.
-     *
-     * @param string|int $value
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function sub_category_id($value)
-    {
-        if ($value) {
-            return $this->builder->where('sub_category_id',"$value");
-        }
-
-        return $this->builder;
-    }
 }

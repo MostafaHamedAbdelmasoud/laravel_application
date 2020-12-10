@@ -22,6 +22,10 @@ class DepartmentsApiController extends Controller
      */
     private $filter;
 
+    /**
+     * DepartmentsApiController constructor.
+     * @param DepartmentsFilter $filter
+     */
     public function __construct(DepartmentsFilter $filter)
     {
         $this->filter = $filter;
@@ -30,19 +34,24 @@ class DepartmentsApiController extends Controller
     public function index(Request $request)
     {
         //abort_if(Gate::denies('department_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $departmentQueryBuilder = Department::with(['city', 'category','sub_category'])->filter($this->filter);
+        $departmentQueryBuilder = Department::filter($this->filter)->with('city', 'category','sub_category');
 
         $city_id = $request['city_id'];
 
         $category_id = $request['category_id'];
 
+        $sub_category_id = $request['sub_category_id'];
+
         $about = $request['about'];
 
         if (isset($city_id)) {
-            $departmentQueryBuilder = $departmentQueryBuilder->where(['city_id'=>$city_id]);
+            $departmentQueryBuilder = $departmentQueryBuilder->where('city_id',$city_id);
         }
         if (isset($category_id)) {
-            $departmentQueryBuilder = $departmentQueryBuilder->where(['category_id'=>$category_id]);
+            $departmentQueryBuilder = $departmentQueryBuilder->where('category_id',$category_id);
+        }
+        if (isset($sub_category_id)) {
+            $departmentQueryBuilder = $departmentQueryBuilder->where('sub_category_id',$sub_category_id);
         }
         if (isset($about)) {
             $departmentQueryBuilder = $departmentQueryBuilder->where('about', 'like', "%" . $about . "%");

@@ -35,10 +35,30 @@ class ProductsApiController extends Controller
 
         $trader_id = $request['trader_id'];
 
+        $main_product_type_id = $request['main_product_type_id'];
+
+        $main_product_service_type_id = $request['main_product_service_type_id'];
+
+        $sub_product_type_id = $request['sub_product_type_id'];
+
+        $sub_product_service_type_id = $request['sub_product_service_type_id'];
+
         $details = $request['details'];
 
         if (isset($details)) {
             $productQuery = $productQuery->where('details', 'like', "%$details%");
+        }
+        if (isset($sub_product_service_type_id)) {
+            $productQuery = $productQuery->where('sub_product_service_type_id', $sub_product_service_type_id);
+        }
+        if (isset($sub_product_type_id)) {
+            $productQuery = $productQuery->where('sub_product_type_id', $sub_product_type_id);
+        }
+        if (isset($main_product_service_type_id)) {
+            $productQuery = $productQuery->where('main_product_service_type_id', $main_product_service_type_id);
+        }
+        if (isset($main_product_type_id)) {
+            $productQuery = $productQuery->where('main_product_type_id', $main_product_type_id);
         }
         if (isset($trader_id)) {
             $productQuery = $productQuery->where('trader_id', $trader_id);

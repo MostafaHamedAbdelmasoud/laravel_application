@@ -33,6 +33,7 @@ class OffersApiController extends Controller
 
         //abort_if(Gate::denies('offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $category_id = $request['category_id'];
+        $sub_category_id = $request['sub_category_id'];
         $trader_id = $request['trader_id'];
         $description = $request['description'];
 
@@ -41,6 +42,9 @@ class OffersApiController extends Controller
         }
         if (isset($trader_id)) {
             $offerQueryBuilder = $offerQueryBuilder->where('trader_id', $trader_id);
+        }
+        if (isset($sub_category_id)) {
+            $offerQueryBuilder = $offerQueryBuilder->where('sub_category_id', $sub_category_id);
         }
         if (isset($category_id)) {
             $offerQueryBuilder = $offerQueryBuilder->where('category_id', $category_id);
