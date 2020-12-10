@@ -13,7 +13,7 @@ Auth::routes();
 //Route::group(['middleware' => ['web','auth']], function () {
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
-    , 'middleware' => ['web']
+    , 'middleware' => ['web','auth']
 ], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
