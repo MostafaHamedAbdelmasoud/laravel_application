@@ -30,7 +30,7 @@ class JobsApiController extends Controller
     public function index(Request $request)
     {
 //        abort_if(Gate::denies('index'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $jobQueryBuilder = Job::with(['city', 'specialization'])->where('approved', 1)->whereNull('deleted_at');
+        $jobQueryBuilder = Job::with('city', 'specialization')->where('approved', 1)->whereNull('deleted_at');
 
         $city_id = $request['city_id'];
 

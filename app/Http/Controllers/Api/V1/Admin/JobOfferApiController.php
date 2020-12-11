@@ -29,8 +29,15 @@ class JobOfferApiController extends Controller
     {
         //abort_if(Gate::denies('job_offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $jobOfferQueryBuilder = JobOffer::with(['specialization', 'city'])->filter($this->filter)->where('deleted_at', null);
+        $jobOfferQueryBuilder = JobOffer::with('specialization', 'city')->filter($this->filter)->where('deleted_at', null);
         $details = $request['details'];
+
+        $city_id = $request['city_id'];
+
+
+        if (isset($city_id)) {
+            $jobQueryBuilder = $jobQueryBuilder->where('city_id', $city_id);
+        }
         if (isset($details)) {
             $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details', 'like', "%$details%");
         }

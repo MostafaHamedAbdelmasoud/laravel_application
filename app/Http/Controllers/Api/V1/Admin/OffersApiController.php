@@ -37,7 +37,6 @@ class OffersApiController extends Controller
         $trader_id = $request['trader_id'];
         $description = $request['description'];
 
-
         $city_id = $request['city_id'];
 
 
