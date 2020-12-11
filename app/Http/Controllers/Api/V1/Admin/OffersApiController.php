@@ -37,6 +37,13 @@ class OffersApiController extends Controller
         $trader_id = $request['trader_id'];
         $description = $request['description'];
 
+
+        $city_id = $request['city_id'];
+
+
+        if (isset($city_id)) {
+            $offerQueryBuilder = $offerQueryBuilder->where('city_id', $city_id);
+        }
         if (isset($description)) {
             $offerQueryBuilder = $offerQueryBuilder->where('description', 'like', "%$description%");
         }

@@ -44,6 +44,13 @@ class NewsApiController extends Controller implements ShouldQueue
 
         $news_sub_category_id= $request['news_sub_category_id'];
 
+
+        $city_id = $request['city_id'];
+
+
+        if (isset($city_id)) {
+            $news_query_builder = $news_query_builder->where('city_id', $city_id);
+        }
         if (isset($news_sub_category_id)) {
             $news_query_builder->where('news_sub_category_id',$news_sub_category_id);
         }
