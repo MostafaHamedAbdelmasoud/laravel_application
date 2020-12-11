@@ -36,7 +36,7 @@ class JobOfferApiController extends Controller
 
 
         if (isset($city_id)) {
-            $jobQueryBuilder = $jobQueryBuilder->where('city_id', $city_id);
+            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('city_id', $city_id);
         }
         if (isset($details)) {
             $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('details', 'like', "%$details%");
