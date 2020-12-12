@@ -12,6 +12,7 @@ use App\Models\News;
 use Gate;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -67,8 +68,14 @@ class NewsApiController extends Controller implements ShouldQueue
     {
         $news = News::create($request->all());
 
-        if ($request->file('image')) {
-            $news->addMedia($request->file('image'))->toMediaCollection('image');
+        if ($request->input('image', false)) {
+            foreach ($request->input('image') as $image) {
+                $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+            }
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $news->id]);
         }
 
         return (new NewsResource($news))
@@ -86,14 +93,29 @@ class NewsApiController extends Controller implements ShouldQueue
     public function update(UpdateNewsRequest $request, News $news)
     {
 //        return \response()->json($request);
-        $news->update($request->all());
-        if ($request->file('image')) {
-            if (!$news->image || $request->file('image') !== $news->image->file_name) {
-                if ($news->image) {
-                    $news->image->delete();
-                }
+//        $news->update($request->all());
+//        if ($request->file('image')) {
+//            if (!$news->image || $request->file('image') !== $news->image->file_name) {
+//                if ($news->image) {
+//                    $news->image->delete();
+//                }
+//
+//                $news->addMedia($request->file('image'))->toMediaCollection('image');
+//            }
+//        } elseif ($news->image) {
+//            $news->image->delete();
+//        }
 
-                $news->addMedia($request->file('image'))->toMediaCollection('image');
+
+        if ($request->input('image', false)) {
+            foreach ($request->input('image') as $image) {
+                if (!$news->image || $image !== $news->image->file_name) {
+                    if ($news->image) {
+                        $news->image->delete();
+                    }
+
+                    $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+                }
             }
         } elseif ($news->image) {
             $news->image->delete();
