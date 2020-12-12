@@ -23,7 +23,7 @@ class StoreNewsRequest extends FormRequest
                 'required',
             ],
             'image'        => [
-                'required',
+//                'required',
             ],
             'details'      => [
                 'required',

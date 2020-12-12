@@ -8,42 +8,39 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class StoreJobOfferRequest extends FormRequest
+class UpdateJobOfferRequest extends FormRequest
 {
     public function authorize(Request $request)
     {
-        return $request->expectsJson()?true:  Gate::allows('job_offer_create');
+        return $request->expectsJson() ? true : Gate::allows('job_offer_edit');
     }
 
     public function rules()
     {
         return [
-            'name'                => [
+            'name' => [
                 'string',
                 'required',
             ],
-            'email'               => [
+            'email' => [
                 'required',
             ],
-            'phone_number'        => [
+            'phone_number' => [
                 'string',
                 'required',
             ],
-            'details'             => [
+            'details' => [
                 'required',
             ],
-            'cv'                  => [
-                'required',
-            ],
-            'approved'            => [
+            'approved' => [
 //                'required',
             ],
-            'add_date'            => [
+            'add_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'age'                 => [
-                'integer',
+            'age' => [
+                'digits_between:1,3',
                 'nullable',
             ],
             'years_of_experience' => [

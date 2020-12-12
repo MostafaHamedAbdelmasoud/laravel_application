@@ -12,35 +12,35 @@ class UpdateJobOfferRequest extends FormRequest
 {
     public function authorize(Request $request)
     {
-        return $request->expectsJson()?true:  Gate::allows('job_offer_edit');
+        return $request->expectsJson() ? true : Gate::allows('job_offer_edit');
     }
 
     public function rules()
     {
         return [
-            'name'                => [
+            'name' => [
                 'string',
                 'required',
             ],
-            'email'               => [
+            'email' => [
                 'required',
             ],
-            'phone_number'        => [
+            'phone_number' => [
                 'string',
                 'required',
             ],
-            'details'             => [
+            'details' => [
                 'required',
             ],
-            'approved'            => [
-                'required',
+            'approved' => [
+//                'required',
             ],
-            'add_date'            => [
+            'add_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'age'                 => [
-                'number',
+            'age' => [
+                'digits_between:1,3',
                 'nullable',
             ],
             'years_of_experience' => [

@@ -90,6 +90,11 @@ class News extends Model implements HasMedia
     }
 
 
+//    public function user()
+//    {
+//        return $this->belongsTo(user::class);
+//    }
+
     public function news_category()
     {
         return $this->belongsTo(NewsCategory::class);

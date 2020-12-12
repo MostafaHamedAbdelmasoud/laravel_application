@@ -23,11 +23,11 @@
 
 
             <div class="form-group">
-                <label class="required" for="category_id">{{ trans('cruds.news_sub_category.fields.category_id') }}</label>
+                <label class="required" for="news_category_id">{{ trans('cruds.news_sub_category.fields.news_category_id') }}</label>
 
-                <select class="form-control select2 {{ $errors->has('category_id') ? 'is-invalid' : '' }}" name="category_id" id="category_id"  required>
-                    @foreach($categories as $id => $value)
-                        <option value="{{ $id }}" {{ in_array($id, old('value', [$news_sub_category->category->id])) ? 'selected' : '' }}>{{ $value }}</option>
+                <select class="form-control select2 {{ $errors->has('news_category_id') ? 'is-invalid' : '' }}" name="news_category_id" id="news_category_id"  required>
+                    @foreach($news_categories  as $id => $value)
+                        <option value="{{ $id }}" {{ in_array($id, old('value', [$news_sub_category->news_category->id])) ? 'selected' : '' }}>{{ $value }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('category_id'))
@@ -35,7 +35,7 @@
                         {{ $errors->first('category_id') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.news_sub_category.fields.category_id_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.news_sub_category.fields.news_category_id_helper') }}</span>
             </div>
 
 

@@ -36,13 +36,13 @@ class NewsApiController extends Controller implements ShouldQueue
     public function index(Request $request)
     {
         //abort_if(Gate::denies('news_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $news_query_builder = News::with('news_category', 'city')->where('approved', 1)->whereNull('deleted_at')->filter($this->filter);
+        $news_query_builder = News::with('news_category', 'city', 'user')->where('approved', 1)->whereNull('deleted_at')->filter($this->filter);
 
-        $news_category_id= $request['news_category_id'];
+        $news_category_id = $request['news_category_id'];
 
-        $details= $request['details'];
+        $details = $request['details'];
 
-        $news_sub_category_id= $request['news_sub_category_id'];
+        $news_sub_category_id = $request['news_sub_category_id'];
 
 
         $city_id = $request['city_id'];
@@ -52,10 +52,10 @@ class NewsApiController extends Controller implements ShouldQueue
             $news_query_builder = $news_query_builder->where('city_id', $city_id);
         }
         if (isset($news_sub_category_id)) {
-            $news_query_builder->where('news_sub_category_id',$news_sub_category_id);
+            $news_query_builder->where('news_sub_category_id', $news_sub_category_id);
         }
         if (isset($news_category_id)) {
-            $news_query_builder->where('news_category_id',$news_category_id);
+            $news_query_builder->where('news_category_id', $news_category_id);
         }
         if (isset($details)) {
             $news_query_builder->where('details', 'like', "%$details%");

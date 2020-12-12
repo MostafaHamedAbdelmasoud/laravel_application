@@ -29,7 +29,8 @@ class JobOfferApiController extends Controller
     {
         //abort_if(Gate::denies('job_offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $jobOfferQueryBuilder = JobOffer::with('specialization', 'city')->filter($this->filter)->where('deleted_at', null);
+        $jobOfferQueryBuilder = JobOffer::with('specialization', 'city')->filter($this->filter)->where([['deleted_at', null],['approved',1]]);
+
         $details = $request['details'];
 
         $city_id = $request['city_id'];
@@ -46,16 +47,16 @@ class JobOfferApiController extends Controller
 
     public function store(StoreJobOfferRequest $request)
     {
-//        return $request->all();
+        return $request->file();
         $jobOffer = JobOffer::create($request->all());
 
         if ($request->input('photo', false)) {
             $jobOffer->addMedia($request->input('photo'))->toMediaCollection('photo');
         }
-
         if ($request->input('cv', false)) {
             $jobOffer->addMedia($request->input('cv'))->toMediaCollection('cv');
         }
+return $jobOffer;
 
         return (new JobOfferResource($jobOffer))
             ->response()

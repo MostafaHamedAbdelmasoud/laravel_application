@@ -86,7 +86,7 @@ class NewsSubCategoriesController extends Controller
         $news_categories = NewsCategory::pluck('name', 'id');
 
 
-        return view('admin.news_sub_categories.edit', compact('sub_category', 'news_categories'));
+        return view('admin.news_sub_categories.edit', compact('news_sub_category', 'news_categories'));
     }
 
     public function update(UpdateNewsSubCategoryRequest $request, NewsSubCategory $news_sub_category)

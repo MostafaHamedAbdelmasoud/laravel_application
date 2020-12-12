@@ -20,39 +20,39 @@ class UpdateNewsRequest extends FormRequest
         return [
             'name' => [
                 'string',
-//                'required',
+                'required',
             ],
             'image' => [
 //                'required',
             ],
             'details' => [
-//                'required',
+                'required',
             ],
             'detailed_title' => [
-//                'required',
+                'required',
             ],
             'news_category_id' => [
-//                'required',
+                'required',
                 'integer',
                 'exists:news_categories,id'
             ],
             'news_sub_category_id' => [
-//                'required',
+                'required',
                 'integer',
                 'exists:news_sub_categories,id'
             ],
             'city_id' => [
-//                'required',
+                'required',
                 'integer',
                 'exists:cities,id',
             ],
             'add_date' => [
-//                'required',
+                'required',
                 'date_format:' . config('panel.date_format'),
             ],
             'phone_number' => [
                 'string',
-//                'required',
+                'required',
             ],
         ];
     }
