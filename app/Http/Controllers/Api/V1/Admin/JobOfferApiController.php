@@ -47,7 +47,6 @@ class JobOfferApiController extends Controller
 
     public function store(StoreJobOfferRequest $request)
     {
-        return $request->file();
         $jobOffer = JobOffer::create($request->all());
 
         if ($request->input('photo', false)) {
@@ -56,7 +55,6 @@ class JobOfferApiController extends Controller
         if ($request->input('cv', false)) {
             $jobOffer->addMedia($request->input('cv'))->toMediaCollection('cv');
         }
-return $jobOffer;
 
         return (new JobOfferResource($jobOffer))
             ->response()

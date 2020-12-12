@@ -93,6 +93,7 @@ class NewsApiController extends Controller implements ShouldQueue
     public function update(UpdateNewsRequest $request, News $news)
     {
 //        return \response()->json($request);
+
 //        $news->update($request->all());
 //        if ($request->file('image')) {
 //            if (!$news->image || $request->file('image') !== $news->image->file_name) {
