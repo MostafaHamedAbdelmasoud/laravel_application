@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UpdateJobOfferRequest extends FormRequest
+class StoreJobOfferRequest extends FormRequest
 {
     public function authorize(Request $request)
     {
