@@ -34,8 +34,12 @@ class JobOfferApiController extends Controller
         $details = $request['details'];
 
         $city_id = $request['city_id'];
+        $specialization_id = $request['specialization_id'];
 
 
+        if (isset($specialization_id)) {
+            $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('specialization_id', $specialization_id);
+        }
         if (isset($city_id)) {
             $jobOfferQueryBuilder = $jobOfferQueryBuilder->where('city_id', $city_id);
         }
@@ -49,7 +53,7 @@ class JobOfferApiController extends Controller
     {
         $jobOffer = JobOffer::create($request->all());
 
-//        $cnt = count($request->file('image'));
+        //        $cnt = count($request->file('image'));
 
         $path = storage_path('tmp/uploads');
         try {
@@ -61,18 +65,18 @@ class JobOfferApiController extends Controller
 
         if ($request->hasFile('photo')) {
 
-//            for ($i = 0; $i < $cnt; $i++) {
+            //            for ($i = 0; $i < $cnt; $i++) {
 
-//                $photo = $request->file('photo')[$i];
-                $photo = $request->file('photo');
+            //                $photo = $request->file('photo')[$i];
+            $photo = $request->file('photo');
 
-                $name = uniqid() . '_' . trim($photo->getClientOriginalName());
+            $name = uniqid() . '_' . trim($photo->getClientOriginalName());
 
-                $photo->move($path, $name);
+            $photo->move($path, $name);
 
-                $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('photo');
+            $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('photo');
 
-//            }
+            //            }
 
         }
 
@@ -86,7 +90,6 @@ class JobOfferApiController extends Controller
             $cv->move($path, $name);
 
             $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('cv');
-
         }
 
 
@@ -98,7 +101,7 @@ class JobOfferApiController extends Controller
     public function show($jobOffer)
     {
         return JobOffer::findOrFail($jobOffer)->first();
-//            ->cv;
+        //            ->cv;
         //abort_if(Gate::denies('job_offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new JobOfferResource(JobOffer::findOrFail($jobOffer)->load(['specialization', 'city']));
