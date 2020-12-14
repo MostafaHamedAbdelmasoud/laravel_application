@@ -30,8 +30,9 @@ class AuthServiceProvider extends ServiceProvider
 //        if (!app()->runningInConsole()) {
 //        };
 
-        Passport::tokensExpireIn(now()->addYears(15));
+        Passport::tokensExpireIn(now()->addYears(40));
         Passport::refreshTokensExpireIn(now()->addYears(30));
+
         Passport::personalAccessTokensExpireIn(now()->addYears(40));
     }
 }
