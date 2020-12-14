@@ -29,7 +29,7 @@ class JobOfferApiController extends Controller
     {
         //abort_if(Gate::denies('job_offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $jobOfferQueryBuilder = JobOffer::with('specialization', 'city')->filter($this->filter)->where([['deleted_at', null],['approved',1]]);
+        $jobOfferQueryBuilder = JobOffer::with('specialization', 'city')->filter($this->filter)->where([['deleted_at', null], ['approved', 1]]);
 
         $details = $request['details'];
 
@@ -49,12 +49,46 @@ class JobOfferApiController extends Controller
     {
         $jobOffer = JobOffer::create($request->all());
 
-        if ($request->input('photo', false)) {
-            $jobOffer->addMedia($request->input('photo'))->toMediaCollection('photo');
+//        $cnt = count($request->file('image'));
+
+        $path = storage_path('tmp/uploads');
+        try {
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+        } catch (\Exception $e) {
         }
-        if ($request->input('cv', false)) {
-            $jobOffer->addMedia($request->input('cv'))->toMediaCollection('cv');
+
+        if ($request->hasFile('image')) {
+
+//            for ($i = 0; $i < $cnt; $i++) {
+
+//                $image = $request->file('image')[$i];
+                $image = $request->file('image');
+
+                $name = uniqid() . '_' . trim($image->getClientOriginalName());
+
+                $image->move($path, $name);
+
+                $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
+
+//            }
+
         }
+
+
+        if ($request->hasFile('cv')) {
+
+            $cv = $request->file('cv');
+
+            $name = uniqid() . '_' . trim($cv->getClientOriginalName());
+
+            $cv->move($path, $name);
+
+            $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('cv');
+
+        }
+
 
         return (new JobOfferResource($jobOffer))
             ->response()

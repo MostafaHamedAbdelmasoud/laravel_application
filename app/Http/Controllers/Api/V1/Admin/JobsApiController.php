@@ -55,8 +55,31 @@ class JobsApiController extends Controller
     {
         $job = Job::create($request->all());
 
-        if ($request->input('image', false)) {
-            $job->addMedia($request->input('image'))->toMediaCollection('image');
+//        $cnt = count($request->file('image'));
+
+        $path = storage_path('tmp/uploads');
+        try {
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+        } catch (\Exception $e) {
+        }
+
+        if ($request->hasFile('image')) {
+
+//            for ($i = 0; $i < $cnt; $i++) {
+
+//                $image = $request->file('image')[$i];
+                $image = $request->file('image');
+
+                $name = uniqid() . '_' . trim($image->getClientOriginalName());
+
+                $image->move($path, $name);
+
+                $job->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
+
+//            }
+
         }
 
         return (new JobResource($job))

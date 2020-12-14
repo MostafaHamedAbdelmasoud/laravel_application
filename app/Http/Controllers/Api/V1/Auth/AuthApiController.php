@@ -42,7 +42,10 @@ class AuthApiController extends Controller
     {
         $request->validate([
             'phone_number' => 'required|exists:users,phone_number',
+        ],[
+            'phone_number.exists' => 'هذا الرقم ليس مُسجل من قبل!'
         ]);
+
         $user = User::where('phone_number',$request->phone_number)->first();
 
         if ($user) {
@@ -55,7 +58,7 @@ class AuthApiController extends Controller
         }
 
         return response()->json([
-            'message' => 'البيانات خاطئة'
+            'message' => 'لم تستطيع إيجاد المستخدم!'
         ]);
     }
 }

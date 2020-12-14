@@ -9,6 +9,6 @@ class NewsResource extends JsonResource
     public function toArray($request)
     {
 
-        return parent::toArray($request->except('image'));
+        return parent::toArray($request);
     }
 }

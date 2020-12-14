@@ -13,6 +13,7 @@ use Gate;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -66,21 +67,35 @@ class NewsApiController extends Controller implements ShouldQueue
 
     public function store(StoreNewsRequest $request)
     {
+        $cnt = count($request->file('image'));
         $news = News::create($request->all());
 
-        if ($request->input('image', false)) {
-            foreach ($request->input('image') as $image) {
-                $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+        $path = storage_path('tmp/uploads');
+        try {
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
             }
+        } catch (\Exception $e) {
         }
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $news->id]);
-        }
+        if ($request->hasFile('image')) {
 
-        return (new NewsResource($news))
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+            for ($i = 0; $i < $cnt; $i++) {
+
+                $image = $request->file('image')[$i];
+
+                $name = uniqid() . '_' . trim($image->getClientOriginalName());
+
+                $image->move($path, $name);
+
+                $news->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
+
+            }
+
+        }
+            return (new NewsResource($news))
+                ->response()
+                ->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show($news)
