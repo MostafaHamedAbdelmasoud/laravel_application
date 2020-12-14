@@ -72,7 +72,15 @@ class JobOffer extends Model implements HasMedia
 
     public function getCvAttribute()
     {
-        return $this->getMedia('cv')->last();
+        $file =  $this->getMedia('cv')->last();
+
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function specialization()

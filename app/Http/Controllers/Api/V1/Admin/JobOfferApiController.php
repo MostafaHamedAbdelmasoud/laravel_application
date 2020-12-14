@@ -59,18 +59,18 @@ class JobOfferApiController extends Controller
         } catch (\Exception $e) {
         }
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('photo')) {
 
 //            for ($i = 0; $i < $cnt; $i++) {
 
-//                $image = $request->file('image')[$i];
-                $image = $request->file('image');
+//                $photo = $request->file('photo')[$i];
+                $photo = $request->file('photo');
 
-                $name = uniqid() . '_' . trim($image->getClientOriginalName());
+                $name = uniqid() . '_' . trim($photo->getClientOriginalName());
 
-                $image->move($path, $name);
+                $photo->move($path, $name);
 
-                $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
+                $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('photo');
 
 //            }
 
@@ -97,6 +97,8 @@ class JobOfferApiController extends Controller
 
     public function show($jobOffer)
     {
+        return JobOffer::findOrFail($jobOffer)->first();
+//            ->cv;
         //abort_if(Gate::denies('job_offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new JobOfferResource(JobOffer::findOrFail($jobOffer)->load(['specialization', 'city']));
