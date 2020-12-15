@@ -206,13 +206,13 @@
                 height: 4096
             },
             success: function (file, response) {
-                // $('form').find('input[name="image"]').remove()
+                // $('form').find('input[name="image[]"]').remove()
                 $('form').append('<input type="hidden" name="image[]" value="' + response.name + '">')
             },
             removedfile: function (file) {
                 file.previewElement.remove()
                 if (file.status !== 'error') {
-                    $('form').find('input[name="image"]').remove()
+                    $('form').find('input[name="image[]"]').remove()
                     this.options.maxFiles = this.options.maxFiles + 1
                 }
             },

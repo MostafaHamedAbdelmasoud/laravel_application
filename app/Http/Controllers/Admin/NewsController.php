@@ -14,6 +14,7 @@ use App\Models\NewsCategory;
 use App\Models\NewsSubCategory;
 use App\Models\Offer;
 use App\Repositories\GateRepository;
+use App\Repositories\NewsRepository;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -194,26 +195,12 @@ class NewsController extends Controller
 
         $news->update($request->all());
 
+
+        $news_repo = new NewsRepository;
+
         if ($request->input('image', false)) {
-//        return $request->input('image');
-//        return   $news->getMedia('image');
-            $not_found = 0;
-            foreach ($request->input('image') as $image) {
+            $news_repo->updateMedia($news, $news->getMedia('image'), $request->input('image'));
 
-                foreach ($news->getMedia('image') as $news_image) {
-                    if ($image !== $news_image->file_name) {
-                        $not_found = 1;
-
-                        $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
-                    }
-                }
-                if ($not_found) {
-                    $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
-                    $news->image->delete();
-                    $not_found = 0;
-                }
-
-            }
         } elseif ($news->image) {
             $news->image->delete();
         }
