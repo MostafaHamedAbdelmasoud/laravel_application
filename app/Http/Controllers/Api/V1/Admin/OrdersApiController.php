@@ -12,6 +12,7 @@ use App\Models\OrderProduct;
 use Exception;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,33 +30,45 @@ class OrdersApiController extends Controller
     {
         DB::beginTransaction();
         try {
-            $order = Order::create($request->all());
+
+            if (Auth::check()) {
+                $user_id = Auth::user()->id;
+                $request['user_id'] = $user_id;
+            } else {
+                return 'لا يوجد مستخدم للطلب';
+            }
 
             if ($request->coupon_code) {
                 $coupon = Coupon::where('code', $request->coupon_code)->first();
                 if (!$coupon || $coupon->max_usage_per_user <= 0) {
                     return response()->json([
-                       'message' => 'الكوبون غير صالح!'
+                        'message' => 'الكوبون غير صالح!'
                     ]);
                 } else {
                     $coupon->max_usage_per_user -= 1;
+
+                    $request['coupon_id'] = $coupon->id;
                 }
             }
+
+            $order = Order::create($request->all());
+
 
             foreach ($request->product_variant as $product_variant) {
                 OrderProduct::create([
 
                     'product_variant_id' => $product_variant,
 
-                    'order_id' => $order->id
+                    'order_id' => $order->id,
+                    'quantity' => $request->quantity
                 ]);
             }
 
             DB::commit();
 
-            return (new OrderResource($order))
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+            return (new OrderResource($order->load(['coupon', 'OrderProducts'])))
+                ->response()
+                ->setStatusCode(Response::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollback();
 

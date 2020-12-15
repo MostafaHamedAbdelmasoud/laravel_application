@@ -19,7 +19,7 @@ class Coupon extends Model
     /**
      * @var string
      */
-    public $table = 'coupons';
+    protected $table = 'coupons';
 
 
     /**
@@ -27,7 +27,7 @@ class Coupon extends Model
      *
      * @var array
      */
-    public $fillable = [
+    protected $fillable = [
         'code',
         'percentage_discount',
         'fixed_discount',

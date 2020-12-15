@@ -24,6 +24,7 @@ class Order extends Model
     protected $with = [
         'user',
         'coupon',
+        'OrderProducts'
     ];
 
     /**

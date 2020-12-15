@@ -85,6 +85,8 @@ class NewsCategoriesController extends Controller
 
         PermissionHelper::createPermissionWithModelAttribute($news_category->name);
 
+        PermissionHelper::createPermissionWithModelAttribute($news_category->name);
+
 
         return redirect()->route('admin.news_categories.index');
     }

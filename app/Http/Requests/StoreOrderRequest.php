@@ -5,28 +5,24 @@ namespace App\Http\Requests;
 use App\Models\Category;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class StoreOrderRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(Request $request)
     {
-        return Gate::allows('order_create');
+        return $request->expectsJson()?true:  Gate::allows('order_create');
     }
 
     public function rules()
     {
         return [
             'product_variant' => [
-                'array',
                 'required'
             ],
-            'product_variant.*' => [
-                'string',
-                'exists:product_variant,id',
-            ],
             'user_id' => [
-                'required',
+//                'required',
                 'exists:users,id',
             ],
             'coupon_id' => [

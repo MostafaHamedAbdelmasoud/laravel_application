@@ -85,6 +85,7 @@ class NewsSubCategoriesController extends Controller
 
         $news_categories = NewsCategory::pluck('name', 'id');
 
+        PermissionHelper::createPermissionWithModelAttribute($news_sub_category->name);
 
         return view('admin.news_sub_categories.edit', compact('news_sub_category', 'news_categories'));
     }

@@ -99,4 +99,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function AauthAcessToken(){
+        return $this->hasMany('\App\OauthAccessToken');
+    }
 }

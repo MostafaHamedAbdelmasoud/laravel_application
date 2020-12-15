@@ -27,6 +27,7 @@ class AuthApiController extends Controller
         ]);
 
         $token = $user->createToken($user->phone_number . '-' . now());
+        Auth::login($user);
 
         return response()->json([
             'user' => $user,
@@ -42,16 +43,17 @@ class AuthApiController extends Controller
     {
         $request->validate([
             'phone_number' => 'required|exists:users,phone_number',
-        ],[
+        ], [
             'phone_number.exists' => 'هذا الرقم ليس مُسجل من قبل!'
         ]);
 
-        $user = User::where('phone_number',$request->phone_number)->first();
+        $user = User::where('phone_number', $request->phone_number)->first();
 
         if ($user) {
 
             $token = $user->createToken($user->phone_number . '-' . now());
-
+            Auth::login($user);
+//            $token = Auth::user()->AauthAcessToken()->first();
             return response()->json([
                 'token' => $token->accessToken
             ]);

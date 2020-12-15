@@ -113,7 +113,7 @@ class NewsController extends Controller
             });
 
             $table->editColumn('approved', function ($row) {
-                return $row->approved ? "نعم": "لا";
+                return $row->approved ? "نعم" : "لا";
             });
 
             $table->editColumn('image', function ($row) {
@@ -189,19 +189,30 @@ class NewsController extends Controller
 
     public function update(UpdateNewsRequest $request, News $news)
     {
-        $request['approved'] = $request['approved']?1:0;
+
+        $request['approved'] = $request['approved'] ? 1 : 0;
 
         $news->update($request->all());
 
         if ($request->input('image', false)) {
+//        return $request->input('image');
+//        return   $news->getMedia('image');
+            $not_found = 0;
             foreach ($request->input('image') as $image) {
-                if (!$news->image || $image !== $news->image->file_name) {
-                    if ($news->image) {
-                        $news->image->delete();
-                    }
 
-                    $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+                foreach ($news->getMedia('image') as $news_image) {
+                    if ($image !== $news_image->file_name) {
+                        $not_found = 1;
+
+                        $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+                    }
                 }
+                if ($not_found) {
+                    $news->addMedia(storage_path('tmp/uploads/' . $image))->toMediaCollection('image');
+                    $news->image->delete();
+                    $not_found = 0;
+                }
+
             }
         } elseif ($news->image) {
             $news->image->delete();
