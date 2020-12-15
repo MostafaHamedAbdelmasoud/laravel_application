@@ -33,7 +33,6 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
 //        if (!app()->runningInConsole()) {
 //        };
-        $this->app->get(AuthorizationServer::class)->enableGrantType(new PersonalAccessGrant(), new \DateInterval('P24Y'));
 
         Passport::tokensExpireIn(Carbon::now()->addYears(40));
         Passport::refreshTokensExpireIn(Carbon::now()->addYears(40));
