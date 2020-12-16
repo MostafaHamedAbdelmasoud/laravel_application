@@ -210,9 +210,11 @@
                 $('form').append('<input type="hidden" name="image[]" value="' + response.name + '">')
             },
             removedfile: function (file) {
-                file.previewElement.remove()
+
+                file.previewElement.remove();
+
                 if (file.status !== 'error') {
-                    $('form').find('input[name="image[]"]').remove()
+                    $('form').find('input[value="'  + file.file_name + '"]').remove();
                     this.options.maxFiles = this.options.maxFiles + 1
                 }
             },
@@ -221,8 +223,8 @@
                 let file = {!! json_encode($news->getMedia('image')) !!};
                 for (var i in file) {
                     this.options.addedfile.call(this, file[i])
-                    console.log(file[i]);
-                    this.options.thumbnail.call(this, file[i], location.origin + '/storage/'+file[i].id+'/'+file[i].file_name)
+                    // console.log(file[i]);
+                    this.options.thumbnail.call(this, file[i], location.origin + '/storage/' + file[i].id + '/' + file[i].file_name)
                     file[i].previewElement.classList.add('dz-complete')
                     $('form').append('<input type="hidden" name="image[]" value="' + file[i].file_name + '">')
                     this.options.maxFiles = this.options.maxFiles - 1

@@ -194,11 +194,10 @@ class NewsController extends Controller
         $request['approved'] = $request['approved'] ? 1 : 0;
 
         $news->update($request->all());
-
-
         $news_repo = new NewsRepository;
 
         if ($request->input('image', false)) {
+
             $news_repo->updateMedia($news, $news->getMedia('image'), $request->input('image'));
 
         } elseif ($news->image) {
