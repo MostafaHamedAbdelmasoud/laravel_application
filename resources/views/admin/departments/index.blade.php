@@ -4,8 +4,17 @@
 
 
     <div style="margin-bottom: 10px;" class="row ">
+
         <div class="col-md-6 text-right ">
+
+            @if(session('success'))
+                <div class="alert alert-success">تم الإضافة</div>
+            @elseif(session('error'))
+                <div class="alert alert-danger">{!! \Session::get('error') !!}</div>
+            @endif
         </div>
+
+
         <div class="col-md-6 text-right ">
 
             <form class="text-center border-dark" enctype="multipart/form-data" action="{{route('admin.upload_departments_excel')}}" method="post" >
@@ -20,12 +29,7 @@
             </form>
 
         </div>
-        <div class="col-md-6 text-right ">
 
-            @if(session('success'))
-                <div class="alert alert-success">تم الإضافة</div>
-            @endif
-        </div>
     </div>
 
     <div style="margin-bottom: 10px;" class="row">

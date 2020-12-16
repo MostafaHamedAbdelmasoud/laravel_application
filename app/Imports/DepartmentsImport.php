@@ -13,12 +13,14 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Excel;
+use Illuminate\Validation\ValidationException;
+
 
 class DepartmentsImport implements ToModel, WithHeadingRow
 {
     private $excel_file;
 
-    public function __construct($excel_file=null)
+    public function __construct($excel_file = null)
     {
         $this->excel_file = $excel_file;
     }
@@ -27,38 +29,45 @@ class DepartmentsImport implements ToModel, WithHeadingRow
      * @param array $row
      *
      * @return Department
+     * @throws ValidationException
      */
     public function model(array $row)
     {
 
 
-        $city= City::where('name', $row[trans("cruds.department.fields.city")])->first();
+        $city = City::where('name', $row[trans("cruds.department.fields.city")])->first();
         $trader = Trader::where('name', $row[trans("cruds.department.fields.trader")])->first();
         $category = Category::where('name', $row[trans("cruds.department.fields.category")])->first();
         $sub_category = SubCategory::where('name', $row[trans("cruds.department.fields.sub_category")])->first();
 
-        $department =  Department::create([
+        if (!$city || !$trader || !$category || !$sub_category) {
+            throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
+        }
+        $department = Department::create([
             'name' => $row[trans("cruds.department.fields.name")],
             'about' => $row[trans('cruds.department.fields.about')],
             'phone_number' => $row[trans('cruds.department.fields.phone_number')],
-            'city_id' => $city?$city->id:'',
-            'trader_id' => $trader?$trader->id:'',
-            'category_id' => $category ?$category->id:'',
-            'sub_category_id' => $sub_category ?$sub_category->id:'',
+            'city_id' => $city ? $city->id : '',
+            'trader_id' => $trader ? $trader->id : '',
+            'category_id' => $category ? $category->id : '',
+            'sub_category_id' => $sub_category ? $sub_category->id : '',
         ]);
 
-        if($this->excel_file)
-            $this->importImage($department,$this->excel_file);
+        if ($this->excel_file)
+            $this->importImage($department, $this->excel_file);
 
         return $department;
     }
 
-    public function drawings()
+    public function rules(): array
     {
+        return [
+            'category_id' => 'exists:categories,id',
 
+        ];
     }
 
-    public function importImage($model,$spreadsheet)
+    public function importImage($model, $spreadsheet)
     {
         $i = 0;
         foreach ($spreadsheet->getActiveSheet()->getDrawingCollection() as $drawing) {
@@ -82,17 +91,17 @@ class DepartmentsImport implements ToModel, WithHeadingRow
                         break;
                 }
             } else {
-                $zipReader = fopen($drawing->getPath(),'r');
+                $zipReader = fopen($drawing->getPath(), 'r');
                 $imageContents = '';
                 while (!feof($zipReader)) {
-                    $imageContents .= fread($zipReader,1024);
+                    $imageContents .= fread($zipReader, 1024);
                 }
                 fclose($zipReader);
                 $extension = $drawing->getExtension();
             }
-            $myFileName = uniqid().'_000_Image_'.++$i.'.'.$extension;
-            file_put_contents($myFileName,$imageContents);
-            $model->addMedia( $myFileName)->toMediaCollection('logo');
+            $myFileName = uniqid() . '_000_Image_' . ++$i . '.' . $extension;
+            file_put_contents($myFileName, $imageContents);
+            $model->addMedia($myFileName)->toMediaCollection('logo');
 
             Storage::delete($myFileName);
         }

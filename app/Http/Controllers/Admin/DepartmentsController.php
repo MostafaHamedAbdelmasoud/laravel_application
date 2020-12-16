@@ -237,7 +237,7 @@ class DepartmentsController extends Controller
             return back()->with('success', 'All good!');
 
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return back()->with('error', $e->getMessage());
         }
 
     }
