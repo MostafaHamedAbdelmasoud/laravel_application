@@ -210,9 +210,9 @@
                 $('form').append('<input type="hidden" name="image[]" value="' + response.name + '">')
             },
             removedfile: function (file) {
-
+                console.log($('form'));
                 file.previewElement.remove();
-
+                console.log(file);
                 if (file.status !== 'error') {
                     $('form').find('input[value="'  + file.file_name + '"]').remove();
                     this.options.maxFiles = this.options.maxFiles + 1
