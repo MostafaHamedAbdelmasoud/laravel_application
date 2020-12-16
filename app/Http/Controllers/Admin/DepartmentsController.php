@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDepartmentRequest;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
+use App\Imports\DepartmentsImport;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Department;
@@ -14,6 +15,8 @@ use App\Models\SubCategory;
 use App\Repositories\GateRepository;
 use Gate;
 use Illuminate\Http\Request;
+use Excel;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -223,5 +226,19 @@ class DepartmentsController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function uploadExcel(Request $request)
+    {
+        try {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file('excel_file'));
+
+             Excel::import(new DepartmentsImport($spreadsheet), $request->file('excel_file'));
+            return back()->with('success', 'All good!');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 }

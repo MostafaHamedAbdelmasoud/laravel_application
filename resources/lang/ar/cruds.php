@@ -252,6 +252,8 @@ return [
             'logo_helper' => ' ',
             'about' => 'نبذة عن المحل',
             'about_helper' => ' ',
+            'trader' => 'التاجر',
+            'trader_helper' => ' ',
             'created_at' => 'Created at',
             'created_at_helper' => ' ',
             'updated_at' => 'Updated at',

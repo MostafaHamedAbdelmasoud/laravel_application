@@ -1,6 +1,33 @@
 @extends('layouts.admin')
 @section('content')
 @can('department_create')
+
+
+    <div style="margin-bottom: 10px;" class="row ">
+        <div class="col-md-6 text-right ">
+        </div>
+        <div class="col-md-6 text-right ">
+
+            <form class="text-center border-dark" enctype="multipart/form-data" action="{{route('admin.upload_departments_excel')}}" method="post" >
+                @csrf
+
+                <div class="py-2 w-100 form-group btn btn-success py-2" >
+                        <span>ملف الإكسل </span>
+                        <br>
+                        <input type="file" name="excel_file">
+                </div>
+                        <button class="btn btn-outline-primary">حفظ</button>
+            </form>
+
+        </div>
+        <div class="col-md-6 text-right ">
+
+            @if(session('success'))
+                <div class="alert alert-success">تم الإضافة</div>
+            @endif
+        </div>
+    </div>
+
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.departments.create') }}">
@@ -46,7 +73,7 @@
                         {{ trans('cruds.department.fields.sub_category') }}
                     </th>
                     <th>
-                        {{ trans('cruds.offer.fields.trader') }}
+                        {{ trans('cruds.department.fields.trader') }}
                     </th>
                     <th>
                         &nbsp;

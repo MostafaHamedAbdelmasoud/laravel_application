@@ -1,13 +1,44 @@
 @extends('layouts.admin')
 @section('content')
     @can('job_create')
-        <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route('admin.jobs.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.job.title_singular') }}
-                </a>
+
+
+            <div style="margin-bottom: 10px;" class="row ">
+                <div class="col-md-6 text-right ">
+
+                    <form enctype="multipart/form-data" action="{{route('admin.upload_jobs_excel')}}" method="post">
+                        @csrf
+
+
+                        <div class="file-field">
+                            <div class="btn btn-success  btn-sm float-left text-left">
+                                <span>ملف الإكسل </span>
+                                <br>
+                                <input type="file" name="excel_file">
+                                <button class="btn btn-success">حفظ</button>
+                            </div>
+                            </div>
+                    </form>
+
+                </div>
+                <div class="col-md-6 text-right ">
+
+                    @if(session('success'))
+                        <div class="alert alert-success">تم الإضافة</div>
+                    @endif
+                </div>
             </div>
-        </div>
+
+
+            <div style="margin-bottom: 10px;" class="row">
+                <div class="col-lg-12 my-4">
+                    <a class="btn btn-success" href="{{ route('admin.jobs.create') }}">
+                        {{ trans('global.add') }} {{ trans('cruds.job.title_singular') }}
+                    </a>
+                </div>
+
+
+            </div>
     @endcan
     <div class="card">
         <div class="card-header">

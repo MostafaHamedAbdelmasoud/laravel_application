@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('departments/media', 'DepartmentsController@storeMedia')->name('departments.storeMedia');
     Route::post('departments/ckmedia', 'DepartmentsController@storeCKEditorImages')->name('departments.storeCKEditorImages');
     Route::resource('departments', 'DepartmentsController');
+    Route::post('/upload_departments_excel', 'DepartmentsController@uploadExcel')->name('upload_departments_excel');
 
     // Categories
     Route::delete('categories/destroy', 'CategoriesController@massDestroy')->name('categories.massDestroy');
@@ -111,6 +112,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('jobs/media', 'JobsController@storeMedia')->name('jobs.storeMedia');
     Route::post('jobs/ckmedia', 'JobsController@storeCKEditorImages')->name('jobs.storeCKEditorImages');
     Route::resource('jobs', 'JobsController');
+    Route::post('/upload_jobs_excel', 'JobsController@uploadExcel')->name('upload_jobs_excel');
 
     // News
     Route::delete('news/destroy', 'NewsController@massDestroy')->name('news.massDestroy');

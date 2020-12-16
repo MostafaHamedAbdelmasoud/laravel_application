@@ -7,13 +7,16 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyJobRequest;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Imports\JobsImport;
 use App\Models\City;
 use App\Models\Job;
 use App\Models\Specialization;
 use Gate;
 use Illuminate\Http\Request;
+use Excel;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+//use Vtiful\Kernel\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class JobsController extends Controller
@@ -176,12 +179,19 @@ class JobsController extends Controller
     public function storeCKEditorImages(Request $request)
     {
         //abort_if(Gate::denies('job_create') && Gate::denies('job_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+    \Maatwebsite\Excel\Excel::
         $model         = new Job();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function uploadExcel(Request $request)
+    {
+        Excel::import(new JobsImport, $request->file('excel_file'));
+
+        return back()->with('success', 'All good!');
     }
 }

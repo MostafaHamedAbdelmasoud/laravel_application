@@ -21,6 +21,8 @@ class Job extends Model implements HasMedia
         'image',
     ];
 
+
+
     protected $dates = [
         'add_date',
         'created_at',
@@ -95,4 +97,5 @@ class Job extends Model implements HasMedia
     {
         return $this->approved? 'نعم' : 'لا';
     }
+
 }
