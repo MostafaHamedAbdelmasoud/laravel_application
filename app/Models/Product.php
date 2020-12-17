@@ -32,7 +32,7 @@ class Product extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'name',
+        'address',
         'show_trader_name',
         'city_id',
         'department_id',

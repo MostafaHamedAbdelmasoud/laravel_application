@@ -14,51 +14,41 @@ class ExtractImageFromExcelHelper
      * @param $model
      * @param $mediaCollection
      * @param $spreadsheet
+     * @param $indx
      */
-    public static function importImage($model, $mediaCollection,$spreadsheet, $indx)
+    public static function importImage($model, $mediaCollection, $spreadsheet, $indx)
     {
         $i = 0;
 
         foreach ($spreadsheet->getActiveSheet()->getDrawingCollection() as $drawing) {
 
-            if ($indx-1 != $i ) {
+            if ($indx - 1 != $i) {
                 $i++;
                 continue;
             }
-            if ($drawing instanceof \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing) {
-                ob_start();
-                call_user_func(
-                    $drawing->getRenderingFunction(),
-                    $drawing->getImageResource()
-                );
-                $imageContents = ob_get_contents();
-                ob_end_clean();
-                switch ($drawing->getMimeType()) {
-                    case \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_PNG :
-                        $extension = 'png';
-                        break;
-                    case \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_GIF:
-                        $extension = 'gif';
-                        break;
-                    case \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_JPEG :
-                        $extension = 'jpg';
-                        break;
-                }
-            } else {
 
-                $zipReader = fopen($drawing->getPath(), 'r');
-                $imageContents = '';
-                while (!feof($zipReader)) {
-                    $imageContents .= fread($zipReader, 1024);
-                }
-                fclose($zipReader);
-                $extension = $drawing->getExtension();
+            /********************** extract part ************************/
+
+            $zipReader = fopen($drawing->getPath(), 'r');
+            $imageContents = '';
+            while (!feof($zipReader)) {
+                $imageContents .= fread($zipReader, 1024);
             }
+            fclose($zipReader);
+            $extension = $drawing->getExtension();
+
+            /********************** add media ************************/
+
+
             $myFileName = uniqid() . '_000_Image_' . ++$i . '.' . $extension;
             file_put_contents($myFileName, $imageContents);
+            if ($model->getMedia($mediaCollection)) {
+                $model->clearMediaCollection($mediaCollection);
+            }
             $model->addMedia($myFileName)->toMediaCollection($mediaCollection);
 
             Storage::delete($myFileName);
+
         }
 
     }

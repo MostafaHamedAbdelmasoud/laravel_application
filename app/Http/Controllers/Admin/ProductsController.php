@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Imports\ProductsImport;
 use App\Models\City;
 use App\Models\Department;
 use App\Models\MainProductServiceType;
@@ -17,6 +18,7 @@ use App\Models\SubProductType;
 use App\Models\Trader;
 use App\Repositories\GateRepository;
 use Gate;
+use Excel;
 
 use Illuminate\Http\Request;
 
@@ -308,5 +310,25 @@ class ProductsController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    /**
+     * upload from excel part in index blade
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadExcel(Request $request)
+    {
+        try {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file('excel_file'));
+
+            Excel::import(new ProductsImport($spreadsheet), $request->file('excel_file'));
+            return back()->with('success', 'All good!');
+
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
     }
 }

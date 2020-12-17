@@ -136,6 +136,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('traders/media', 'TraderController@storeMedia')->name('traders.storeMedia');
     Route::post('traders/ckmedia', 'TraderController@storeCKEditorImages')->name('traders.storeCKEditorImages');
     Route::resource('traders', 'TraderController');
+    Route::post('/upload_traders_excel', 'TraderController@uploadExcel')->name('upload_traders_excel');
+
 
     // Traders
     Route::delete('orders/destroy', 'OrdersController@massDestroy')->name('orders.massDestroy');
@@ -146,6 +148,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('products/media', 'ProductsController@storeMedia')->name('products.storeMedia');
     Route::post('products/ckmedia', 'ProductsController@storeCKEditorImages')->name('products.storeCKEditorImages');
     Route::resource('products', 'ProductsController');
+    Route::post('/upload_products_excel', 'ProductsController@uploadExcel')->name('upload_products_excel');
+
 
     // products.variants
     Route::delete('variants/destroy', 'VariantsController@massDestroy')->name('variants.massDestroy');

@@ -2,11 +2,13 @@
 @section('content')
     @can('product_create')
         <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <a class="btn btn-success" href="{{ route('admin.products.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.product.title_singular') }}
                 </a>
             </div>
+            @include('partials.addExcel',['route_name'=>'upload_products_excel'])
+
         </div>
     @endcan
     <div class="card">
@@ -42,7 +44,7 @@
                         {{ trans('cruds.product.fields.image') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.name') }}
+                        {{ trans('cruds.product.fields.address') }}
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.price') }}

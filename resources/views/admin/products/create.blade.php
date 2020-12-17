@@ -23,15 +23,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="name">{{ trans('cruds.product.fields.name') }}</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
-                           id="name" value="{{ old('name', '') }}">
-                    @if($errors->has('name'))
+                    <label for="address">{{ trans('cruds.product.fields.address') }}</label>
+                    <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address"
+                           id="address" value="{{ old('address', '') }}">
+                    @if($errors->has('address'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('name') }}
+                            {{ $errors->first('address') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.product.fields.address_helper') }}</span>
                 </div>
 
                 <div class="form-group">

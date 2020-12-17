@@ -2,11 +2,13 @@
 @section('content')
 @can('trader_create')
     <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <a class="btn btn-success" href="{{ route('admin.traders.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.trader.title_singular') }}
             </a>
         </div>
+        @include('partials.addExcel',['route_name'=>'upload_traders_excel'])
+
     </div>
 @endcan
 <div class="card">

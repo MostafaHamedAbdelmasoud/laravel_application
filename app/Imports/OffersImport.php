@@ -17,7 +17,7 @@ use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Row;
 
 
-class OffersImport implements ToModel, WithHeadingRow, OnEachRow
+class OffersImport implements ToModel, WithHeadingRow
 {
     /**
      * the excel file uploaded

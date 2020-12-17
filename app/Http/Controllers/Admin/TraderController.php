@@ -7,8 +7,10 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTraderRequest;
 use App\Http\Requests\StoreTraderRequest;
 use App\Http\Requests\UpdateTraderRequest;
+use App\Imports\TradersImport;
 use App\Models\Trader;
 use Gate;
+use Excel;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -178,5 +180,25 @@ class TraderController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    /**
+     * upload from excel part in index blade
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadExcel(Request $request)
+    {
+        try {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file('excel_file'));
+
+            Excel::import(new TradersImport($spreadsheet), $request->file('excel_file'));
+            return back()->with('success', 'All good!');
+
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
     }
 }
