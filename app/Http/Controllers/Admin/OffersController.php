@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOfferRequest;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
+use App\Imports\OffersImport;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Offer;
@@ -14,6 +15,7 @@ use App\Models\SubCategory;
 use App\Models\Trader;
 use App\Repositories\GateRepository;
 use Gate;
+use Excel;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -261,4 +263,25 @@ class OffersController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    /**
+     * upload from excel part in index blade
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadExcel(Request $request)
+    {
+        try {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file('excel_file'));
+
+            Excel::import(new OffersImport($spreadsheet), $request->file('excel_file'));
+            return back()->with('success', 'All good!');
+
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+    }
+
 }

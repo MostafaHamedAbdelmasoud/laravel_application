@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Department;
+use App\Models\Helpers\ExtractImageFromExcelHelper;
 use App\Models\SubCategory;
 use App\Models\Trader;
 use Illuminate\Http\File;
@@ -18,10 +19,26 @@ use Illuminate\Validation\ValidationException;
 
 class DepartmentsImport implements ToModel, WithHeadingRow
 {
+    /**
+     * the excel file uploaded
+     * @var null
+     */
     private $excel_file;
 
+    /**
+     * it contains the number of current rows
+     * @var int
+     */
+    private $rows;
+
+    /**
+     * DepartmentsImport constructor.
+     * @param null $excel_file
+     */
     public function __construct($excel_file = null)
     {
+
+        $this->rows = 0;
         $this->excel_file = $excel_file;
     }
 
@@ -43,67 +60,25 @@ class DepartmentsImport implements ToModel, WithHeadingRow
         if (!$city || !$trader || !$category || !$sub_category) {
             throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
         }
-        $department = Department::create([
+        $department = Department::firstOrCreate([
             'name' => $row[trans("cruds.department.fields.name")],
             'about' => $row[trans('cruds.department.fields.about')],
             'phone_number' => $row[trans('cruds.department.fields.phone_number')],
+
             'city_id' => $city ? $city->id : '',
             'trader_id' => $trader ? $trader->id : '',
             'category_id' => $category ? $category->id : '',
             'sub_category_id' => $sub_category ? $sub_category->id : '',
         ]);
 
+        $this->rows++;
+
+
         if ($this->excel_file)
-            $this->importImage($department, $this->excel_file);
+            ExtractImageFromExcelHelper::importImage($department, 'logo', $this->excel_file, $this->rows);
 
         return $department;
     }
 
-    public function rules(): array
-    {
-        return [
-            'category_id' => 'exists:categories,id',
 
-        ];
-    }
-
-    public function importImage($model, $spreadsheet)
-    {
-        $i = 0;
-        foreach ($spreadsheet->getActiveSheet()->getDrawingCollection() as $drawing) {
-            if ($drawing instanceof \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing) {
-                ob_start();
-                call_user_func(
-                    $drawing->getRenderingFunction(),
-                    $drawing->getImageResource()
-                );
-                $imageContents = ob_get_contents();
-                ob_end_clean();
-                switch ($drawing->getMimeType()) {
-                    case \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_PNG :
-                        $extension = 'png';
-                        break;
-                    case \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_GIF:
-                        $extension = 'gif';
-                        break;
-                    case \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_JPEG :
-                        $extension = 'jpg';
-                        break;
-                }
-            } else {
-                $zipReader = fopen($drawing->getPath(), 'r');
-                $imageContents = '';
-                while (!feof($zipReader)) {
-                    $imageContents .= fread($zipReader, 1024);
-                }
-                fclose($zipReader);
-                $extension = $drawing->getExtension();
-            }
-            $myFileName = uniqid() . '_000_Image_' . ++$i . '.' . $extension;
-            file_put_contents($myFileName, $imageContents);
-            $model->addMedia($myFileName)->toMediaCollection('logo');
-
-            Storage::delete($myFileName);
-        }
-    }
 }

@@ -228,6 +228,12 @@ class DepartmentsController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
+    /**
+     * upload from excel part in index blade
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function uploadExcel(Request $request)
     {
         try {

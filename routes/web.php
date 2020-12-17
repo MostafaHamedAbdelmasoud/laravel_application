@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('offers/media', 'OffersController@storeMedia')->name('offers.storeMedia');
     Route::post('offers/ckmedia', 'OffersController@storeCKEditorImages')->name('offers.storeCKEditorImages');
     Route::resource('offers', 'OffersController');
+    Route::post('/upload_offers_excel', 'OffersController@uploadExcel')->name('upload_offers_excel');
 
     // Specializations
     Route::delete('specializations/destroy', 'SpecializationsController@massDestroy')->name('specializations.massDestroy');

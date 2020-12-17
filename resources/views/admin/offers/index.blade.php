@@ -1,12 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 @can('offer_create')
+
+
+
     <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <a class="btn btn-success" href="{{ route('admin.offers.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.offer.title_singular') }}
             </a>
         </div>
+    @include('partials.addExcel',['route_name'=>'upload_offers_excel'])
     </div>
 @endcan
 <div class="card">
