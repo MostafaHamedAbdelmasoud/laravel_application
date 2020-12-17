@@ -83,8 +83,11 @@
                             <td>
                                 @foreach($order->OrderProducts as  $order_product)
                                     <span class="label label-info">
-                                {{ $order_product->ProductVariant->product->name .' - '.  $order_product->ProductVariant->variant->color .' - '.
-                                 $order_product->ProductVariant->variant->size .' - '.$order_product->ProductVariant->variant->price }}
+                                {{
+    $order_product->ProductVariant->product ? $order_product->ProductVariant->product->name :''
+    .' - '.  $order_product->ProductVariant->variant ? $order_product->ProductVariant->variant->color  :''
+    .' - '. $order_product->ProductVariant->variant ? $order_product->ProductVariant->variant->size : ''
+    .' - '.$order_product->ProductVariant->variant ? $order_product->ProductVariant->variant->price : '' }}
                                <br>
                                 </span>
                                 @endforeach

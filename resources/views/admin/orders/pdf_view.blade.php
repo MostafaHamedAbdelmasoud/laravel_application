@@ -98,18 +98,18 @@
                             @forelse($order->OrderProducts as  $order_product)
                                 <tr>
                                     <td>
-                                        {{ $order_product->ProductVariant->product->name}}
+                                        {{ $order_product->ProductVariant->product?$order_product->ProductVariant->product->name:''}}
                                     </td>
                                     <td>
-                                        {{ $order_product->ProductVariant->variant->color}}
-                                    </td>
-
-                                    <td>
-                                        {{ $order_product->ProductVariant->variant->size}}
+                                        {{ $order_product->ProductVariant->variant?$order_product->ProductVariant->variant->color:''}}
                                     </td>
 
                                     <td>
-                                        {{ $order_product->ProductVariant->variant->price}}
+                                        {{ $order_product->ProductVariant->variant?$order_product->ProductVariant->variant->size:''}}
+                                    </td>
+
+                                    <td>
+                                        {{ $order_product->ProductVariant->variant?$order_product->ProductVariant->variant->price:''}}
                                     </td>
 
                                     <td>
