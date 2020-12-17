@@ -28,6 +28,10 @@
                     </th>
 
                     <th>
+                        {{ trans('cruds.product.fields.name') }}
+                    </th>
+
+                    <th>
                         {{ trans('cruds.product.fields.brand') }}
                     </th>
 
@@ -94,6 +98,10 @@
                     <td>
                     </td>
 
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+
+                    </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
 
@@ -253,6 +261,7 @@
                 columns: [
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
                     {data: 'brand', name: 'brand'},
                     {data: 'product_code', name: 'product_code'},
                     {data: 'show_in_trader_page', name: 'show_in_trader_page'},

@@ -77,6 +77,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             'price_after_discount' => $row[trans('cruds.product.fields.price_after_discount')],
             'product_code' => $row[trans('cruds.product.fields.product_code')],
             'address' => $row[trans('cruds.product.fields.address')],
+            'name' => $row[trans('cruds.product.fields.name')],
             'show_in_trader_page' => $row[trans('cruds.product.fields.show_in_trader_page')],
             'show_in_main_page' => $row[trans('cruds.product.fields.show_in_main_page')],
             'price' => $row[trans('cruds.product.fields.price')],

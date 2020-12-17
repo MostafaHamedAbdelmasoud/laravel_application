@@ -35,6 +35,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="name">{{ trans('cruds.product.fields.name') }}</label>
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
+                           id="name" value="{{ old('name', '') }}">
+                    @if($errors->has('name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                </div>
+
+                <div class="form-group">
                     <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>
                     <input class="form-control {{ $errors->has('product_code') ? 'is-invalid' : '' }}" type="text"
                            name="product_code"

@@ -45,6 +45,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.product.fields.address') }}
+                        </th>
+                        <td>
+                            {{ $product->address }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.product.fields.brand') }}
                         </th>
                         <td>
@@ -117,7 +125,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.MainProductType') }}
+                            {{ trans('cruds.product.fields.main_product_type_name') }}
                         </th>
                         <td>
                             {{ $product->MainProductType?$product->MainProductType->name : '' }}
@@ -125,7 +133,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.SubProductType') }}
+                            {{ trans('cruds.product.fields.sub_product_type_name') }}
                         </th>
                         <td>
                             {{ $product->SubProductType?$product->SubProductType->name : '' }}
@@ -133,7 +141,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.MainProductServiceType') }}
+                            {{ trans('cruds.product.fields.main_product_service_type_name') }}
                         </th>
                         <td>
                             {{ $product->MainProductServiceType?$product->MainProductServiceType->name : '' }}
@@ -141,7 +149,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.SubProductServiceType') }}
+                            {{ trans('cruds.product.fields.sub_product_service_type_name') }}
                         </th>
                         <td>
                             {{ $product->SubProductServiceType?$product->SubProductServiceType->name : '' }}
@@ -189,8 +197,8 @@
             {{ trans('global.relatedData') }}
         </div>
         <ul class="nav nav-tabs" >
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.products.variants.index',$product)}}" role="tab" >
+            <li class="nav-item bg-success mx-2">
+                <a class="nav-link text-white" href="{{route('admin.products.variants.index',$product)}}" role="tab" >
                     {{ trans('cruds.variant.title') }}
                 </a>
             </li>

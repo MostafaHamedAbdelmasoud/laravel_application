@@ -102,6 +102,9 @@ class ProductsController extends Controller
             $table->editColumn('address', function ($row) {
                 return $row->address ? $row->address : "";
             });
+            $table->editColumn('name', function ($row) {
+                return $row->name   ? $row->name : "";
+            });
             $table->addColumn('main_product_type_name', function ($row) {
                 return $row->MainProductType ? $row->MainProductType->name : "";
             });

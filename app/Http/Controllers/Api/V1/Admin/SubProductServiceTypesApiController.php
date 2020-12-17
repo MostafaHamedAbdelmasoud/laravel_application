@@ -15,7 +15,13 @@ class SubProductServiceTypesApiController extends Controller
 {
     public function index(Request $request)
     {
-        return new SubProductServiceTypeResource(SubProductServiceType::all());
+        $SubProductServiceTypeQuery = new SubProductServiceType;
+        $main_product_service_type_id = $request['main_product_service_type_id'];
+
+        if($main_product_service_type_id){
+            $SubProductServiceTypeQuery= $SubProductServiceTypeQuery->where('main_product_service_type_id',$main_product_service_type_id);
+        }
+        return new SubProductServiceTypeResource($SubProductServiceTypeQuery->get());
     }
 
     public function store(StoreSubProductServiceTypeRequest $request)

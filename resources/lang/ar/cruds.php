@@ -673,6 +673,8 @@ return [
             'product_code_helper' => ' ',
             'address' => 'العنوان',
             'address_helper' => ' ',
+            'name' => 'اسم المنتج',
+            'name_helper' => ' ',
             'main_product_type_name' => 'تصنيف منتجات رئيسى',
             'main_product_type_name_helper' => ' ',
             'sub_product_type_name' => 'تصنيف منتجات فرعى',

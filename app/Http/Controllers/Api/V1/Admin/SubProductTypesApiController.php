@@ -6,16 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubProductTypeRequest;
 use App\Http\Requests\UpdateSubProductTypeRequest;
 use App\Http\Resources\Admin\SubProductTypeResource;
+use App\Models\SubProductServiceType;
 use App\Models\SubProductType;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubProductTypesApiController extends Controller
 {
     public function index(Request $request)
     {
-        return new SubProductTypeResource(SubProductType::all());
+
+        $SubProductTypeQuery = SubProductType::query();
+
+        $main_product_type_id = $request['main_product_type_id'];
+
+        if (isset($main_product_type_id)) {
+            $SubProductTypeQuery = $SubProductTypeQuery->where('main_product_type_id', $main_product_type_id);
+        }
+
+        return new SubProductTypeResource($SubProductTypeQuery->get());
     }
 
     public function store(StoreSubProductTypeRequest $request)
@@ -62,7 +73,7 @@ class SubProductTypesApiController extends Controller
         $sub_product_types = SubProductType::select('id', 'name')->where('main_product_type_id', $id)->get();
 
         return \response()->json([
-             $sub_product_types,
+            $sub_product_types,
         ]);
     }
 }
