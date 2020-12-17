@@ -65,7 +65,7 @@ class ProductsImport implements ToModel, WithHeadingRow
         $sub_product_service_type_name = SubProductServiceType::where('name', $row[trans("cruds.product.fields.sub_product_service_type_name")])->first();
         $department = Department::where('name', $row[trans("cruds.product.fields.department_name")])->first();
 
-        if (!$city || !$trader || !$sub_product_type_name || !$sub_product_service_type_name ||!$main_product_service_type_name ||!$main_product_type_name) {
+        if (!$city || !$trader || ($sub_product_type_name && $sub_product_service_type_name)  || ($main_product_service_type_name  && $main_product_type_name) ) {
             throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
         }
 
@@ -82,10 +82,10 @@ class ProductsImport implements ToModel, WithHeadingRow
             'price' => $row[trans('cruds.product.fields.price')],
 
             'city_id' =>  $city->id ,
-            'main_product_type_id' =>  $main_product_type_name->id ,
-            'main_product_service_type_id' =>  $main_product_service_type_name->id ,
-            'sub_product_type_id' =>  $sub_product_type_name->id ,
-            'sub_product_service_type_id' =>  $sub_product_service_type_name->id ,
+            'main_product_type_id' =>  $main_product_type_name?$main_product_type_name->id:null ,
+            'main_product_service_type_id' =>  $main_product_service_type_name?$main_product_service_type_name->id:null ,
+            'sub_product_type_id' =>  $sub_product_type_name?$sub_product_type_name->id: null ,
+            'sub_product_service_type_id' =>  $sub_product_service_type_name? $sub_product_service_type_name->id:null ,
             'trader_id' =>  $trader->id ,
             'department_id' =>  $department->id ,
         ]);

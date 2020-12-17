@@ -258,7 +258,7 @@
                     {data: 'show_in_trader_page', name: 'show_in_trader_page'},
                     {data: 'show_in_main_page', name: 'show_in_main_page'},
                     {data: 'image', name: 'image', sortable: false, searchable: false},
-                    {data: 'name', name: 'name'},
+                    {data: 'address', name: 'address'},
                     {data: 'price', name: 'price'},
                     {data: 'main_product_type_name', name: 'main_product_type_name'},
                     {data: 'sub_product_type_name', name: 'sub_product_type_name'},
