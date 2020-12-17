@@ -40,7 +40,7 @@ class StoreProductRequest extends FormRequest
                 'required_without:main_product_type_id',
 //                'exists:main_product_service_types,id',
             ],
-            'sub_product_service_id' => [
+            'sub_product_service_type_id' => [
 //                'required',
                 'required_with:main_product_service_type_id',
                 'exists:sub_product_service_types,id',
