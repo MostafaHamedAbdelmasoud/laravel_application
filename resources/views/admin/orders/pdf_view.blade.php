@@ -149,34 +149,34 @@
                                 <td class="text-right"></td>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-right">
                             <tr>
                                 <td class="thick-line"></td>
                                 <td class="thick-line"></td>
-                                <td class="thick-line text-center"><strong> السعر </strong></td>
                                 <td class="thick-line text-right">
                                     جنيه
                                     <del>{{$order->subtotal}} </del>
                                 </td>
+                                <td class="thick-line text-center"><strong> السعر </strong></td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-center"><strong>قيمة التخفيض</strong></td>
                                 <td class="no-line text-right">
                                     {{$order->discount}}
                                     جنيه
                                 </td>
+                                <td class="no-line text-center"><strong>قيمة التخفيض</strong></td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
-                                <td class="no-line text-center"><strong>المبلغ المطلوب</strong></td>
                                 <td class="no-line text-right">
                                     {{$order->total}}
                                     جنيه
 
                                 </td>
+                                <td class="no-line text-center"><strong>المبلغ المطلوب</strong></td>
                             </tr>
                             </tbody>
                         </table>
