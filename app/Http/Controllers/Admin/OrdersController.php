@@ -13,6 +13,9 @@ use App\Models\ProductVariant;
 use App\Models\User;
 use Exception;
 use Gate;
+use Barryvdh\DomPDF\Facade as PDF;
+use Dompdf\Dompdf;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,7 +81,7 @@ class OrdersController extends Controller
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $order_product_ids = $order->OrderProducts->pluck('product_variant_id');
-        
+
         return view('admin.orders.edit', compact('users', 'product_variants', 'order', 'coupons', 'order_product_ids'));
     }
 
@@ -87,11 +90,11 @@ class OrdersController extends Controller
         $order->update($request->all());
 
         $order_product_ids = $order->OrderProducts->pluck('id');
-        
+
         foreach ($order_product_ids as $id) {
             OrderProduct::where('id', $id)->delete();
         }
-        
+
         foreach ($request->product_variant as $id) {
             $order->OrderProducts()->create([
                 'product_variant_id' => $id,
@@ -122,5 +125,24 @@ class OrdersController extends Controller
         Order::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * download single order
+     *
+     * @return mixed
+     */
+    public function download_pdf($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $data = [
+            'title' => 'إسم الطلب',
+            'heading' => 'إسم الطلب',
+            'order' => $order
+        ];
+
+        $pdf = PDF::loadView('admin.orders.pdf_view', $data);
+        return $pdf->stream('medium.pdf');
     }
 }

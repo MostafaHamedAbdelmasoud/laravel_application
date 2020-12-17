@@ -144,6 +144,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     // Traders
     Route::delete('orders/destroy', 'OrdersController@massDestroy')->name('orders.massDestroy');
     Route::resource('orders', 'OrdersController');
+    Route::get('orders/download_pdf/{id}', 'OrdersController@download_pdf')->name('orders.download_pdf');
 
     // Products
     Route::delete('products/destroy', 'ProductsController@massDestroy')->name('products.massDestroy');

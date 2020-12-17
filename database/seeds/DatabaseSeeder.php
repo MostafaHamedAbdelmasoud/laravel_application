@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
             CouponsTableSeeder::class,
             TraderTableSeeder::class,
             SpecializationTableSeeder::class,
+            DepartmentsTableSeeder::class,
+            ProductsTableSeeder::class,
+            ProductVariantTableSeeder::class,
         ]);
     }
 }

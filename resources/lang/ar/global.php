@@ -112,6 +112,7 @@ return [
     'attachment'                           => 'المرفق',
     'axis'                                 => 'محور',
     'back_to_list'                         => 'الرجوع للقائمة',
+    'download_pdf'                         => 'تحميل PDF',
     'basic_crm'                            => 'إداره علاقات العملاء',
     'budget'                               => 'الميزانية',
     'calendar_sources'                     => 'مصدر التقويم',
