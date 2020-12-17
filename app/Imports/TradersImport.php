@@ -16,7 +16,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Excel;
 use Illuminate\Validation\ValidationException;
 
-
 class TradersImport implements ToModel, WithHeadingRow
 {
     /**
@@ -37,7 +36,6 @@ class TradersImport implements ToModel, WithHeadingRow
      */
     public function __construct($excel_file = null)
     {
-
         $this->rows = 0;
         $this->excel_file = $excel_file;
     }
@@ -50,7 +48,6 @@ class TradersImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-
         $trader = Trader::firstOrCreate([
             'activeness' => $row[trans("cruds.trader.fields.activeness")],
             'name' => $row[trans('cruds.trader.fields.name')],
@@ -65,11 +62,10 @@ class TradersImport implements ToModel, WithHeadingRow
         $this->rows++;
 
 
-        if ($this->excel_file)
+        if ($this->excel_file) {
             ExtractImageFromExcelHelper::importImage($trader, 'images', $this->excel_file, $this->rows);
+        }
 
         return $trader;
     }
-
-
 }

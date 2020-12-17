@@ -18,8 +18,8 @@ class SubProductServiceTypesApiController extends Controller
         $SubProductServiceTypeQuery = new SubProductServiceType;
         $main_product_service_type_id = $request['main_product_service_type_id'];
 
-        if($main_product_service_type_id){
-            $SubProductServiceTypeQuery= $SubProductServiceTypeQuery->where('main_product_service_type_id',$main_product_service_type_id);
+        if ($main_product_service_type_id) {
+            $SubProductServiceTypeQuery= $SubProductServiceTypeQuery->where('main_product_service_type_id', $main_product_service_type_id);
         }
         return new SubProductServiceTypeResource($SubProductServiceTypeQuery->get());
     }

@@ -16,7 +16,6 @@ use Excel;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Row;
 
-
 class OffersImport implements ToModel, WithHeadingRow
 {
     /**
@@ -37,7 +36,6 @@ class OffersImport implements ToModel, WithHeadingRow
      */
     public function __construct($excel_file = null)
     {
-
         $this->rows=0;
         $this->excel_file = $excel_file;
     }
@@ -75,13 +73,11 @@ class OffersImport implements ToModel, WithHeadingRow
         ]);
         $this->rows++;
 
-        if ($this->excel_file)
-            ExtractImageFromExcelHelper::importImage($offer, 'images',$this->excel_file, $this->rows);
+        if ($this->excel_file) {
+            ExtractImageFromExcelHelper::importImage($offer, 'images', $this->excel_file, $this->rows);
+        }
 
 
         return $offer;
     }
-
-
-
 }

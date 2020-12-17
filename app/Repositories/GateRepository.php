@@ -33,12 +33,9 @@ class GateRepository
         $permissions = [];
 
         foreach ($roles as $role) {
-
             foreach ($role->permissions as $permission) {
-
                 $permissions[] = $permission->title;
             }
-
         }
 
         return $permissions;
@@ -56,13 +53,11 @@ class GateRepository
         $permissions = $this->get_permissions();
 
         foreach ($parameters as $parameter) {
-
             $imploded_parameter = implode('_', explode(' ', $parameter));
 
             if (in_array($imploded_parameter . $suffix, $permissions)) {
                 return $type . $suffix;
             }
-
         }
         return '';
     }

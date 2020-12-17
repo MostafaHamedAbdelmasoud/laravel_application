@@ -45,5 +45,4 @@ class DepartmentsFilter extends BaseFilters
 
         return $this->builder;
     }
-
 }

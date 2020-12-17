@@ -30,7 +30,6 @@ class OrdersApiController extends Controller
     {
         DB::beginTransaction();
         try {
-
             if (Auth::check()) {
                 $user_id = Auth::user()->id;
                 $request['user_id'] = $user_id;

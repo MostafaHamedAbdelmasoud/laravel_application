@@ -32,6 +32,7 @@ class News extends Model implements HasMedia
     protected $fillable = [
         'name',
         'details',
+        'added_by_admin',
         'price',
         'detailed_title',
         'news_category_id',
@@ -89,11 +90,6 @@ class News extends Model implements HasMedia
         return $this->approved ? 'نعم' : 'لا';
     }
 
-
-//    public function user()
-//    {
-//        return $this->belongsTo(user::class);
-//    }
 
     public function news_category()
     {

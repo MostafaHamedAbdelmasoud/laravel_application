@@ -112,7 +112,9 @@ Route::namespace('Api\V1\Admin')->group(function () {
     Route::get('/select/cities', 'CitiesSelectController@select_city')->name('cities.select');
 });
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Auth',], function () {
+Route::group(
+    ['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Auth',],
+    function () {
     //Auth API
     Route::post('register', 'AuthApiController@register');
     Route::post('login', 'AuthApiController@login');

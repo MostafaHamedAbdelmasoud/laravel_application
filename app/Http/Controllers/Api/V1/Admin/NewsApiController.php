@@ -79,9 +79,7 @@ class NewsApiController extends Controller implements ShouldQueue
         }
 
         if ($request->hasFile('image')) {
-
             for ($i = 0; $i < $cnt; $i++) {
-
                 $image = $request->file('image')[$i];
 
                 $name = uniqid() . '_' . trim($image->getClientOriginalName());
@@ -89,11 +87,9 @@ class NewsApiController extends Controller implements ShouldQueue
                 $image->move($path, $name);
 
                 $news->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
-
             }
-
         }
-            return (new NewsResource($news))
+        return (new NewsResource($news))
                 ->response()
                 ->setStatusCode(Response::HTTP_CREATED);
     }

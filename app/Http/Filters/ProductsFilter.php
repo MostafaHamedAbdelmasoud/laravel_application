@@ -83,7 +83,7 @@ class ProductsFilter extends BaseFilters
     }
 
     /**
-     * Filter the query by a given range with higher price_after_discount.
+     * Filter the query by a given range with higher price.
      *
      * @param string|int $value
      * @return \Illuminate\Database\Eloquent\Builder
@@ -91,14 +91,14 @@ class ProductsFilter extends BaseFilters
     protected function HigherPrice($value)
     {
         if ($value) {
-            return $this->builder->Where('price_after_discount', '<=', $value);
+            return $this->builder->Where('price', '<=', $value);
         }
 
         return $this->builder;
     }
 
     /**
-     * Filter the query by a given range with higher price_after_discount.
+     * Filter the query by a given range with higher price.
      *
      * @param string|int $value
      * @return \Illuminate\Database\Eloquent\Builder
@@ -106,7 +106,7 @@ class ProductsFilter extends BaseFilters
     protected function LowerPrice($value)
     {
         if ($value) {
-            return $this->builder->Where('price_after_discount', '>=', $value);
+            return $this->builder->Where('price', '>=', $value);
         }
 
         return $this->builder;

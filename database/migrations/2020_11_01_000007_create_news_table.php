@@ -17,6 +17,7 @@ class CreateNewsTable extends Migration
             $table->string('price')->nullable();
             $table->string('phone_number')->nullable();
             $table->boolean('approved')->default(0);
+            $table->boolean('added_by_admin')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

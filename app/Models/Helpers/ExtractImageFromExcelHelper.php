@@ -5,7 +5,6 @@ namespace App\Models\Helpers;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
-
 class ExtractImageFromExcelHelper
 {
     /**
@@ -18,14 +17,24 @@ class ExtractImageFromExcelHelper
      */
     public static function importImage($model, $mediaCollection, $spreadsheet, $indx)
     {
-        $i = 0;
+        if ($model->getMedia($mediaCollection)) {
+            $model->clearMediaCollection($mediaCollection);
+        }
 
+        $i = 0;
+        $arr = [];
         foreach ($spreadsheet->getActiveSheet()->getDrawingCollection() as $drawing) {
 
-            if ($indx - 1 != $i) {
+            $current_row_coordinates = (substr($drawing->getCoordinates(), 1));
+
+            if (($current_row_coordinates != $indx + 1)) {
                 $i++;
                 continue;
             }
+            if ($indx + 1 < $current_row_coordinates) {
+                break;
+            }
+
 
             /********************** extract part ************************/
 
@@ -39,16 +48,13 @@ class ExtractImageFromExcelHelper
 
             /********************** add media ************************/
 
-
             $myFileName = uniqid() . '_000_Image_' . ++$i . '.' . $extension;
             file_put_contents($myFileName, $imageContents);
-            if ($model->getMedia($mediaCollection)) {
-                $model->clearMediaCollection($mediaCollection);
-            }
+            $arr[] = $myFileName;
+
             $model->addMedia($myFileName)->toMediaCollection($mediaCollection);
 
             Storage::delete($myFileName);
-
         }
 
     }
@@ -63,6 +69,5 @@ class ExtractImageFromExcelHelper
     {
         $UNIX_DATE = ($value - 25569) * 86400;
         return gmdate("Y-m-d", $UNIX_DATE);
-
     }
 }

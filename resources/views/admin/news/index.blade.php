@@ -2,11 +2,13 @@
 @section('content')
     @can('news_create')
         <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <a class="btn btn-success" href="{{ route('admin.news.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.news.title_singular') }}
                 </a>
             </div>
+            @include('partials.addExcel',['route_name'=>'upload_news_excel'])
+
         </div>
     @endcan
     <div class="card">
@@ -58,6 +60,10 @@
                     </th>
 
                     <th>
+                        {{ trans('cruds.news.fields.added_by_admin') }}
+                    </th>
+
+                    <th>
                         {{ trans('cruds.news.fields.image') }}
                     </th>
                     <th>
@@ -105,6 +111,9 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -187,6 +196,7 @@
                     {data: 'add_date', name: 'add_date'},
                     {data: 'phone_number', name: 'phone_number'},
                     {data: 'approved', name: 'approved'},
+                    {data: 'added_by_admin', name: 'added_by_admin'},
 
                     {data: 'image', name: 'image', sortable: false, searchable: false},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}

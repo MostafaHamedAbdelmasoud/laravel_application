@@ -44,7 +44,6 @@ class ProductsController extends Controller
     public function __construct(GateRepository $repo)
     {
         $this->repo = $repo;
-
     }
 
     public function index(Request $request)
@@ -61,7 +60,6 @@ class ProductsController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-
                 $parameters = [
                     $row->MainProductType? $row->MainProductType->name:"",
                      $row->SubProductType? $row->SubProductType->name:'',
@@ -69,9 +67,9 @@ class ProductsController extends Controller
                      $row->SubProductServiceType? $row->SubProductServiceType->name : ''
                 ];
 
-                $viewGate = $this->repo->get_gate($parameters, 'product','_show');
-                $editGate = $this->repo->get_gate($parameters, 'product','_edit');
-                $deleteGate = $this->repo->get_gate($parameters, 'product','_delete');
+                $viewGate = $this->repo->get_gate($parameters, 'product', '_show');
+                $editGate = $this->repo->get_gate($parameters, 'product', '_edit');
+                $deleteGate = $this->repo->get_gate($parameters, 'product', '_delete');
 
 //                $checkNull = $viewGate ?? $editGate ?? $deleteGate ?? '';
                 $crudRoutePart = 'products';
@@ -325,10 +323,8 @@ class ProductsController extends Controller
 
             Excel::import(new ProductsImport($spreadsheet), $request->file('excel_file'));
             return back()->with('success', 'All good!');
-
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
-
     }
 }

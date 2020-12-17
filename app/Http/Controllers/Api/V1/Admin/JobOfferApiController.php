@@ -77,12 +77,10 @@ class JobOfferApiController extends Controller
             $jobOffer->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('photo');
 
             //            }
-
         }
 
 
         if ($request->hasFile('cv')) {
-
             $cv = $request->file('cv');
 
             $name = uniqid() . '_' . trim($cv->getClientOriginalName());

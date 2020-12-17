@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyNewsRequest;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
+use App\Imports\NewsImport;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\News;
@@ -15,8 +16,10 @@ use App\Models\NewsSubCategory;
 use App\Models\Offer;
 use App\Repositories\GateRepository;
 use App\Repositories\NewsRepository;
+use Dotenv\Exception\ValidationException;
 use Gate;
 use Illuminate\Http\Request;
+use Excel;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -54,7 +57,6 @@ class NewsController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-
                 $parameters = [
                     $row->news_category->name,
                     $row->news_sub_category->name,
@@ -80,6 +82,10 @@ class NewsController extends Controller
             });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
+            });
+
+            $table->editColumn('added_by_admin', function ($row) {
+                return $row->added_by_admin ? "نعم" : "لا";
             });
 
             $table->editColumn('city_name', function ($row) {
@@ -159,6 +165,8 @@ class NewsController extends Controller
 
     public function store(StoreNewsRequest $request)
     {
+        $request['added_by_admin'] = 1;
+
         $news = News::create($request->all());
 
         if ($request->input('image', false)) {
@@ -190,16 +198,13 @@ class NewsController extends Controller
 
     public function update(UpdateNewsRequest $request, News $news)
     {
-
         $request['approved'] = $request['approved'] ? 1 : 0;
 
         $news->update($request->all());
         $news_repo = new NewsRepository;
 
         if ($request->input('image', false)) {
-
             $news_repo->updateMedia($news, $news->getMedia('image'), $request->input('image'));
-
         } elseif ($news->image) {
             $news->image->delete();
         }
@@ -243,5 +248,29 @@ class NewsController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+
+    /**
+     * upload from excel part in index blade
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function uploadExcel(Request $request)
+    {
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file('excel_file'));
+
+
+        $lol = Excel::import(new NewsImport($spreadsheet), $request->file('excel_file'));
+//        dd('s');
+        return back()->with('success', 'All good!');
+//        try {
+//
+//
+//        } catch (ValidationException $e)  {
+////            return back()->with('error', $e->getMessage());
+//            return  $e->getMessage();
+//        }
     }
 }

@@ -46,7 +46,6 @@ class PermissionHelper
                 if ($key <= $cnt_of_permission_copy) {
                     $content .= "\t'" . $permission . "' => '" . trans('permissions_of_main_components.' . $permission) . "',\n";
                 } else {
-
                     $content .= "\t'" . $permission . "' => '" . trans('permissions.' . $permission) . "',\n";
                 }
             }

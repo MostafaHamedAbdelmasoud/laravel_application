@@ -34,7 +34,7 @@ class DepartmentsApiController extends Controller
     public function index(Request $request)
     {
         //abort_if(Gate::denies('department_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $departmentQueryBuilder = Department::filter($this->filter)->with('city', 'category','sub_category');
+        $departmentQueryBuilder = Department::filter($this->filter)->with('city', 'category', 'sub_category');
 
         $city_id = $request['city_id'];
 
@@ -45,13 +45,13 @@ class DepartmentsApiController extends Controller
         $about = $request['about'];
 
         if (isset($city_id)) {
-            $departmentQueryBuilder = $departmentQueryBuilder->where('city_id',$city_id);
+            $departmentQueryBuilder = $departmentQueryBuilder->where('city_id', $city_id);
         }
         if (isset($category_id)) {
-            $departmentQueryBuilder = $departmentQueryBuilder->where('category_id',$category_id);
+            $departmentQueryBuilder = $departmentQueryBuilder->where('category_id', $category_id);
         }
         if (isset($sub_category_id)) {
-            $departmentQueryBuilder = $departmentQueryBuilder->where('sub_category_id',$sub_category_id);
+            $departmentQueryBuilder = $departmentQueryBuilder->where('sub_category_id', $sub_category_id);
         }
         if (isset($about)) {
             $departmentQueryBuilder = $departmentQueryBuilder->where('about', 'like', "%" . $about . "%");

@@ -50,7 +50,6 @@ class AuthApiController extends Controller
         $user = User::where('phone_number', $request->phone_number)->first();
 
         if ($user) {
-
             $token = $user->createToken($user->phone_number . '-' . now());
             Auth::login($user);
 //            $token = Auth::user()->AauthAcessToken()->first();

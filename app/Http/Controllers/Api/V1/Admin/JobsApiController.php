@@ -70,16 +70,15 @@ class JobsApiController extends Controller
 //            for ($i = 0; $i < $cnt; $i++) {
 
 //                $image = $request->file('image')[$i];
-                $image = $request->file('image');
+            $image = $request->file('image');
 
-                $name = uniqid() . '_' . trim($image->getClientOriginalName());
+            $name = uniqid() . '_' . trim($image->getClientOriginalName());
 
-                $image->move($path, $name);
+            $image->move($path, $name);
 
-                $job->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
+            $job->addMedia(storage_path('tmp/uploads/' . $name))->toMediaCollection('image');
 
 //            }
-
         }
 
         return (new JobResource($job))

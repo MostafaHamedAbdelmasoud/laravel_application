@@ -21,7 +21,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Excel;
 use Illuminate\Validation\ValidationException;
 
-
 class ProductsImport implements ToModel, WithHeadingRow
 {
     /**
@@ -42,7 +41,6 @@ class ProductsImport implements ToModel, WithHeadingRow
      */
     public function __construct($excel_file = null)
     {
-
         $this->rows = 0;
         $this->excel_file = $excel_file;
     }
@@ -55,8 +53,6 @@ class ProductsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-
-
         $city = City::where('name', $row[trans("cruds.product.fields.city_name")])->first();
         $trader = Trader::where('name', $row[trans("cruds.product.fields.trader")])->first();
         $main_product_type_name = MainProductType::where('name', $row[trans("cruds.product.fields.main_product_type_name")])->first();
@@ -65,7 +61,7 @@ class ProductsImport implements ToModel, WithHeadingRow
         $sub_product_service_type_name = SubProductServiceType::where('name', $row[trans("cruds.product.fields.sub_product_service_type_name")])->first();
         $department = Department::where('name', $row[trans("cruds.product.fields.department_name")])->first();
 
-        if (!$city || !$trader || ($sub_product_type_name && $sub_product_service_type_name)  || ($main_product_service_type_name  && $main_product_type_name) ) {
+        if (!$city || !$trader || ($sub_product_type_name && $sub_product_service_type_name)  || ($main_product_service_type_name  && $main_product_type_name)) {
             throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
         }
 
@@ -94,11 +90,10 @@ class ProductsImport implements ToModel, WithHeadingRow
         $this->rows++;
 
 
-        if ($this->excel_file)
+        if ($this->excel_file) {
             ExtractImageFromExcelHelper::importImage($product, 'image', $this->excel_file, $this->rows);
+        }
 
         return $product;
     }
-
-
 }

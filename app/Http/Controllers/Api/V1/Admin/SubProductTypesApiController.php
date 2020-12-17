@@ -17,7 +17,6 @@ class SubProductTypesApiController extends Controller
 {
     public function index(Request $request)
     {
-
         $SubProductTypeQuery = SubProductType::query();
 
         $main_product_type_id = $request['main_product_type_id'];

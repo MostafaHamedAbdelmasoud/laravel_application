@@ -97,5 +97,4 @@ class Job extends Model implements HasMedia
     {
         return $this->approved? 'نعم' : 'لا';
     }
-
 }

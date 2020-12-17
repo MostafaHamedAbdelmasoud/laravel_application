@@ -179,7 +179,7 @@ class JobsController extends Controller
     public function storeCKEditorImages(Request $request)
     {
         //abort_if(Gate::denies('job_create') && Gate::denies('job_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    \Maatwebsite\Excel\Excel::
+        \Maatwebsite\Excel\Excel::
         $model         = new Job();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;

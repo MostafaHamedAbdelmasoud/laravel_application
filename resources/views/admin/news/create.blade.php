@@ -60,7 +60,7 @@
 
                 <div class="form-group">
                     <label class="required"
-                           for="news_category_id">{{ trans('cruds.news.fields.news_category') }}</label>
+                           for="news_category_id">{{ trans('cruds.news.fields.news_category_name') }}</label>
                     <select class="form-control select2 {{ $errors->has('news_category') ? 'is-invalid' : '' }}"
                             name="news_category_id" id="news_category_id" required>
                         @foreach($news_categories as $id => $news_category)
@@ -73,13 +73,13 @@
                             {{ $errors->first('news_category') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.news.fields.news_category_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.news.fields.news_category_name_helper') }}</span>
                 </div>
 
 
                 <div class="form-group">
                     <label class="required"
-                           for="news_sub_category_id">{{ trans('cruds.news.fields.news_sub_category') }}</label>
+                           for="news_sub_category_id">{{ trans('cruds.news.fields.news_sub_category_name') }}</label>
                     <select class="form-control select2 {{ $errors->has('news_sub_category') ? 'is-invalid' : '' }}"
                             name="news_sub_category_id" id="news_sub_category_id" required>
 
@@ -89,12 +89,12 @@
                             {{ $errors->first('news_sub_category') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.news.fields.news_sub_category_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.news.fields.news_sub_category_name_helper') }}</span>
                 </div>
 
 
                 <div class="form-group">
-                    <label class="required" for="city_id">{{ trans('cruds.news.fields.city') }}</label>
+                    <label class="required" for="city_id">{{ trans('cruds.news.fields.city_name') }}</label>
                     <select class="form-control select2 {{ $errors->has('city') ? 'is-invalid' : '' }}" name="city_id"
                             id="city_id" required>
                         @foreach($cities as $id => $city)
@@ -106,7 +106,7 @@
                             {{ $errors->first('city') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.news.fields.city_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.news.fields.city_name_helper') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="required" for="add_date">{{ trans('cruds.news.fields.add_date') }}</label>

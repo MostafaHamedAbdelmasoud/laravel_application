@@ -56,7 +56,6 @@ class OffersController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-
                 $parameters = [
                     $row->category->name,
                     $row->category->type,
@@ -277,11 +276,8 @@ class OffersController extends Controller
 
             Excel::import(new OffersImport($spreadsheet), $request->file('excel_file'));
             return back()->with('success', 'All good!');
-
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
-
     }
-
 }

@@ -19,7 +19,6 @@ class NewsRepository
      */
     public function updateMedia($model, $news_media, array $request_images)
     {
-
         $images = [];
         foreach ($news_media as $image) {
             $images[] = $image->file_name;
@@ -43,7 +42,5 @@ class NewsRepository
                 $model->addMedia(storage_path('tmp/uploads/' . $request_image))->toMediaCollection('image');
             }
         }
-
-
     }
 }

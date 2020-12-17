@@ -16,7 +16,6 @@ class JobsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-
         $UNIX_DATE = ($row['add_date'] - 25569) * 86400;
         $date_column = gmdate("Y-m-d", $UNIX_DATE);
 
@@ -32,5 +31,4 @@ class JobsImport implements ToModel, WithHeadingRow
             'specialization_id' => $row['specialization_id']
         ]);
     }
-
 }

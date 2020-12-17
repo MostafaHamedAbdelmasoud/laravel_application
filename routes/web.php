@@ -120,6 +120,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('news/media', 'NewsController@storeMedia')->name('news.storeMedia');
     Route::post('news/ckmedia', 'NewsController@storeCKEditorImages')->name('news.storeCKEditorImages');
     Route::resource('news', 'NewsController');
+    Route::post('/upload_news_excel', 'NewsController@uploadExcel')->name('upload_news_excel');
+
 
     // Notifications
     Route::delete('notifications/destroy', 'NotificationsController@massDestroy')->name('notifications.massDestroy');

@@ -103,7 +103,6 @@ class TraderController extends Controller
 
     public function store(StoreTraderRequest $request)
     {
-
         $trader = Trader::create($request->all());
 
         foreach ($request->input('images', []) as $file) {
@@ -195,10 +194,8 @@ class TraderController extends Controller
 
             Excel::import(new TradersImport($spreadsheet), $request->file('excel_file'));
             return back()->with('success', 'All good!');
-
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
-
     }
 }

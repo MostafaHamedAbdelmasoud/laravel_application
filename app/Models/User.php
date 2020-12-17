@@ -25,7 +25,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected  $with = [
+    protected $with = [
         'roles',
     ];
 
@@ -100,7 +100,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function AauthAcessToken(){
+    public function AauthAcessToken()
+    {
         return $this->hasMany('\App\OauthAccessToken');
     }
 }

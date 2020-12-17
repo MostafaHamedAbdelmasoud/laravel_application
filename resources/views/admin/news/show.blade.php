@@ -65,7 +65,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.news.fields.news_category') }}
+                            {{ trans('cruds.news.fields.news_category_name') }}
                         </th>
                         <td>
                             {{ $news->news_category->name ?? '' }}
@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.news.fields.news_sub_category') }}
+                            {{ trans('cruds.news.fields.news_sub_category_name') }}
                         </th>
                         <td>
                             {{ $news->news_sub_category->name ?? '' }}
@@ -81,7 +81,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.news.fields.city') }}
+                            {{ trans('cruds.news.fields.city_name') }}
                         </th>
                         <td>
                             {{ $news->city->name ?? '' }}
@@ -117,6 +117,14 @@
                         </th>
                         <td>
                             <input type="checkbox" disabled="disabled" {{ $news->approved ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.news.fields.added_by_admin') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $news->added_by_admin ? 'checked' : '' }}>
                         </td>
                     </tr>
                     </tbody>
