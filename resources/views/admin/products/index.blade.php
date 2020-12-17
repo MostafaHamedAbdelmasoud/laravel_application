@@ -47,9 +47,7 @@
                     <th>
                         {{ trans('cruds.product.fields.image') }}
                     </th>
-                    <th>
-                        {{ trans('cruds.product.fields.address') }}
-                    </th>
+
                     <th>
                         {{ trans('cruds.product.fields.price') }}
                     </th>
@@ -116,9 +114,7 @@
                     </td>
                     <td>
                     </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
+
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
@@ -267,7 +263,6 @@
                     {data: 'show_in_trader_page', name: 'show_in_trader_page'},
                     {data: 'show_in_main_page', name: 'show_in_main_page'},
                     {data: 'image', name: 'image', sortable: false, searchable: false},
-                    {data: 'address', name: 'address'},
                     {data: 'price', name: 'price'},
                     {data: 'main_product_type_name', name: 'main_product_type_name'},
                     {data: 'sub_product_type_name', name: 'sub_product_type_name'},

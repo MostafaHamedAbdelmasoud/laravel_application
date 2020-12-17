@@ -99,9 +99,6 @@ class ProductsController extends Controller
 
                 return '';
             });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : "";
-            });
             $table->editColumn('name', function ($row) {
                 return $row->name   ? $row->name : "";
             });
