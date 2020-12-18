@@ -12,7 +12,7 @@ class StoreOrderRequest extends FormRequest
 {
     public function authorize(Request $request)
     {
-        return $request->expectsJson()?true:  Gate::allows('order_create');
+        return $request->expectsJson() ? true : Gate::allows('order_create');
     }
 
     public function rules()
@@ -28,6 +28,12 @@ class StoreOrderRequest extends FormRequest
             'coupon_id' => [
                 'nullable',
                 'exists:coupons,id',
+            ],
+            'address' => [
+                'required',
+            ],
+            'phone_number' => [
+                'required',
             ],
         ];
     }

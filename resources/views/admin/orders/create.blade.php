@@ -73,6 +73,28 @@
                 <span class="help-block">{{ trans('cruds.order.fields.subtotal_helper') }}</span>
             </div>
 
+            <div class="form-group">
+                <label class="required" for="address">{{ trans('cruds.order.fields.address') }}</label>
+                <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', '') }}" required>
+                @if($errors->has('address'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('address') }}
+                </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.order.fields.address_helper') }}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="phone_number">{{ trans('cruds.order.fields.phone_number') }}</label>
+                <input class="form-control {{ $errors->has('phone_number') ? 'is-invalid' : '' }}" type="text" name="phone_number" id="phone_number" value="{{ old('phone_number', '') }}" required>
+                @if($errors->has('phone_number'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('phone_number') }}
+                </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.order.fields.phone_number_helper') }}</span>
+            </div>
+
 
 
             <div class="form-group">

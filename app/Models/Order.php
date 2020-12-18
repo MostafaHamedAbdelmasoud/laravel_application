@@ -36,6 +36,8 @@ class Order extends Model
         'user_id',
         'coupon_id',
         'details',
+        'address',
+        'phone_number',
         'subtotal',
         'total',
         'discount',

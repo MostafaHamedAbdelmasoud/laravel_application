@@ -39,7 +39,12 @@ class UpdateOrderRequest extends FormRequest
             'total' => [
                 'required',
             ],
-            
+            'address' => [
+                'required',
+            ],
+            'phone_number' => [
+                'required',
+            ],
         ];
     }
 }

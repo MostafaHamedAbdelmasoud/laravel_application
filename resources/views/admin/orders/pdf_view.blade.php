@@ -40,9 +40,9 @@
 <body>
 
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="row">
+    <div class="row py-0">
         <div class="col-xs-12">
             <div class="invoice-title text-right">
                 <p class="pull-right">رقم الطلب # {{$order->id}}</p>
@@ -50,19 +50,18 @@
             <hr>
             <div class="row">
                 <div class="col-xs-4 text-left">
-                    <address >
+                    <address  style="width: 30%;">
                         <strong>دفع إلى:</strong><br>
                         {{$order->user->name}}<br>
-                        1234 Main<br>
-                        Apt. 4B<br>
-                        Springfield, ST 54321
+                        {{$order->address}}
                     </address>
                 </div>
                 <div class="col-xs-4 text-center">
                     <address>
-                        <strong>طريقة الدفع:</strong><br>
-                        الدفع عند التوصيل<br>
-                        {{$order->user->phone_number}}
+                        <strong>رقم التليفون:</strong><br>
+                        الدفع عن التوصيل
+                        <br>
+                        {{$order->phone_number}}<br>
                     </address>
                 </div>
                 <div class="col-xs-4 text-right">
@@ -71,7 +70,25 @@
                         {{$order->created_at}}<br><br>
                     </address>
                 </div>
+
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12 text-right">
+                    <address >
+                        <strong>تفاصيل الطلب:</strong><br>
+                        {{$order->details}}<br>
+
+                    </address>
+                </div>
+
+            </div>
+            <hr>
         </div>
     </div>
 
@@ -98,18 +115,18 @@
                             @forelse($order->OrderProducts as  $order_product)
                                 <tr>
                                     <td>
-                                        {{ $order_product->ProductVariant->product?$order_product->ProductVariant->product->name:''}}
+                                        {{ $order_product->ProductVariant->product->name}}
                                     </td>
                                     <td>
-                                        {{ $order_product->ProductVariant->variant?$order_product->ProductVariant->variant->color:''}}
-                                    </td>
-
-                                    <td>
-                                        {{ $order_product->ProductVariant->variant?$order_product->ProductVariant->variant->size:''}}
+                                        {{ $order_product->ProductVariant->variant->color}}
                                     </td>
 
                                     <td>
-                                        {{ $order_product->ProductVariant->variant?$order_product->ProductVariant->variant->price:''}}
+                                        {{ $order_product->ProductVariant->variant->size}}
+                                    </td>
+
+                                    <td>
+                                        {{ $order_product->ProductVariant->variant->price}}
                                     </td>
 
                                     <td>

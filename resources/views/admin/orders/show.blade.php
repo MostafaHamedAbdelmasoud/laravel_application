@@ -70,6 +70,22 @@
                         </tr>
                         <tr>
                             <th>
+                                {{ trans('cruds.order.fields.address') }}
+                            </th>
+                            <td>
+                                {{ $order->address }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.order.fields.phone_number') }}
+                            </th>
+                            <td>
+                                {{ $order->phone_number }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 {{ trans('cruds.order.fields.details') }}
                             </th>
                             <td>
@@ -83,11 +99,8 @@
                             <td>
                                 @foreach($order->OrderProducts as  $order_product)
                                     <span class="label label-info">
-                                {{
-    $order_product->ProductVariant->product ? $order_product->ProductVariant->product->name :''
-    .' - '.  $order_product->ProductVariant->variant ? $order_product->ProductVariant->variant->color  :''
-    .' - '. $order_product->ProductVariant->variant ? $order_product->ProductVariant->variant->size : ''
-    .' - '.$order_product->ProductVariant->variant ? $order_product->ProductVariant->variant->price : '' }}
+                                {{ $order_product->ProductVariant->product->name .' - '.  $order_product->ProductVariant->variant->color .' - '.
+                                 $order_product->ProductVariant->variant->size .' - '.$order_product->ProductVariant->variant->price }}
                                <br>
                                 </span>
                                 @endforeach
