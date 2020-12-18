@@ -45,14 +45,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.address') }}
-                        </th>
-                        <td>
-                            {{ $product->address }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.product.fields.brand') }}
                         </th>
                         <td>
