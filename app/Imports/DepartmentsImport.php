@@ -29,6 +29,10 @@ class DepartmentsImport implements ToModel, WithHeadingRow
      * @var int
      */
     private $rows;
+    /**
+     * @var int
+     */
+    private $cnt_of_headers_and_rows_filled_with_data;
 
     /**
      * DepartmentsImport constructor.
@@ -38,6 +42,9 @@ class DepartmentsImport implements ToModel, WithHeadingRow
     {
         $this->rows = 0;
         $this->excel_file = $excel_file;
+        if ($this->excel_file) {
+            $this->cnt_of_headers_and_rows_filled_with_data = ExtractImageFromExcelHelper::get_header_and_rows_count($excel_file);
+        }
     }
 
     /**
@@ -48,6 +55,9 @@ class DepartmentsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
+        if ($this->rows == $this->cnt_of_headers_and_rows_filled_with_data-1) {
+            return null;
+        } // it exceeds the rows that have data
         $city = City::where('name', $row[trans("cruds.department.fields.city")])->first();
         $trader = Trader::where('name', $row[trans("cruds.department.fields.trader")])->first();
         $category = Category::where('name', $row[trans("cruds.department.fields.category")])->first();

@@ -29,6 +29,10 @@ class TradersImport implements ToModel, WithHeadingRow
      * @var int
      */
     private $rows;
+    /**
+     * @var int
+     */
+    private $cnt_of_headers_and_rows_filled_with_data;
 
     /**
      * DepartmentsImport constructor.
@@ -38,6 +42,9 @@ class TradersImport implements ToModel, WithHeadingRow
     {
         $this->rows = 0;
         $this->excel_file = $excel_file;
+        if ($this->excel_file) {
+            $this->cnt_of_headers_and_rows_filled_with_data = ExtractImageFromExcelHelper::get_header_and_rows_count($excel_file);
+        }
     }
 
     /**
@@ -48,6 +55,10 @@ class TradersImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
+        if ($this->rows == $this->cnt_of_headers_and_rows_filled_with_data-1) {
+            return null;
+        } // it exceeds the rows that have data
+
         $trader = Trader::firstOrCreate([
             'activeness' => $row[trans("cruds.trader.fields.activeness")],
             'name' => $row[trans('cruds.trader.fields.name')],

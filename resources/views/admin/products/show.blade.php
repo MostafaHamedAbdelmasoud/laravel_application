@@ -1,6 +1,22 @@
 @extends('layouts.admin')
 @section('content')
 
+
+
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.relatedData') }}
+        </div>
+        <ul class="nav nav-tabs" >
+            <li class="nav-item bg-success mx-2">
+                <a class="nav-link text-white" href="{{route('admin.products.variants.index',$product)}}" role="tab" >
+                    {{ trans('cruds.variant.title') }}
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
     <div class="card">
         <div class="card-header">
             {{ trans('global.show') }} {{ trans('cruds.product.title') }}
@@ -183,19 +199,6 @@
     </div>
 
 
-    <div class="card">
-        <div class="card-header">
-            {{ trans('global.relatedData') }}
-        </div>
-        <ul class="nav nav-tabs" >
-            <li class="nav-item bg-success mx-2">
-                <a class="nav-link text-white" href="{{route('admin.products.variants.index',$product)}}" role="tab" >
-                    {{ trans('cruds.variant.title') }}
-                </a>
-            </li>
-        </ul>
-
-    </div>
 
 
 

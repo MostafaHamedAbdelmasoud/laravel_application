@@ -70,7 +70,6 @@
                         {{$order->created_at}}<br><br>
                     </address>
                 </div>
-
             </div>
         </div>
     </div>

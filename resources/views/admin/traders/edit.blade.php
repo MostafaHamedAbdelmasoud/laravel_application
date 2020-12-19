@@ -88,7 +88,7 @@
 
             <div class="form-group">
                 <label for="activeness">{{ trans('cruds.trader.fields.activeness') }}</label>
-                <input class="form-control {{ $errors->has('activeness') ? 'is-invalid' : '' }}" type="text" name="activeness" id="activeness" value="{{ old('activeness', '') }}">
+                <input class="form-control {{ $errors->has('activeness') ? 'is-invalid' : '' }}" type="text" name="activeness" id="activeness" value="{{ old('activeness', $trader->activeness) }}">
                 @if($errors->has('activeness'))
                     <div class="invalid-feedback">
                         {{ $errors->first('activeness') }}

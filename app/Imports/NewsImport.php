@@ -44,7 +44,7 @@ class NewsImport implements ToModel, WithHeadingRow
         $this->excel_file = $excel_file;
 
         if ($this->excel_file) {
-            $this->cnt_of_headers_and_rows_filled_with_data = $this->get_header_and_rows_count();
+            $this->cnt_of_headers_and_rows_filled_with_data = ExtractImageFromExcelHelper::get_header_and_rows_count($excel_file);
         }
     }
 

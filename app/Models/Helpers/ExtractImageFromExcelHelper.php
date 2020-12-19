@@ -14,8 +14,10 @@ class ExtractImageFromExcelHelper
      * @param $mediaCollection
      * @param $spreadsheet
      * @param $indx
+     * @param int $variant
+     * @param int $product
      */
-    public static function importImage($model, $mediaCollection, $spreadsheet, $indx)
+    public static function importImage($model, $mediaCollection, $spreadsheet, $indx, $variant = 0, $product = 0)
     {
         if ($model->getMedia($mediaCollection)) {
             $model->clearMediaCollection($mediaCollection);
@@ -23,16 +25,18 @@ class ExtractImageFromExcelHelper
 
         $i = 0;
         $arr = [];
+
         foreach ($spreadsheet->getActiveSheet()->getDrawingCollection() as $drawing) {
 
             $current_row_coordinates = (substr($drawing->getCoordinates(), 1));
 
+            if ($variant) {
+                $variant--;
+                continue;
+            }
             if (($current_row_coordinates != $indx + 1)) {
                 $i++;
                 continue;
-            }
-            if ($indx + 1 < $current_row_coordinates) {
-                break;
             }
 
 
@@ -55,8 +59,10 @@ class ExtractImageFromExcelHelper
             $model->addMedia($myFileName)->toMediaCollection($mediaCollection);
 
             Storage::delete($myFileName);
-        }
 
+            if ($product) break;
+        }
+        return $model;
     }
 
     /**
@@ -69,5 +75,18 @@ class ExtractImageFromExcelHelper
     {
         $UNIX_DATE = ($value - 25569) * 86400;
         return gmdate("Y-m-d", $UNIX_DATE);
+    }
+
+    /**
+     * @param $excel_file
+     * @return int
+     */
+    public static function get_header_and_rows_count($excel_file)
+    {
+        $objPHPExcel = $excel_file;
+        $maxCell = $objPHPExcel->getActiveSheet()->getHighestRowAndColumn();
+        $data = $objPHPExcel->getActiveSheet()->rangeToArray('A1:' . $maxCell['column'] . $maxCell['row']);
+        $data = array_map('array_filter', $data);
+        return count(array_filter($data));
     }
 }
