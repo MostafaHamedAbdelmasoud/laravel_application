@@ -16,7 +16,7 @@
                 });
                 $.ajax({
                     type: 'GET',
-                    url: location.origin + '/public/index.php/api/v1/get_news_sub_categories_ajax/' + valueOFselectCategory,
+                    url: location.origin + '/public/api/v1/get_news_sub_categories_ajax/' + valueOFselectCategory,
                     contentType: false,
                     cache: false,
                     processData: false,
