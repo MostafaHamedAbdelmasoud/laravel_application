@@ -27,9 +27,9 @@ class MainProductServiceTypesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'main_product_service_show';
-                $editGate      = 'main_product_service_edit';
-                $deleteGate    = 'main_product_service_delete';
+                $viewGate      = 'main_product_service_type_show';
+                $editGate      = 'main_product_service_type_edit';
+                $deleteGate    = 'main_product_service_type_delete';
                 $crudRoutePart = 'main_product_service_types';
 
                 return view('partials.datatablesActions', compact(
