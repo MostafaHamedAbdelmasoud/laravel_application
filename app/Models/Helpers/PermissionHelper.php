@@ -24,7 +24,7 @@ class PermissionHelper
         $attribute_seperated = implode('_', $attribute_Array);
 
         foreach ($permission_sufixs as $permission_suffix) {
-            $permission = Permission::create([
+            $permission = Permission::firstOrcreate([
                 'title' => $attribute_seperated . $permission_suffix,
             ]);
             $lol = Role::where('title', 'Admin')->first()->permissions()->attach($permission);

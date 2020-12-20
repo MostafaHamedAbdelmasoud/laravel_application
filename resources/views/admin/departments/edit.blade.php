@@ -103,7 +103,7 @@
                 <label for="trader_id">{{ trans('cruds.offer.fields.trader') }}</label>
                 <select class="form-control select2 {{ $errors->has('trader') ? 'is-invalid' : '' }}" name="trader_id" id="trader_id">
                     @foreach($traders as $id => $trader)
-                        <option value="{{ $id }}" {{ (old('trader_id') ? old('trader_id') : $offer->trader->id ?? '') == $id ? 'selected' : '' }}>{{ $trader }}</option>
+                        <option value="{{ $id }}" {{ (old('trader_id') ? old('trader_id') : $department->trader_id ?? '') == $id ? 'selected' : '' }}>{{ $trader }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('trader'))
