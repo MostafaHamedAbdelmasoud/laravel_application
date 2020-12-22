@@ -85,6 +85,7 @@ class ProductsImport implements ToModel, WithHeadingRow
         if (!$city || !$trader || ($sub_product_type_name && $sub_product_service_type_name) || ($main_product_service_type_name && $main_product_type_name) || !$department) {
             throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
         }
+        
         $product = Product::firstOrCreate([
             'brand' => $row[trans("cruds.product.fields.brand")],
             'details' => $row[trans('cruds.product.fields.details')],
