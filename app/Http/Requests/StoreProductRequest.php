@@ -42,6 +42,7 @@ class StoreProductRequest extends FormRequest
             ],
             'sub_product_service_type_id' => [
 //                'required',
+            'nullable',
                 'required_with:main_product_service_type_id',
                 'exists:sub_product_service_types,id',
             ],

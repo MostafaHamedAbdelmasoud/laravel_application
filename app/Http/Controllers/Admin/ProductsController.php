@@ -196,6 +196,7 @@ class ProductsController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+
         $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
         $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;

@@ -19,8 +19,7 @@ class Coupon extends Model
     /**
      * @var string
      */
-    protected $table = 'coupons';
-
+    public $table = 'coupons';
 
     /**
      * The attributes that are mass assignable.
