@@ -12,11 +12,11 @@ class AddRelationshipFieldsToNewsTable extends Migration
 
         Schema::table('news', function (Blueprint $table) {
             $table->unsignedBigInteger('news_category_id')->nullable();
-            $table->foreign('news_category_id')->references('id')->on('news_categories');
+            $table->foreign('news_category_id')->references('id')->on('news_categories')->cascadeOnDelete();
             $table->unsignedBigInteger('news_sub_category_id')->nullable();
-            $table->foreign('news_sub_category_id')->references('id')->on('news_sub_categories');
+            $table->foreign('news_sub_category_id')->references('id')->on('news_sub_categories')->cascadeOnDelete();
             $table->unsignedBigInteger('city_id')->nullable();
-            $table->foreign('city_id', 'city_fk_2472773')->references('id')->on('cities');
+            $table->foreign('city_id', 'city_fk_2472773')->references('id')->on('cities')->cascadeOnDelete();
         });
         Schema::enableForeignKeyConstraints();
     }

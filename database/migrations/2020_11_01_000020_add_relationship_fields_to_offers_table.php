@@ -12,11 +12,11 @@ class AddRelationshipFieldsToOffersTable extends Migration
 
         Schema::table('offers', function (Blueprint $table) {
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->unsignedBigInteger('trader_id')->nullable();
-            $table->foreign('trader_id', 'trader_fk_2504442')->references('id')->on('traders');
+            $table->foreign('trader_id', 'trader_fk_2504442')->references('id')->on('traders')->cascadeOnDelete();
             $table->unsignedBigInteger('city_id')->nullable();
-            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('city_id')->references('id')->on('cities')->cascadeOnDelete();
         });
         Schema::enableForeignKeyConstraints();
     }

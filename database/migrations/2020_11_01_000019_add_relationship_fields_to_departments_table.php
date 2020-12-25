@@ -20,7 +20,7 @@ class AddRelationshipFieldsToDepartmentsTable extends Migration
                 ->references('id')->on('traders')
                 ->cascadeOnDelete();
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();;
         });
         Schema::enableForeignKeyConstraints();
     }
