@@ -47,7 +47,7 @@
             var selected = 'selected';
             var notselected = '';
             for (var j = 0; j < hos.length; j++) {
-                allData +=  '<option selected value=""></option> ' ;
+                allData +=  '<option selected value="">يرجى الإختيار</option> ' ;
                 allData += ' <option value="' + hos[j].id + '"  ';
                 allData += old_id==hos[j].id? selected:notselected  ;
                 allData+= '>'+hos[j].name + '</option>\n';
