@@ -19,11 +19,13 @@ class AuthApiController extends Controller
     {
         $request->validate([
             'phone_number' => 'required|unique:users,phone_number',
+            'name' => 'required|unique:users,name',
         ]);
 
 
         $user = User::create([
             'phone_number' => $request->phone_number,
+            'name' => $request->name,
         ]);
 
         $token = $user->createToken($user->phone_number . '-' . now());
