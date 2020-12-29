@@ -80,6 +80,7 @@ class Department extends Model implements HasMedia
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
+
     public function trader()
     {
         return $this->belongsTo(Trader::class, 'trader_id');

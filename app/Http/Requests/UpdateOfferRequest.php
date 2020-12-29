@@ -21,13 +21,13 @@ class UpdateOfferRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'category_id'  => [
+            'sub_category_id' => [
                 'required',
-                'integer',
+                'exists:departments_sub_categories,id',
             ],
-            'sub_category_id'  => [
+            'category_id' => [
                 'required',
-                'integer',
+                'exists:categories,id',
             ],
             'add_date'     => [
                 'required',

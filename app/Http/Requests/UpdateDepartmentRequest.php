@@ -29,6 +29,14 @@ class UpdateDepartmentRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'sub_category_id' => [
+                'required',
+                'exists:departments_sub_categories,id',
+            ],
+            'category_id' => [
+                'required',
+                'exists:categories,id',
+            ],
         ];
     }
 }

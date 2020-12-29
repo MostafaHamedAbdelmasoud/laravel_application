@@ -175,7 +175,7 @@
                     {data: 'city_name', name: 'city.name'},
                     {data: 'phone_number', name: 'phone_number'},
                     {data: 'category_name', name: 'category.name'},
-                    {data: 'sub_category_name', name: 'sub_category.name'},
+                    {data: 'sub_category_name', name: 'departments_sub_category.name'},
                     {data: 'trader_name', name: 'trader.name'},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],

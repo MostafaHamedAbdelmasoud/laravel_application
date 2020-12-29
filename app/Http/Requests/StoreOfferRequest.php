@@ -17,23 +17,23 @@ class StoreOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => [
+            'name' => [
                 'string',
                 'required',
             ],
-            'category_id'  => [
+            'sub_category_id' => [
                 'required',
-                'integer',
+                'exists:departments_sub_categories,id',
             ],
-            'sub_category_id'  => [
+            'category_id' => [
                 'required',
-                'integer',
+                'exists:categories,id',
             ],
-            'add_date'     => [
+            'add_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'date_end'     => [
+            'date_end' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
@@ -41,14 +41,15 @@ class StoreOfferRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'location'     => [
+            'location' => [
                 'string',
                 'required',
             ],
-            'price'        => [
+            'price' => [
                 'numeric',
                 'required',
             ],
+
         ];
     }
 }
