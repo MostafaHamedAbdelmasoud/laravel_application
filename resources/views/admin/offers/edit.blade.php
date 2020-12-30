@@ -21,6 +21,17 @@
                 <span class="help-block">{{ trans('cruds.offer.fields.name_helper') }}</span>
             </div>
 
+            <div class="form-group">
+                <label class="required" for="description">{{ trans('cruds.offer.fields.description') }}</label>
+                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', $offer->description) }}" required>
+                @if($errors->has('description'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('description') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.offer.fields.description_helper') }}</span>
+            </div>
+
 
             <div class="form-group">
                 <label class="required" for="category_id">{{ trans('cruds.offer.fields.category') }}</label>
@@ -130,7 +141,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.offer.fields.city_helper') }}</span>
             </div>
-            
+
             <div class="form-group">
                 <label for="images">{{ trans('cruds.offer.fields.images') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}" id="images-dropzone">
