@@ -21,6 +21,10 @@
                     <th width="10">
 
                     </th>
+
+                    <th>
+                        &nbsp;
+                    </th>
                     <th>
                         {{ trans('cruds.coupon.fields.id') }}
                     </th>
@@ -39,11 +43,10 @@
                     <th>
                         {{ trans('cruds.coupon.fields.min_total') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -72,8 +75,7 @@
 {{--                            @endforeach--}}
 {{--                        </select>--}}
 {{--                    </td>--}}
-                    <td>
-                    </td>
+
                 </tr>
             </thead>
         </table>
@@ -126,14 +128,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.coupons.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', orderable: false, searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false },
 { data: 'id', name: 'id' },
 { data: 'code', name: 'code' },
 { data: 'percentage_discount', name: 'percentage_discount' },
 { data: 'fixed_discount', name: 'fixed_discount' },
 { data: 'max_usage_per_user', name: 'max_usage_per_user' },
 { data: 'min_total', name: 'min_total' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

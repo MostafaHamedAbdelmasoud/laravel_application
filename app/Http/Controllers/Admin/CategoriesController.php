@@ -35,6 +35,7 @@ class CategoriesController extends Controller
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
+
             $table->editColumn('actions', function ($row) {
 //                $name_seperated = explode(' ',$row->name);
 //                $name_imploded_with_underscore  = implode('_',$name_seperated);
@@ -65,7 +66,7 @@ class CategoriesController extends Controller
                 return $row->type ? Category::TYPE_RADIO[$row->type] : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions','placeholder']);
 
             return $table->make(true);
         }

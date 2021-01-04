@@ -53,6 +53,9 @@
 
                     </th>
                     <th>
+                        &nbsp;
+                    </th>
+                    <th>
                         {{ trans('cruds.job.fields.id') }}
                     </th>
                     <th>
@@ -82,11 +85,10 @@
                     <th>
                         {{ trans('cruds.job.fields.email') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -126,8 +128,6 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
                     </td>
                 </tr>
                 </thead>
@@ -184,7 +184,8 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.jobs.index') }}",
                 columns: [
-                    {data: 'placeholder', name: 'placeholder'},
+                    {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
                     {data: 'approved', name: 'approved'},
                     {data: 'name', name: 'name'},
@@ -195,7 +196,6 @@
                     {data: 'specialization_name', name: 'specialization.name'},
                     {data: 'details', name: 'details'},
                     {data: 'email', name: 'email'},
-                    {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],

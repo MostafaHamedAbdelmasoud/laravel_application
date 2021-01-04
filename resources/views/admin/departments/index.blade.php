@@ -25,6 +25,10 @@
                     <th width="10">
 
                     </th>
+
+                    <th>
+                        &nbsp;
+                    </th>
                     <th>
                         {{ trans('cruds.department.fields.id') }}
                     </th>
@@ -52,11 +56,10 @@
                     <th>
                         {{ trans('cruds.department.fields.trader') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -110,8 +113,6 @@
                         </select>
                     </td>
 
-                    <td>
-                    </td>
                 </tr>
                 </thead>
             </table>
@@ -167,7 +168,8 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.departments.index') }}",
                 columns: [
-                    {data: 'placeholder', name: 'placeholder'},
+                    {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'logo', name: 'logo', sortable: false, searchable: false},
@@ -177,7 +179,6 @@
                     {data: 'category_name', name: 'category.name'},
                     {data: 'sub_category_name', name: 'departments_sub_category.name'},
                     {data: 'trader_name', name: 'trader.name'},
-                    {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],
