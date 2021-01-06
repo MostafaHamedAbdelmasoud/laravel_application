@@ -91,7 +91,9 @@ class TraderController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.traders.index');
+        $traders = Trader::all();
+
+        return view('admin.traders.index',compact('traders'));
     }
 
     public function create()

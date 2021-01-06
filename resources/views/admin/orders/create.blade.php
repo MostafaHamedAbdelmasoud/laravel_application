@@ -57,8 +57,7 @@
                         @foreach($product_variants as $product_variant)
                             <option
                                 value="{{ $product_variant->id }}" {{ in_array($product_variant->id , old('product_variant', [])) ? 'selected' : '' }}>
-                                {{--                                {{ $product_variant->product->name .' - '.$product_variant->variant->color .' - '.$product_variant->variant->size .' - '. $product_variant->variant->price}}--}}
-                                {{ $product->name .' - '.$product_variant->variant->color .' - '.$product_variant->variant->size .' - '. $product_variant->variant->price}}
+                                {{ $product_variant->product->name .' - '.$product_variant->variant->color .' - '.$product_variant->variant->size .' - '. $product_variant->variant->price}}
                             </option>
                         @endforeach
                     </select>
