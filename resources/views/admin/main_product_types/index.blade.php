@@ -23,25 +23,25 @@
 
                     </th>
                     <th>
+                        &nbsp;
+                    </th>
+                    <th>
                         {{ trans('cruds.main_product_type.fields.id') }}
                     </th>
                     <th>
                         {{ trans('cruds.main_product_type.fields.name') }}
-                    </th>
-                    <th>
-                        &nbsp;
                     </th>
                 </tr>
                 <tr>
                     <td>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                 </tr>
                 </thead>
@@ -98,10 +98,10 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.main_product_types.index') }}",
                 columns: [
-                    {data: 'placeholder', name: 'placeholder'},
+                    {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'actions', name: '{{ trans('global.actions') }}'}
+                    {data: 'name', name: 'name', searchable: true},
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],

@@ -50,7 +50,7 @@ class NewsController extends Controller
         $this->repo->user = auth()->user();
 
         if ($request->ajax()) {
-            $query = News::with(['news_category', 'news_sub_category'])->select(sprintf('%s.*', (new News)->table));
+            $query = News::with(['news_category', 'news_sub_category','city'])->select(sprintf('%s.*', (new News)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -85,7 +85,7 @@ class NewsController extends Controller
             });
 
             $table->editColumn('added_by_admin', function ($row) {
-                return $row->added_by_admin ? "نعم" : "لا";
+                return $row->added_by_admin ;
             });
 
             $table->editColumn('city_name', function ($row) {
@@ -120,7 +120,7 @@ class NewsController extends Controller
             });
 
             $table->editColumn('approved', function ($row) {
-                return $row->approved ? "نعم" : "لا";
+                return $row->approved ;
             });
 
             $table->editColumn('image', function ($row) {

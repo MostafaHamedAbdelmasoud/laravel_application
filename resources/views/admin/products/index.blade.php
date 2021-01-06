@@ -25,6 +25,10 @@
                     <th width="10">
 
                     </th>
+
+                    <th>
+                        &nbsp;
+                    </th>
                     <th>
                         {{ trans('cruds.product.fields.id') }}
                     </th>
@@ -87,12 +91,12 @@
                         {{ trans('cruds.product.fields.price_after_discount') }}
                     </th>
 
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
 
                 <tr>
+
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -111,8 +115,10 @@
 
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -194,8 +200,6 @@
 
                     </td>
 
-                    <td>
-                    </td>
                 </tr>
 
                 </thead>
@@ -257,27 +261,27 @@
                     }
                 },
                 columns: [
-                    {data: 'placeholder', name: 'placeholder'},
+                    {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'brand', name: 'brand'},
                     {data: 'product_code', name: 'product_code'},
-                    {data: 'show_in_trader_page', name: 'show_in_trader_page'},
+                    {data: 'show_in_trader_page', name: 'showInTraderPage'},
                     {data: 'show_in_main_page', name: 'show_in_main_page'},
                     {data: 'image', name: 'image', sortable: false, searchable: false},
                     {data: 'price', name: 'price'},
-                    {data: 'main_product_type_name', name: 'main_product_type_name'},
-                    {data: 'sub_product_type_name', name: 'sub_product_type_name'},
-                    {data: 'main_product_service_type_name', name: 'main_product_service_type_name'},
-                    {data: 'sub_product_service_type_name', name: 'sub_product_service_type_name'},
-                    {data: 'trader_name', name: 'trader_name'},
-                    {data: 'department_name', name: 'department_name'},
-                    {data: 'city_name', name: 'city_name'},
+                    {data: 'main_product_type_name', name: 'MainProductType.name'},
+                    {data: 'sub_product_type_name', name: 'SubProductType.name'},
+                    {data: 'main_product_service_type_name', name: 'MainProductServiceType.name'},
+                    {data: 'sub_product_service_type_name', name: 'MainProductServiceType.name'},
+                    {data: 'trader_name', name: 'trader.name'},
+                    {data: 'department_name', name: 'department.name'},
+                    {data: 'city_name', name: 'city.name'},
                     {data: 'show_trader_name', name: 'show_trader_name'},
                     {data: 'details', name: 'details'},
                     {data: 'detailed_title', name: 'detailed_title'},
                     {data: 'price_after_discount', name: 'price_after_discount'},
-                    {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],

@@ -22,6 +22,9 @@
 
                     </th>
                     <th>
+                        &nbsp;
+                    </th>
+                    <th>
                         {{ trans('cruds.user.fields.id') }}
                     </th>
                     <th>
@@ -39,11 +42,10 @@
                     <th>
                         {{ trans('cruds.user.fields.phone_number') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -68,8 +70,6 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
                     </td>
                 </tr>
             </thead>
@@ -123,14 +123,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.users.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder' , orderable: false, searchable: false},
+{ data: 'actions', name: '{{ trans('global.actions') }}' , orderable: false, searchable: false},
 { data: 'id', name: 'id' },
 { data: 'accept_notifications', name: 'accept_notifications' },
 { data: 'name', name: 'name' },
 { data: 'email', name: 'email' },
 { data: 'roles', name: 'roles.title' },
 { data: 'phone_number', name: 'phone_number' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

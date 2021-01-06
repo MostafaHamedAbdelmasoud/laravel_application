@@ -53,7 +53,8 @@ class ProductsController extends Controller
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::with(['trader'])->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['trader','city','department','MainProductType','MainProductType'
+                ,'SubProductType','MainProductServiceType','SubProductServiceType'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -124,7 +125,7 @@ class ProductsController extends Controller
                 return $row->city ? $row->city->name : "";
             });
             $table->editColumn('show_trader_name', function ($row) {
-                return $row->show_trader_name ? 'نعم' : "لا";
+                return $row->show_trader_name;
             });
             $table->editColumn('details', function ($row) {
                 return $row->details ? $row->details : "";
@@ -141,10 +142,10 @@ class ProductsController extends Controller
             /*********/
 
             $table->editColumn('show_in_trader_page', function ($row) {
-                return $row->showInTraderPage();
+                return $row->show_in_trader_page;
             });
             $table->editColumn('show_in_main_page', function ($row) {
-                return $row->showInMainPage();
+                return $row->show_in_main_page;
             });
             $table->editColumn('price', function ($row) {
                 return $row->price ? $row->price : "";
@@ -287,8 +288,7 @@ class ProductsController extends Controller
         //abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $product->delete();
-
-
+        $product->variants()->delete();
         return back();
     }
 

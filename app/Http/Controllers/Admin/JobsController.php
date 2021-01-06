@@ -73,7 +73,7 @@ class JobsController extends Controller
             $table->editColumn('details', function ($row) {
                 return $row->details ? $row->details : "";
             });
-            $table->editColumn('approved', function ($row) {
+            $table->editColumn('is_approved', function ($row) {
                 return $row->is_approved ;
             });
             $table->addColumn('specialization_name', function ($row) {

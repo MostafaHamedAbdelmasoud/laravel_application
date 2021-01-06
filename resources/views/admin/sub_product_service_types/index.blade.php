@@ -22,6 +22,9 @@
 
                     </th>
                     <th>
+                        &nbsp;
+                    </th>
+                    <th>
                         {{ trans('cruds.sub_product_service_type.fields.id') }}
                     </th>
                     <th>
@@ -30,15 +33,11 @@
                     <th>
                         {{ trans('cruds.sub_product_service_type.fields.main_product_service_type_id') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
                     <td>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -47,6 +46,7 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                 </tr>
             </thead>
@@ -100,11 +100,11 @@
     aaSorting: [],
     ajax: "{{ route('admin.sub_product_service_types.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder' , orderable: false, searchable: false},
+{ data: 'actions', name: '{{ trans('global.actions') }}' , orderable: false, searchable: false},
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'main_product_service_type_id', name: 'main_product_service_type_id' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'main_product_service_type_id', name: 'MainProductServiceType.name' ,searchable: true},
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

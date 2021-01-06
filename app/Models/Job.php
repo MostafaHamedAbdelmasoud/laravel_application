@@ -19,6 +19,7 @@ class Job extends Model implements HasMedia
 
     protected $appends = [
         'image',
+        'is_approved',
     ];
 
 

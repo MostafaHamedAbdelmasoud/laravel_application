@@ -23,6 +23,9 @@
 
                         </th>
                         <th>
+                            &nbsp;
+                        </th>
+                        <th>
                             {{ trans('cruds.order.fields.id') }}
                         </th>
                         <th>
@@ -46,15 +49,12 @@
                         <th>
                             {{ trans('cruds.order.fields.phone_number') }}
                         </th>
-                        <th>
-                            &nbsp;
-                        </th>
+
                     </tr>
                     <tr>
                         <td>
                         </td>
                         <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -78,7 +78,9 @@
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -86,30 +88,6 @@
                         <tr data-entry-id="{{ $order->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $order->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->coupon->code ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->user->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->subtotal ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->discount ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->total ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->address ?? '' }}
-                            </td>
-                            <td>
-                                {{ $order->phone_number ?? '' }}
                             </td>
                             <td>
                                 @can('order_show')
@@ -138,6 +116,31 @@
                                 @endcan
 
                             </td>
+                            <td>
+                                {{ $order->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->coupon->code ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->subtotal ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->discount ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->total ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->address ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->phone_number ?? '' }}
+                            </td>
+
 
                         </tr>
                     @endforeach

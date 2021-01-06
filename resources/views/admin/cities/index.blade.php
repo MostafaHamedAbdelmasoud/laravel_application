@@ -100,7 +100,7 @@
                     {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
                     {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
+                    {data: 'name', name: 'name',searchable: true},
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],

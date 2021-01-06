@@ -23,6 +23,9 @@
 
                         </th>
                         <th>
+                            &nbsp;
+                        </th>
+                        <th>
                             {{ trans('cruds.notification.fields.id') }}
                         </th>
                         <th>
@@ -34,15 +37,11 @@
                         <th>
                             {{ trans('cruds.notification.fields.city_id') }}
                         </th>
-                        <th>
-                            &nbsp;
-                        </th>
                     </tr>
                     <tr>
                         <td>
                         </td>
                         <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -54,6 +53,7 @@
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                     </tr>
                     </thead>
@@ -62,18 +62,6 @@
                         <tr data-entry-id="{{ $notification->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $notification->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $notification->title ?? '' }}
-                            </td>
-                            <td>
-                                {{ $notification->content ?? '' }}
-                            </td>
-                            <td>
-                                {{ $notification->city ? $notification->city->name: '' }}
                             </td>
                             <td>
                                 @can('notification_show')
@@ -101,6 +89,19 @@
                                     </form>
                                 @endcan
 
+                            </td>
+
+                            <td>
+                                {{ $notification->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $notification->title ?? '' }}
+                            </td>
+                            <td>
+                                {{ $notification->content ?? '' }}
+                            </td>
+                            <td>
+                                {{ $notification->city ? $notification->city->name: '' }}
                             </td>
 
                         </tr>

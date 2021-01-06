@@ -22,7 +22,7 @@ class SubProductServiceTypesController extends Controller
         //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SubProductServiceType::query()->select(sprintf('%s.*', (new SubProductServiceType)->table));
+            $query = SubProductServiceType::with('MainProductServiceType')->select(sprintf('%s.*', (new SubProductServiceType)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

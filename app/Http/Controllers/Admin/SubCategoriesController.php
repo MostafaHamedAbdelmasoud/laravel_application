@@ -21,7 +21,7 @@ class SubCategoriesController extends Controller
         //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SubCategory::query()->select(sprintf('%s.*', (new SubCategory)->table));
+            $query = SubCategory::with('category')->select(sprintf('%s.*', (new SubCategory)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,6 +49,9 @@ class SubCategoriesController extends Controller
                 return $row->name ? $row->name : "";
             });
             $table->editColumn('category_id', function ($row) {
+                return $row->category ? $row->category->name : '';
+            });
+            $table->addColumn('category_name', function ($row) {
                 return $row->category ? $row->category->name : '';
             });
 

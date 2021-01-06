@@ -22,7 +22,7 @@ class NewsSubCategoriesController extends Controller
         //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = NewsSubCategory::query()->select(sprintf('%s.*', (new NewsSubCategory)->table));
+            $query = NewsSubCategory::with('news_category')->select(sprintf('%s.*', (new NewsSubCategory)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

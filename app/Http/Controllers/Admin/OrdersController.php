@@ -36,8 +36,8 @@ class OrdersController extends Controller
     {
         //abort_if(Gate::denies('orders_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product_variants =  ProductVariant::all();
-
+        $product_variants =  ProductVariant::all()->load('product','variant');
+//        dd($product_variants);
         $coupons =   Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -51,13 +51,14 @@ class OrdersController extends Controller
         try {
             $order = Order::create($request->all());
 
-
             foreach ($request->product_variant as $product_variant) {
                 OrderProduct::create([
 
                     'product_variant_id' => $product_variant,
 
-                    'order_id' => $order->id
+                    'order_id' => $order->id,
+                    // todo
+                    'quantity' => $product_variant->qunatity,
                 ]);
             }
 

@@ -24,6 +24,9 @@
 
                     </th>
                     <th>
+                        &nbsp;
+                    </th>
+                    <th>
                         {{ trans('cruds.news.fields.id') }}
                     </th>
                     <th>
@@ -66,11 +69,10 @@
                     <th>
                         {{ trans('cruds.news.fields.image') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -123,8 +125,6 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
                     </td>
 
                     <td>
@@ -184,22 +184,22 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.news.index') }}",
                 columns: [
-                    {data: 'placeholder', name: 'placeholder'},
+                    {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'city_name', name: 'city.name'},
                     {data: 'details', name: 'details'},
                     {data: 'price', name: 'price'},
                     {data: 'detailed_title', name: 'detailed_title'},
-                    {data: 'news_category_name', name: 'news_category_name'},
-                    {data: 'news_sub_category_name', name: 'news_sub_category_name'},
+                    {data: 'news_category_name', name: 'news_category.name'},
+                    {data: 'news_sub_category_name', name: 'news_sub_category.name'},
                     {data: 'add_date', name: 'add_date'},
                     {data: 'phone_number', name: 'phone_number'},
                     {data: 'approved', name: 'approved'},
                     {data: 'added_by_admin', name: 'added_by_admin'},
 
                     {data: 'image', name: 'image', sortable: false, searchable: false},
-                    {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],

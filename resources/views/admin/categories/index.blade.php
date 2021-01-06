@@ -107,11 +107,11 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.categories.index') }}",
                 columns: [
-                    {data: 'placeholder', name: 'placeholder',orderable: false, searchable: false},
-                    {data: 'actions', name: '{{ trans('global.actions') }}',orderable: false, searchable: false},
+                    {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
+                    {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'type', name: 'type'},
+                    {data: 'type', name: 'type', searchable: true},
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],
@@ -130,6 +130,23 @@
                     .search(value, strict)
                     .draw()
             });
+
+            $('.datatable thead select').on('change', function () {
+                // var column = ;
+                var val = $.fn.dataTable.util.escapeRegex(
+                    $(this).val()
+                );
+                let strict = $(this).attr('strict') || false;
+
+                table
+                    .column($(this).parent().index())
+                    .search(val, strict)
+                    .draw();
+
+
+            });
+
+
         });
 
     </script>

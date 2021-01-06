@@ -24,6 +24,9 @@
 
                     </th>
                     <th>
+                        &nbsp;
+                    </th>
+                    <th>
                         {{ trans('cruds.trader.fields.id') }}
                     </th>
                     <th>
@@ -50,20 +53,11 @@
                     <th>
                         {{ trans('cruds.trader.fields.whatsapp') }}
                     </th>
-                    <th>
-                        &nbsp;
-                    </th>
                 </tr>
                 <tr>
                     <td>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -72,7 +66,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -84,6 +77,13 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                 </tr>
             </thead>
@@ -137,7 +137,8 @@
     aaSorting: [],
     ajax: "{{ route('admin.traders.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder' , orderable: false, searchable: false},
+{ data: 'actions', name: '{{ trans('global.actions') }}' , orderable: false, searchable: false},
 { data: 'id', name: 'id' },
 { data: 'activeness', name: 'activeness' },
 { data: 'images', name: 'images', sortable: false, searchable: false },
@@ -147,7 +148,6 @@
 { data: 'details', name: 'details' },
 { data: 'facebook_url', name: 'facebook_url' },
 { data: 'whatsapp', name: 'whatsapp' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

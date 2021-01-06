@@ -22,7 +22,7 @@ class SubProductTypesController extends Controller
         //abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SubProductType::query()->select(sprintf('%s.*', (new SubProductType)->table));
+            $query = SubProductType::with('MainProductType')->select(sprintf('%s.*', (new SubProductType)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,7 +49,7 @@ class SubProductTypesController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
-            $table->editColumn('main_product_type_id', function ($row) {
+            $table->addColumn('main_product_type_name', function ($row) {
                 return $row->MainProductType ? $row->MainProductType->name : '';
             });
 
