@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginApiRequest;
+use App\Http\Requests\RegisterApiRequest;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -15,15 +17,18 @@ class AuthApiController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterApiRequest $request)
     {
-        $request->validate([
-            'phone_number' => 'required|unique:users,phone_number',
-            'name' => 'required|unique:users,name',
-        ]);
+//        $request->validate([
+//            'phone_number' => "required|Rule::unique('servers')->where(function ($query) use($ip,$hostname) {
+//            return $query->where('ip', $ip)
+//            ->where('hostname', $hostname);
+//        })",
+//            'name' => 'required|unique:users,name',
+//        ]);
 
 
-        $user = User::create([
+        $user = User::firstOrCreate([
             'phone_number' => $request->phone_number,
             'name' => $request->name,
         ]);
@@ -41,15 +46,15 @@ class AuthApiController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginApiRequest $request)
     {
-        $request->validate([
-            'phone_number' => 'required|exists:users,phone_number',
-        ], [
-            'phone_number.exists' => 'هذا الرقم ليس مُسجل من قبل!'
-        ]);
+//        $request->validate([
+//            'phone_number' => 'required|exists:users,phone_number',
+//        ], [
+//            'phone_number.exists' => 'هذا الرقم ليس مُسجل من قبل!'
+//        ]);
 
-        $user = User::where('phone_number', $request->phone_number)->first();
+        $user = User::where('phone_number', $request->phone_number)->whereNull('deleted_at')->first();
 
         if ($user) {
             $token = $user->createToken($user->phone_number . '-' . now());
