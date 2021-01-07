@@ -58,7 +58,7 @@ class OrdersController extends Controller
 
                     'order_id' => $order->id,
                     // todo
-                    'quantity' => $product_variant->qunatity,
+//                    'quantity' => $product_variant->qunatity,
                 ]);
             }
 

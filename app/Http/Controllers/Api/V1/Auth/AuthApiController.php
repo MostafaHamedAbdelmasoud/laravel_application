@@ -19,15 +19,6 @@ class AuthApiController extends Controller
      */
     public function register(RegisterApiRequest $request)
     {
-//        $request->validate([
-//            'phone_number' => "required|Rule::unique('servers')->where(function ($query) use($ip,$hostname) {
-//            return $query->where('ip', $ip)
-//            ->where('hostname', $hostname);
-//        })",
-//            'name' => 'required|unique:users,name',
-//        ]);
-
-
         $user = User::firstOrCreate([
             'phone_number' => $request->phone_number,
             'name' => $request->name,
@@ -48,12 +39,6 @@ class AuthApiController extends Controller
      */
     public function login(LoginApiRequest $request)
     {
-//        $request->validate([
-//            'phone_number' => 'required|exists:users,phone_number',
-//        ], [
-//            'phone_number.exists' => 'هذا الرقم ليس مُسجل من قبل!'
-//        ]);
-
         $user = User::where('phone_number', $request->phone_number)->whereNull('deleted_at')->first();
 
         if ($user) {

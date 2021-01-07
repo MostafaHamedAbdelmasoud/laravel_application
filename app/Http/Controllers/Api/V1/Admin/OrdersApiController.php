@@ -59,7 +59,7 @@ class OrdersApiController extends Controller
                     'product_variant_id' => $product_variant,
 
                     'order_id' => $order->id,
-                    'quantity' => $request->quantity
+//                    'quantity' => $request->quantity
                 ]);
             }
 
