@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyCityRequest;
 use App\Http\Requests\StoreCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use App\Models\City;
+use App\Repositories\CityRepository;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CitiesController extends Controller
 {
+    /**
+     * @var CityRepository
+     */
+    private $repository;
+
+    public function __construct(CityRepository $repository)
+    {
+
+        $this->repository = $repository;
+    }
+
     public function index(Request $request)
     {
         //abort_if(Gate::denies('city_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -26,9 +38,9 @@ class CitiesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'city_show';
-                $editGate      = 'city_edit';
-                $deleteGate    = 'city_delete';
+                $viewGate = 'city_show';
+                $editGate = 'city_edit';
+                $deleteGate = 'city_delete';
                 $crudRoutePart = 'cities';
 
                 return view('partials.datatablesActions', compact(
@@ -96,6 +108,12 @@ class CitiesController extends Controller
     {
         //abort_if(Gate::denies('city_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        if ($this->repository->checkForExistenceInOtherModel($city)) {
+            return back()->withErrors('
+                لا نستطيع حذف هذه المدينة،
+                لإنها مُرتبطه بقسم بالفعل!
+                ' . $city->name);
+        }
         $city->delete();
 
         return back();
@@ -103,7 +121,17 @@ class CitiesController extends Controller
 
     public function massDestroy(MassDestroyCityRequest $request)
     {
-        City::whereIn('id', request('ids'))->delete();
+        $cities = City::whereIn('id', request('ids'));
+        foreach ($cities->get() as $city) {
+            if ($this->repository->checkForExistenceInOtherModel($city)) {
+                return back()->withErrors($city->name . '
+                لا نستطيع حذف هذه المدينة،
+                لإنها مُرتبطه بقسم بالفعل!
+                ');
+            }
+        }
+
+        $cities->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

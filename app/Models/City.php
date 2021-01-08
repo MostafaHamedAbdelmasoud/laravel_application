@@ -45,4 +45,19 @@ class City extends Model
     {
         return $this->hasMany(JobOffer::class, 'city_id', 'id');
     }
+
+    public function cityOffers()
+    {
+        return $this->hasMany(Offer::class, 'city_id', 'id');
+    }
+
+    public function cityProducts()
+    {
+        return $this->hasMany(Product::class, 'city_id', 'id');
+    }
+
+    public function cityNotifications()
+    {
+        return $this->hasMany(Notification::class, 'city_id', 'id');
+    }
 }

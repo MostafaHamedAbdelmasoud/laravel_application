@@ -81,6 +81,7 @@
                             data: {ids: ids, _method: 'DELETE'}
                         })
                             .done(function () {
+                                // sessionStorage.setItem('message','لا يمكن حذف هذه المدن');
                                 location.reload()
                             })
                     }
