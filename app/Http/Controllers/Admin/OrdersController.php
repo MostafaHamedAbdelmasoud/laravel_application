@@ -36,11 +36,11 @@ class OrdersController extends Controller
     {
         //abort_if(Gate::denies('orders_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 //        dd('s');
-        $product_variants =  ProductVariant::whereHas('product',function ($q){
+        $product_variants = ProductVariant::whereHas('product', function ($q) {
             $q->whereNull('deleted_at');
-        })->get()->load('product','variant');
+        })->get()->load('product', 'variant');
 //        dd($product_variants);
-        $coupons =   Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $coupons = Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -78,9 +78,11 @@ class OrdersController extends Controller
     {
         //abort_if(Gate::denies('orders_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product_variants =  ProductVariant::all();
+        $product_variants = ProductVariant::whereHas('product', function ($q) {
+            $q->whereNull('deleted_at');
+        })->get()->load('product', 'variant');
 
-        $coupons =   Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $coupons = Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $order_product_ids = $order->OrderProducts->pluck('product_variant_id');
