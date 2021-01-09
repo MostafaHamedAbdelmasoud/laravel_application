@@ -29,8 +29,6 @@ class StoreCouponRequest extends FormRequest
             'fixed_discount' => [
                 'nullable',
                 'required_without:percentage_discount',
-                'integer',
-                'min:1',
             ],
             'percentage_discount' => [
                 'nullable',
