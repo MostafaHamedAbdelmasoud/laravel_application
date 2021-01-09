@@ -20,6 +20,7 @@ class UpdateUserRequest extends FormRequest
             'name'         => [
                 'string',
                 'required',
+                'unique:users',
             ],
             'email'        => [
                 'required',
@@ -34,7 +35,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'phone_number' => [
                 'string',
-                'nullable',
+                'unique:users',
             ],
         ];
     }

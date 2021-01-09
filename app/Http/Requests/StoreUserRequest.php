@@ -19,7 +19,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name'         => [
                 'string',
-                'required',
+                'unique:users',
             ],
             'email'        => [
                 'required',
@@ -37,7 +37,7 @@ class StoreUserRequest extends FormRequest
             ],
             'phone_number' => [
                 'string',
-                'nullable',
+                'unique:users',
             ],
         ];
     }
