@@ -17,7 +17,6 @@ class CouponRepository
     {
         if ($data['type'] == 'percentage_discount') {
             unset($data['fixed_discount']);
-//        dd($data );
         } else {
             unset($data['percentage_discount']);
         }
