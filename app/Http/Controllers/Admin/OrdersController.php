@@ -35,11 +35,12 @@ class OrdersController extends Controller
     public function create()
     {
         //abort_if(Gate::denies('orders_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-//        dd('s');
-        $product_variants = ProductVariant::whereHas('product', function ($q) {
-            $q->whereNull('deleted_at');
-        })->get()->load('product', 'variant');
-//        dd($product_variants);
+
+        // $product_variants = ProductVariant::whereHas('product', function ($q) {
+        //     $q->whereNull('deleted_at');
+        // })->get()->load('product', 'variant');
+        $product_variants =  ProductVariant::all()->load('product','variant');
+
         $coupons = Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -78,9 +79,11 @@ class OrdersController extends Controller
     {
         //abort_if(Gate::denies('orders_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product_variants = ProductVariant::whereHas('product', function ($q) {
-            $q->whereNull('deleted_at');
-        })->get()->load('product', 'variant');
+        // $product_variants = ProductVariant::whereHas('product', function ($q) {
+        //     $q->whereNull('deleted_at');
+        // })->get()->load('product', 'variant');
+
+        $product_variants =  ProductVariant::all()->load('product','variant');
 
         $coupons = Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
