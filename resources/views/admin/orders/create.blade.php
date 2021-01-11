@@ -55,10 +55,12 @@
                     <select class="form-control select2 {{ $errors->has('product_variant') ? 'is-invalid' : '' }}"
                             name="product_variant[]" id="product_variant" multiple required>
                         @foreach($product_variants as $product_variant)
+                            @if( $product_variant->product)
                             <option
                                 value="{{ $product_variant->id }}" {{ in_array($product_variant->id , old('product_variant', [])) ? 'selected' : '' }}>
                                 {{ $product_variant->product->name .' - '.$product_variant->variant->color .' - '.$product_variant->variant->size .' - '. $product_variant->variant->price}}
                             </option>
+                            @endif
                         @endforeach
                     </select>
                     @if($errors->has('product_variant'))
