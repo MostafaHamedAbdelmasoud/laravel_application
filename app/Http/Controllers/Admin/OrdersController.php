@@ -39,7 +39,7 @@ class OrdersController extends Controller
         // $product_variants = ProductVariant::whereHas('product', function ($q) {
         //     $q->whereNull('deleted_at');
         // })->get()->load('product', 'variant');
-        $product_variants =  ProductVariant::all()->load('product','variant');
+        $product_variants = ProductVariant::all();
 
         $coupons = Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -50,14 +50,17 @@ class OrdersController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+//        dd($request->product_variant);
+
         DB::beginTransaction();
         try {
             $order = Order::create($request->all());
 
-            foreach ($request->product_vartiants as $order_product) {
+            foreach ($request->product_variant as $product_variant) {
+
                 OrderProduct::create([
 
-                    'product_variant_id' => $order_product->product_variant_id,
+                    'product_variant_id' => $product_variant,
 
                     'order_id' => $order->id,
                     // todo
@@ -83,7 +86,7 @@ class OrdersController extends Controller
         //     $q->whereNull('deleted_at');
         // })->get()->load('product', 'variant');
 
-        $product_variants =  ProductVariant::all()->load('product','variant');
+        $product_variants = ProductVariant::all()->load('product', 'variant');
 
         $coupons = Coupon::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
