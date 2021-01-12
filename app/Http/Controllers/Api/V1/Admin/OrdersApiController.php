@@ -29,14 +29,15 @@ class OrdersApiController extends Controller
     public function store(StoreOrderRequest $request)
     {
         DB::beginTransaction();
-        try {
+//        try {
             if (Auth::check()) {
+//                dd(Auth::user()->id);
                 $user_id = Auth::user()->id;
                 $request['user_id'] = $user_id;
             } else {
                 return 'لا يوجد مستخدم للطلب';
             }
-
+//            dd($request->all());
 //            if ($request->coupon_code) {
 //                $coupon = Coupon::where('code', $request->coupon_code)->first();
 //                if (!$coupon || $coupon->max_usage_per_user <= 0) {
@@ -49,19 +50,20 @@ class OrdersApiController extends Controller
 //                    $request['coupon_id'] = $coupon->id;
 //                }
 //            }
-            $request['coupon_id'] = $request->coupon_id;
 
-            $order = Order::create($request->validated());
+//            $request['coupon_id'] = $request->coupon_id;
+
+            $order = Order::create($request->all());
 
 
             foreach ($request->order_products as $order_product) {
                 OrderProduct::create([
 
-                    'product_variant_id' => $order_product->product_variant_id,
+                    'product_variant_id' => $order_product['product_variant_id'],
 
                     'order_id' => $order->id,
                     // todo
-                    'quantity' => $order_product->qunatity,
+                    'quantity' => $order_product['quantity'],
                 ]);
             }
 
@@ -70,11 +72,11 @@ class OrdersApiController extends Controller
             return (new OrderResource($order->load(['coupon', 'OrderProducts'])))
                 ->response()
                 ->setStatusCode(Response::HTTP_CREATED);
-        } catch (Exception $e) {
-            DB::rollback();
-
-            return ($e->getMessage());
-        }
+//        } catch (Exception $e) {
+//            DB::rollback();
+//
+//            return ($e->getMessage());
+//        }
     }
 
     public function show($order)

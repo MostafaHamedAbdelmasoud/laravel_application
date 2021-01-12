@@ -18,13 +18,17 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_variant' => [
-                'required'
+            'order_products' => [
+                'required',
+                'array'
             ],
-            'user_id' => [
-//                'required',
-                'exists:users,id',
+            'order_products.*.product_variant_id' => [
+                'exists:product_variant,id'
             ],
+//            'user_id' => [
+////                'required',
+//                'exists:users,id',
+//            ],
             'coupon_id' => [
                 'nullable',
                 'exists:coupons,id',
@@ -34,6 +38,16 @@ class StoreOrderRequest extends FormRequest
             ],
             'phone_number' => [
                 'required',
+            ],
+            'subtotal' => [
+                'required',
+                'numeric',
+            ],
+            'details' => [
+                'required',
+            ],
+            'discount' => [
+                'numeric',
             ],
         ];
     }

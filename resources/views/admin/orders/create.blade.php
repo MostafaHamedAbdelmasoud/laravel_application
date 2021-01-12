@@ -53,7 +53,7 @@
                               style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                     </div>
                     <select class="form-control select2 {{ $errors->has('product_variant') ? 'is-invalid' : '' }}"
-                            name="product_variant[]" id="product_variant" multiple required>
+                            name="order_products[]" id="product_variant" multiple required>
                         @foreach($product_variants as $product_variant)
                             @if( $product_variant->product)
                             <option

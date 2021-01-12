@@ -56,7 +56,7 @@ class OrdersController extends Controller
         try {
             $order = Order::create($request->all());
 
-            foreach ($request->product_variant as $product_variant) {
+            foreach ($request->order_products as $product_variant) {
 
                 OrderProduct::create([
 

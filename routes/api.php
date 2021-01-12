@@ -2,7 +2,7 @@
 
 Route::group(
     ['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin',
-        // 'middleware' => ['auth:api']
+//         'middleware' => ['auth:api']
     ],
     function () {
         // Permissions
@@ -103,8 +103,14 @@ Route::group(
         Route::post('variants/media', 'VariantsApiController@storeMedia')->name('variants.storeMedia');
         Route::apiResource('products.variants', 'VariantsApiController');
 
-        // Orders
-        Route::apiResource('orders', 'OrdersApiController');
+
+        Route::group([
+            'middleware' => ['auth:api']
+        ],
+            function () {
+                // Orders
+                Route::apiResource('orders', 'OrdersApiController');
+            });
     }
 );
 
@@ -115,9 +121,9 @@ Route::namespace('Api\V1\Admin')->group(function () {
 Route::group(
     ['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Auth',],
     function () {
-    //Auth API
-    Route::post('register', 'AuthApiController@register');
-    Route::post('login', 'AuthApiController@login');
-    // + other routes in the same namespace
-}
+        //Auth API
+        Route::post('register', 'AuthApiController@register');
+        Route::post('login', 'AuthApiController@login');
+        // + other routes in the same namespace
+    }
 );

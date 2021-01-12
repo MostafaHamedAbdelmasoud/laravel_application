@@ -44,6 +44,7 @@ class AuthApiController extends Controller
         if ($user) {
             $token = $user->createToken($user->phone_number . '-' . now());
             Auth::login($user);
+//            dd(Auth::user()->id);
 //            $token = Auth::user()->AauthAcessToken()->first();
             return response()->json([
                 'token' => $token->accessToken
