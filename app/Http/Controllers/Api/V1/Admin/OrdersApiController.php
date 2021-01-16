@@ -37,21 +37,6 @@ class OrdersApiController extends Controller
             } else {
                 return 'لا يوجد مستخدم للطلب';
             }
-//            dd($request->all());
-//            if ($request->coupon_code) {
-//                $coupon = Coupon::where('code', $request->coupon_code)->first();
-//                if (!$coupon || $coupon->max_usage_per_user <= 0) {
-//                    return response()->json([
-//                        'message' => 'الكوبون غير صالح!'
-//                    ]);
-//                } else {
-//                    $coupon->max_usage_per_user -= 1;
-//
-//                    $request['coupon_id'] = $coupon->id;
-//                }
-//            }
-
-//            $request['coupon_id'] = $request->coupon_id;
 
             $order = Order::create($request->all());
 

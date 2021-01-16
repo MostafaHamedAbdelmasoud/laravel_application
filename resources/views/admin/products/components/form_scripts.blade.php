@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 
 
@@ -46,11 +45,11 @@
             var old_id = '{!! $component_id !!}' ?? 0;
             var selected = 'selected';
             var notselected = '';
+            allData += '<option selected value="">يرجى الإختيار</option> ';
             for (var j = 0; j < hos.length; j++) {
-                allData +=  '<option selected value="">يرجى الإختيار</option> ' ;
                 allData += ' <option value="' + hos[j].id + '"  ';
-                allData += old_id==hos[j].id? selected:notselected  ;
-                allData+= '>'+hos[j].name + '</option>\n';
+                allData += old_id == hos[j].id ? selected : notselected;
+                allData += '>' + hos[j].name + '</option>\n';
             }
             document.getElementById('{!! $sub_name_id !!}').innerHTML = allData;
         }

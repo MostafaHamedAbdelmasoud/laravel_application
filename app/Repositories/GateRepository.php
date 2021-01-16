@@ -45,6 +45,7 @@ class GateRepository
      * get name of gate if in roles
      *
      * @param array $parameters
+     * @param $type
      * @param $suffix
      * @return string
      */
