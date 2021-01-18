@@ -50,7 +50,7 @@
             <hr>
             <div class="row">
                 <div class="col-xs-4 text-left">
-                    <address  style="width: 30%;">
+                    <address style="width: 30%;">
                         <strong>دفع إلى:</strong><br>
                         {{$order->user->name}}<br>
                         {{$order->address}}
@@ -79,7 +79,7 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="col-xs-12 text-right">
-                    <address >
+                    <address>
                         <strong>تفاصيل الطلب:</strong><br>
                         {{$order->details}}<br>
 
@@ -112,32 +112,34 @@
                             </thead>
                             <tbody>
                             @forelse($order->OrderProducts as  $order_product)
-                                <tr>
-                                    <td>
-                                        {{ $order_product->ProductVariant->product->name}}
-                                    </td>
-                                    <td>
-                                        {{ $order_product->ProductVariant->variant->color}}
-                                    </td>
+                                @if($order_product->ProductVariant)
+                                    <tr>
+                                        <td>
+                                            {{ $order_product->ProductVariant->product->name}}
+                                        </td>
+                                        <td>
+                                            {{ $order_product->ProductVariant->variant->color}}
+                                        </td>
 
-                                    <td>
-                                        {{ $order_product->ProductVariant->variant->size}}
-                                    </td>
+                                        <td>
+                                            {{ $order_product->ProductVariant->variant->size}}
+                                        </td>
 
-                                    <td>
-                                        {{ $order_product->ProductVariant->variant->price}}
-                                    </td>
+                                        <td>
+                                            {{ $order_product->ProductVariant->variant->price}}
+                                        </td>
 
-                                    <td>
-                                        {{ $order_product->quantity}}
-                                    </td>
+                                        <td>
+                                            {{ $order_product->quantity}}
+                                        </td>
 
-                                    @php($total_price_per_item = $order_product->ProductVariant->variant->price * $order_product->quantity)
+                                        @php($total_price_per_item = $order_product->ProductVariant->variant->price * $order_product->quantity)
 
-                                    <td>
-                                        {{ $total_price_per_item}}
-                                    </td>
-                                </tr>
+                                        <td>
+                                            {{ $total_price_per_item}}
+                                        </td>
+                                    </tr>
+                                @endif
                             @empty
                                 <tr>
                                     لا يوجد
