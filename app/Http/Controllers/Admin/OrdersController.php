@@ -56,6 +56,21 @@ class OrdersController extends Controller
         try {
             $order = Order::create($request->all());
 
+
+            if ($request->coupon_id) {
+                $coupon = Coupon::findOrFail( $request->coupon_id);
+                if (!$coupon || $coupon->max_usage_per_user <= 0) {
+                    return response()->json([
+                        'message' => 'الكوبون غير صالح!'
+                    ]);
+                } else {
+                    $coupon->update([
+                        'max_usage_per_user' => $coupon->max_usage_per_user-1
+                    ]);
+
+                }
+            }
+
             foreach ($request->order_products as $product_variant) {
 
                 OrderProduct::create([
@@ -81,10 +96,6 @@ class OrdersController extends Controller
     public function edit(Order $order)
     {
         //abort_if(Gate::denies('orders_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // $product_variants = ProductVariant::whereHas('product', function ($q) {
-        //     $q->whereNull('deleted_at');
-        // })->get()->load('product', 'variant');
 
         $product_variants = ProductVariant::all()->load('product', 'variant');
 

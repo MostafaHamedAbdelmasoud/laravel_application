@@ -30,33 +30,46 @@ class OrdersApiController extends Controller
     {
         DB::beginTransaction();
 //        try {
-            if (Auth::check()) {
-//                dd(Auth::user()->id);
-                $user_id = Auth::user()->id;
-                $request['user_id'] = $user_id;
-            } else {
-                return 'لا يوجد مستخدم للطلب';
-            }
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+            $request['user_id'] = $user_id;
+        } else {
+            return 'لا يوجد مستخدم للطلب';
+        }
 
-            $order = Order::create($request->all());
-
-
-            foreach ($request->order_products as $order_product) {
-                OrderProduct::create([
-
-                    'product_variant_id' => $order_product['product_variant_id'],
-
-                    'order_id' => $order->id,
-                    // todo
-                    'quantity' => $order_product['quantity'],
+        if ($request->coupon_id) {
+            $coupon = Coupon::findOrFail( $request->coupon_id);
+            if (!$coupon || $coupon->max_usage_per_user <= 0) {
+                return response()->json([
+                    'message' => 'الكوبون غير صالح!'
                 ]);
+            } else {
+                $coupon->update([
+                    'max_usage_per_user' => $coupon->max_usage_per_user - 1
+                ]);
+
             }
+        }
 
-            DB::commit();
+        $order = Order::create($request->all());
 
-            return (new OrderResource($order->load(['coupon', 'OrderProducts'])))
-                ->response()
-                ->setStatusCode(Response::HTTP_CREATED);
+
+        foreach ($request->order_products as $order_product) {
+            OrderProduct::create([
+
+                'product_variant_id' => $order_product['product_variant_id'],
+
+                'order_id' => $order->id,
+                // todo
+                'quantity' => $order_product['quantity'],
+            ]);
+        }
+
+        DB::commit();
+
+        return (new OrderResource($order->load(['coupon', 'OrderProducts'])))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
 //        } catch (Exception $e) {
 //            DB::rollback();
 //
