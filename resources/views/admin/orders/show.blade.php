@@ -99,7 +99,7 @@
                             <td>
                                 @foreach($order->OrderProducts as  $order_product)
                                     <span class="label label-info">
-                                        @if( $product_variant->product)
+                                        @if( $order_product->product)
                                             {{ $order_product->ProductVariant->product->name .' - '.  $order_product->ProductVariant->variant->color .' - '.
                                              $order_product->ProductVariant->variant->size .' - '.$order_product->ProductVariant->variant->price }}
                                         @endif
