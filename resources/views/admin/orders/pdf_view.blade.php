@@ -112,7 +112,7 @@
                             </thead>
                             <tbody>
                             @forelse($order->OrderProducts as  $order_product)
-                                @if($order_product->ProductVariant)
+                                @if( $order_product->ProductVariant &&  $order_product->ProductVariant->product)
                                     <tr>
                                         <td>
                                             {{ $order_product->ProductVariant->product->name}}

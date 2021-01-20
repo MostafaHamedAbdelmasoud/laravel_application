@@ -13,12 +13,14 @@ use App\Models\ProductVariant;
 use App\Models\User;
 use Exception;
 use Gate;
-use Barryvdh\DomPDF\Facade as PDF;
-use Dompdf\Dompdf;
+//use PDF;
 
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+
+//require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 class OrdersController extends Controller
 {
@@ -58,14 +60,14 @@ class OrdersController extends Controller
 
 
             if ($request->coupon_id) {
-                $coupon = Coupon::findOrFail( $request->coupon_id);
+                $coupon = Coupon::findOrFail($request->coupon_id);
                 if (!$coupon || $coupon->max_usage_per_user <= 0) {
                     return response()->json([
                         'message' => 'الكوبون غير صالح!'
                     ]);
                 } else {
                     $coupon->update([
-                        'max_usage_per_user' => $coupon->max_usage_per_user-1
+                        'max_usage_per_user' => $coupon->max_usage_per_user - 1
                     ]);
 
                 }
@@ -164,6 +166,8 @@ class OrdersController extends Controller
             'order' => $order
         ];
 
+
+        /******************/
         $pdf = PDF::loadView('admin.orders.pdf_view', $data);
         return $pdf->stream('medium.pdf');
     }
