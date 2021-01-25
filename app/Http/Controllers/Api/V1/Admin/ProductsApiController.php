@@ -69,7 +69,7 @@ class ProductsApiController extends Controller
         }
 
         if (isset($higher_price)) {
-            dd($productQuery->Where('price', '=<', $higher_price)->toSql());
+            $higher_price = float($higher_price);
             $productQuery = $productQuery->Where('price', '=<', $higher_price);
         }
 
