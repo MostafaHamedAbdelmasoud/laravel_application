@@ -9,10 +9,14 @@
     <title>{{ $order->id }}</title>
 
     <style>
+        @page{size:a3}
+        @page{size:auto}
 
         * {
             font-family: DejaVu Sans, sans-serif;
         }
+
+        /*font-family: examplefont, sans-serif;*/
 
         /********************/
         .invoice-title h2, .invoice-title h3 {
@@ -45,31 +49,38 @@
     <div class="row py-0">
         <div class="col-xs-12">
             <div class="invoice-title text-right">
-                <p class="pull-right">رقم الطلب # {{$order->id}}</p>
+                <p class="pull-right">
+                    <p>
+
+                    رقم الطلب #
+                </p>
+                    {{$order->id}}</p>
             </div>
             <hr>
             <div class="row">
-                <div class="col-xs-4 text-left">
+                <div class="col-xs-12 text-right">
+                <div class="col-xs-12 text-right">
                     <address style="width: 30%;">
                         <strong>دفع إلى:</strong><br>
                         {{$order->user->name}}<br>
                         {{$order->address}}
                     </address>
                 </div>
-                <div class="col-xs-4 text-center">
+                <div class="col-xs-12 text-right">
                     <address>
-                        <strong>رقم التليفون:</strong><br>
+                        <b>رقم التليفون:</b><br>
                         الدفع عن التوصيل
                         <br>
                         {{$order->phone_number}}<br>
                     </address>
                 </div>
-                <div class="col-xs-4 text-right">
+                <div class="col-xs-12 text-right">
                     <address>
                         <strong>تاريخ الطلب:</strong><br>
                         {{$order->created_at}}<br><br>
                     </address>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -90,6 +101,23 @@
             <hr>
         </div>
     </div>
+
+{{--    <div class="row">--}}
+
+{{--        <div class="col-xs-12">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-xs-12 text-right">--}}
+{{--                    <address>--}}
+{{--                        <strong>تاريخ الطلب:</strong><br>--}}
+{{--                        {{$order->created_at}}<br><br>--}}
+{{--                    </address>--}}
+{{--                </div>--}}
+
+{{--            </div>--}}
+{{--            <hr>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
 
     <div class="row">
         <div class="col-md-12">
@@ -208,15 +236,15 @@
 
 {{--<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>--}}
 {{--<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>--}}
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+{{--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"--}}
+{{--        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"--}}
+{{--        crossorigin="anonymous"></script>--}}
+{{--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"--}}
+{{--        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"--}}
+{{--        crossorigin="anonymous"></script>--}}
+{{--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"--}}
+{{--        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"--}}
+{{--        crossorigin="anonymous"></script>--}}
 
 </body>
 </html>

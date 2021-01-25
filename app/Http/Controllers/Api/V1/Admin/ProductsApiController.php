@@ -31,7 +31,7 @@ class ProductsApiController extends Controller
     {
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productQuery = Product::filter($this->filter)->with('trader');
+        $productQuery = Product::with('trader');
 
         $trader_id = $request['trader_id'];
 
@@ -47,10 +47,62 @@ class ProductsApiController extends Controller
 
         $city_id = $request['city_id'];
 
+        $higher_price = $request['HigherPrice'];
+
+        $SortByLowerPrice = $request['SortByLowerPrice'];
+        $RecentlyAdded = $request['RecentlyAdded'];
+        $Brand = $request['Brand'];
+        $PriceAfterDiscount = $request['PriceAfterDiscount'];
+        $LowerPrice = $request['LowerPrice'];
+        $Color = $request['Color'];
+        $Size = $request['Size'];
+
 
         if (isset($city_id)) {
             $productQuery = $productQuery->where('city_id', $city_id);
         }
+
+        if (isset($higher_price)) {
+            $productQuery = $productQuery->Where('price', '<=', $higher_price);
+        }
+
+        if (isset($RecentlyAdded)) {
+            $productQuery = $productQuery->orderBy('updated_at', 'DESC');
+        }
+
+        if (isset($Brand)) {
+            $productQuery = $productQuery->where('brand', 'like', "%$Brand%");
+        }
+
+        if (isset($PriceAfterDiscount)) {
+            $productQuery = $productQuery->whereNotNull('price_after_discount')->Where('price_after_discount', '!=', 0)->WhereColumn('price_after_discount', '!=', 'price');
+        }
+
+        if (isset($LowerPrice)) {
+            $productQuery = $productQuery->Where('price', '>=', $LowerPrice);
+        }
+
+        if (isset($Color)) {
+            $productQuery = $productQuery->WhereHas('variants', function ($q) use ($Color) {
+                $q->where('color', 'like', "%$Color%");
+            });
+        }
+
+        if (isset($Size)) {
+            $productQuery = $productQuery->WhereHas('variants', function ($q) use ($Size) {
+                $q->where('color', 'like', "%$Size%");
+            });
+        }
+
+        if (isset($SortByLowerPrice)) {
+            if ($SortByLowerPrice == 0) {
+                $productQuery = $productQuery->orderBy('price_after_discount', 'DESC');
+            } elseif ($SortByLowerPrice == 1) {
+                $productQuery = $productQuery->orderBy('price_after_discount', 'ASC');
+            }
+        }
+
+
         if (isset($details)) {
             $productQuery = $productQuery->where('details', 'like', "%$details%");
         }

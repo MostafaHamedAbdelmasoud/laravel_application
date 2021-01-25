@@ -24,6 +24,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "maatwebsite/excel": "^3.1",
+        "mpdf/mpdf": "^8.0",
+        "niklasravnsborg/laravel-pdf": "^4.0",
         "spatie/laravel-medialibrary": "^7.19",
         "yajra/laravel-datatables-oracle": "^9.9"
     },

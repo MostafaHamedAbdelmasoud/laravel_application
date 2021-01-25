@@ -13,14 +13,12 @@ use App\Models\ProductVariant;
 use App\Models\User;
 use Exception;
 use Gate;
-//use PDF;
+use PDF;
 
-use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
-
-//require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 class OrdersController extends Controller
 {
@@ -169,6 +167,7 @@ class OrdersController extends Controller
 
         /******************/
         $pdf = PDF::loadView('admin.orders.pdf_view', $data);
+
         return $pdf->stream('medium.pdf');
     }
 }
