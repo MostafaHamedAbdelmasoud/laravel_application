@@ -50,11 +50,17 @@ class ProductsApiController extends Controller
         $higher_price = $request['HigherPrice'];
 
         $SortByLowerPrice = $request['SortByLowerPrice'];
+
         $RecentlyAdded = $request['RecentlyAdded'];
+
         $Brand = $request['Brand'];
+
         $PriceAfterDiscount = $request['PriceAfterDiscount'];
+
         $LowerPrice = $request['LowerPrice'];
+
         $Color = $request['Color'];
+
         $Size = $request['Size'];
 
 
@@ -63,7 +69,8 @@ class ProductsApiController extends Controller
         }
 
         if (isset($higher_price)) {
-            $productQuery = $productQuery->Where('price', '<=', $higher_price);
+            dd($productQuery->Where('price', '=<', $higher_price)->toSql());
+            $productQuery = $productQuery->Where('price', '=<', $higher_price);
         }
 
         if (isset($RecentlyAdded)) {
