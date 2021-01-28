@@ -26,23 +26,25 @@ class UpdateProductRequest extends FormRequest
                 'required',
             ],
             'main_product_type_id' => [
-//                'required',
+//                'nullable',
                 'required_without:main_product_service_type_id',
 //                'exists:main_product_types,id',
             ],
             'sub_product_type_id' => [
-//                'required',
+                'nullable',
                 'required_with:main_product_type_id',
+//                'required_unless:main_product_type_id,not null',
                 'exists:sub_product_types,id',
             ],
             'main_product_service_type_id' => [
-//                'required',
+//                'nullable',
                 'required_without:main_product_type_id',
 //                'exists:main_product_service_types,id',
             ],
             'sub_product_service_type_id' => [
-//                'required',
+                'nullable',
                 'required_with:main_product_service_type_id',
+//                'required_unless:main_product_service_type_id,not null',
                 'exists:sub_product_service_types,id',
             ],
         ];

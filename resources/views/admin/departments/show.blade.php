@@ -83,6 +83,15 @@
                             {{ $offer->trader->name ?? '' }}
                         </td>
                     </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.news.fields.show_in_main_page') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $news->show_in_main_page ? 'checked' : '' }}>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -50,7 +50,7 @@ class DepartmentsController extends Controller
         $this->repo->user = auth()->user();
 
         if ($request->ajax()) {
-            $query = Department::with(['city', 'category', 'trader','sub_category'])->select(sprintf('%s.*', (new Department)->table));
+            $query = Department::with(['city', 'category', 'trader', 'sub_category'])->select(sprintf('%s.*', (new Department)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -83,6 +83,9 @@ class DepartmentsController extends Controller
             });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
+            });
+            $table->editColumn('show_in_main_page', function ($row) {
+                return $row->show_in_main_page ;
             });
             $table->editColumn('logo', function ($row) {
                 if ($photo = $row->logo) {

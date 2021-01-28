@@ -290,6 +290,22 @@
                     <span class="help-block">{{ trans('cruds.product.fields.show_trader_name_helper') }}</span>
                 </div>
 
+                <div class="form-group">
+                    <div class="form-check {{ $errors->has('is_available') ? 'is-invalid' : '' }}">
+                        <input class="form-check-input" type="checkbox" name="is_available"
+                               id="is_available" value="1"
+                            {{ old('is_available', 0) == 1 ? 'checked' : '' }}>
+                        <label class="required form-check-label"
+                               for="is_available">{{ trans('cruds.product.fields.is_available') }}</label>
+                    </div>
+                    @if($errors->has('is_available'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('is_available') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.product.fields.is_available_helper') }}</span>
+                </div>
+
 
 
                 <div class="form-group">

@@ -297,6 +297,23 @@
                     </div>
 
 
+                    <div class="form-group">
+                        <div class="form-check {{ $errors->has('is_available') ? 'is-invalid' : '' }}">
+                            <input class="form-check-input" type="checkbox" name="is_available"
+                                   id="is_available" value="1"
+                                {{ old('is_available', $product->is_available) == 1 ? 'checked' : '' }}>
+                            <label class="required form-check-label"
+                                   for="is_available">{{ trans('cruds.product.fields.is_available') }}</label>
+                        </div>
+                        @if($errors->has('is_available'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('is_available') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.product.fields.is_available_helper') }}</span>
+                    </div>
+
+
                     <hr/>
 
 
@@ -344,7 +361,7 @@
         'component_id'=>isset($product)?$product->sub_product_type_id:'0',
         'main_name_id'=>'#main_product_type_id',
         'sub_name_id'=>'sub_product_type_id',
-        'api_url'=>'/public/api/v1/get_main_product_type_ajax/',
+        'api_url'=>'/api/v1/get_main_product_type_ajax/',
     ]);
 
     @include('admin.products.components.form_scripts',[
@@ -352,7 +369,7 @@
         'component_id'=>isset($product)?$product->sub_product_service_type_id:'0',
         'main_name_id'=>'#main_product_service_type_id',
         'sub_name_id'=>'sub_product_service_type_id',
-        'api_url'=>'/public/api/v1/get_main_product_service_type_ajax/',
+        'api_url'=>'/api/v1/get_main_product_service_type_ajax/',
     ]);
 
 

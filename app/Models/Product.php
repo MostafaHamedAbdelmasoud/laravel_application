@@ -49,6 +49,7 @@ class Product extends Model implements HasMedia
         'main_product_service_type_id',
         'sub_product_type_id',
         'sub_product_service_type_id',
+        'is_available',
         'created_at',
         'updated_at',
         'deleted_at',

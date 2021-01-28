@@ -53,8 +53,8 @@ class ProductsController extends Controller
         //abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::with(['trader','city','department','MainProductType','MainProductType'
-                ,'SubProductType','MainProductServiceType','SubProductServiceType'])->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['trader', 'city', 'department', 'MainProductType', 'MainProductType'
+                , 'SubProductType', 'MainProductServiceType', 'SubProductServiceType'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -62,10 +62,10 @@ class ProductsController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $parameters = [
-                    $row->MainProductType? $row->MainProductType->name:"",
-                     $row->SubProductType? $row->SubProductType->name:'',
-                    $row->MainProductServiceType? $row->MainProductServiceType->name:'',
-                     $row->SubProductServiceType? $row->SubProductServiceType->name : ''
+                    $row->MainProductType ? $row->MainProductType->name : "",
+                    $row->SubProductType ? $row->SubProductType->name : '',
+                    $row->MainProductServiceType ? $row->MainProductServiceType->name : '',
+                    $row->SubProductServiceType ? $row->SubProductServiceType->name : ''
                 ];
 
                 $viewGate = $this->repo->get_gate($parameters, 'product', '_show');
@@ -99,7 +99,7 @@ class ProductsController extends Controller
                 return '';
             });
             $table->editColumn('name', function ($row) {
-                return $row->name   ? $row->name : "";
+                return $row->name ? $row->name : "";
             });
             $table->addColumn('main_product_type_name', function ($row) {
                 return $row->MainProductType ? $row->MainProductType->name : "";
@@ -134,7 +134,7 @@ class ProductsController extends Controller
                 return $row->detailed_title ? $row->detailed_title : "";
             });
             $table->editColumn('price_after_discount', function ($row) {
-                return $row->price_after_discount ? $row->price_after_discount : "";
+                return $row->price_after_discount;
             });
             $table->editColumn('product_code', function ($row) {
                 return $row->product_code ? $row->product_code : "";
@@ -148,7 +148,7 @@ class ProductsController extends Controller
                 return $row->show_in_main_page;
             });
             $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : "";
+                return $row->price;
             });
             $table->addColumn('trader_name', function ($row) {
                 return $row->trader ? $row->trader->name : '';
@@ -248,6 +248,8 @@ class ProductsController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
+//        dd($request);
+
         $request['show_in_main_page'] = $request->has('show_in_main_page') ? 1 : 0;
 
         $request['show_in_trader_page'] = $request->has('show_in_trader_page') ? 1 : 0;

@@ -33,6 +33,10 @@
                         {{ trans('cruds.product.fields.id') }}
                     </th>
 
+
+                    <th>
+                        {{ trans('cruds.product.fields.is_available') }}
+                    </th>
                     <th>
                         {{ trans('cruds.product.fields.name') }}
                     </th>
@@ -102,6 +106,10 @@
                     <td>
                     </td>
 
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+
+                    </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
 
@@ -264,6 +272,7 @@
                     {data: 'placeholder', name: 'placeholder', orderable: false, searchable: false},
                     {data: 'actions', name: '{{ trans('global.actions') }}', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
+                    {data: 'is_available', name: 'is_available'},
                     {data: 'name', name: 'name'},
                     {data: 'brand', name: 'brand'},
                     {data: 'product_code', name: 'product_code'},

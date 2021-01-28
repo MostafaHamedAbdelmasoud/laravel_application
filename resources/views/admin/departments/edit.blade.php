@@ -113,6 +113,23 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.offer.fields.trader_helper') }}</span>
             </div>
+
+
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('show_in_main_page') ? 'is-invalid' : '' }}">
+                    <input class="form-check-input" type="checkbox" name="show_in_main_page" id="show_in_main_page"
+                           value="1" {{ $department->show_in_main_page || old('show_in_main_page', 0) === 1 ? 'checked' : '' }} >
+                    <label class="required form-check-label"
+                           for="show_in_main_page">{{ trans('cruds.department.fields.show_in_main_page') }}</label>
+                </div>
+                @if($errors->has('show_in_main_page'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('show_in_main_page') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.department.fields.show_in_main_page_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

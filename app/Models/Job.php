@@ -15,7 +15,7 @@ class Job extends Model implements HasMedia
 {
     use SoftDeletes, HasMediaTrait,Filterable;
 
-    public $table = 'jobs';
+    public $table = 'jobs_app';
 
     protected $appends = [
         'image',

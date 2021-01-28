@@ -33,6 +33,7 @@ class Department extends Model implements HasMedia
         'phone_number',
         'category_id',
         'sub_category_id',
+        'show_in_main_page',
         'trader_id',
         'created_at',
         'updated_at',
